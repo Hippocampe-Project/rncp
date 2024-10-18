@@ -5,9 +5,9 @@ on:
     branches:
       - dev
 
-# permissions:
-#   packages: write
-#   contents: read
+permissions:
+  packages: write
+  contents: read
 
 jobs:
   build:
