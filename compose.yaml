@@ -1,0 +1,24 @@
+services:
+  web:
+    image: rncp-app
+    build:
+      context: ./app
+      dockerfile: dockerfile
+    volumes:
+      - ./app:/app
+      # - /app/node_modules
+    ports:
+      - "7777:3000"
+   # depends_on:
+   #   - scraping
+
+  scraper:
+    image: rncp-scraping
+    build: 
+      context: ./scraping
+      dockerfile: dockerfile
+    volumes:
+      - ./scrapping:/scraping
+
+
+# Manage container dependencies with DB (eg)

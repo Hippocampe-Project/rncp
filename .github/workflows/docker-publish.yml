@@ -1,0 +1,37 @@
+name: Build and Publish rncp Docker Image when push on dev branch
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build the web docker image (rncp-app) 
+      run: |
+        docker build -t ghcr.io/PDeslousPaoli/rncp-app:latest -f app/dockerfile ./app
+
+    - name: Build the scraper docker image (rncp-scraping)
+      run: |
+        docker build -t ghcr.io/PDeslousPaoli/rncp-scraping:latest -f scraping/dockerfile ./scraping
+
+    - name: Push the rncp-app docker image to GitHub Container Registry
+      run: |
+        docker push ghcr.io/PDeslousPaoli/rncp-app:latest
+
+    - name: Push the rncp-scrping docker image to GitHub Container Registry
+      run: |
+        docker push ghcr.io/PDeslousPaoli/rncp-scraping:latest
