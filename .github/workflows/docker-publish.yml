@@ -22,16 +22,16 @@ jobs:
 
     - name: Build the web docker image (rncp-app) 
       run: |
-        docker build -t ghcr.io/PDeslousPaoli/rncp-app:latest -f app/dockerfile ./app
+        docker build -t ghcr.io/hippocampe-project/rncp-app:latest -f app/dockerfile ./app
 
     - name: Build the scraper docker image (rncp-scraping)
       run: |
-        docker build -t ghcr.io/PDeslousPaoli/rncp-scraping:latest -f scraping/dockerfile ./scraping
+        docker build -t ghcr.io/hippocampe-project/rncp-scraping:latest -f scraping/dockerfile ./scraping
 
     - name: Push the rncp-app docker image to GitHub Container Registry
       run: |
-        docker push ghcr.io/PDeslousPaoli/rncp-app:latest
+        docker push ghcr.io/hippocampe-project/rncp-app:latest
 
     - name: Push the rncp-scrping docker image to GitHub Container Registry
       run: |
-        docker push ghcr.io/PDeslousPaoli/rncp-scraping:latest
+        docker push ghcr.io/hippocampe-project/rncp-scraping:latest
