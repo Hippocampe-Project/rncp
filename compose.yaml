@@ -18,7 +18,7 @@ services:
       context: ./scraping
       dockerfile: dockerfile
     volumes:
-      - ./scrapping:/scraping
+      - ./scraping:/scraping
 
 
 # Manage container dependencies with DB (eg)
