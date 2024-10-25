@@ -1,0 +1,1 @@
+//# sourceMappingURL=partis.model.js.map
