@@ -1,0 +1,3 @@
+node_modules/
+scraping/__pycache__/scrap_Deputes.cpython-313.pyc
+.gitignore
