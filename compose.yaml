@@ -6,7 +6,7 @@ services:
       dockerfile: dockerfile
     volumes:
       - ./app:/app
-      # - /app/node_modules
+      - /app/node_modules
     ports:
       - "7777:3000"
    # depends_on:
@@ -18,7 +18,7 @@ services:
       context: ./scraping
       dockerfile: dockerfile
     volumes:
-      - ./scrapping:/scraping
+      - ./scraping:/scraping
 
 
 # Manage container dependencies with DB (eg)
