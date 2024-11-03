@@ -9,13 +9,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DepsearchModule = void 0;
 const common_1 = require("@nestjs/common");
 const depsearch_resolver_1 = require("./depsearch.resolver");
-const depsearch_module_1 = require("./depsearch.module");
+const depsearch_service_1 = require("./depsearch.service");
 let DepsearchModule = class DepsearchModule {
 };
 exports.DepsearchModule = DepsearchModule;
 exports.DepsearchModule = DepsearchModule = __decorate([
     (0, common_1.Module)({
-        providers: [depsearch_resolver_1.DepsearchResolver, depsearch_module_1.DepsearchService],
+        providers: [depsearch_resolver_1.DepsearchResolver, depsearch_service_1.DepsearchService],
     })
 ], DepsearchModule);
 //# sourceMappingURL=depsearch.module.js.map

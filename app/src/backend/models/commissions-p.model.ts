@@ -11,12 +11,12 @@ import {
 import { InferAttributes, InferCreationAttributes } from "sequelize";
 
 @Table({
-  tableName: "departements",
+  tableName: "commissions-p",
   timestamps: false,
 })
-export class Departements extends Model<
-  InferAttributes<Departements>,
-  InferCreationAttributes<Departements>
+export class CommissionsPermanentes extends Model<
+  InferAttributes<CommissionsPermanentes>,
+  InferCreationAttributes<CommissionsPermanentes>
 > {
   @PrimaryKey
   @AutoIncrement
@@ -25,4 +25,7 @@ export class Departements extends Model<
 
   @Column(DataType.STRING)
   nom: string;
+
+  @Column(DataType.STRING)
+  objet: string;
 }

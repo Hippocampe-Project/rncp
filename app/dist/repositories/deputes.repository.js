@@ -12,25 +12,44 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DepsearchService = void 0;
+exports.DeputeRepository = void 0;
 const common_1 = require("@nestjs/common");
-const deputes_model_1 = require("../../models/deputes.model");
+const deputes_model_1 = require("../models/deputes.model");
 const sequelize_1 = require("@nestjs/sequelize");
-let DepsearchService = class DepsearchService {
+let DeputeRepository = class DeputeRepository {
     constructor(deputeModel) {
         this.deputeModel = deputeModel;
     }
-    async findDepute(deputeId) {
-        return this.deputeModel.findOne({ where: { id: deputeId } });
+    async create(createDeputeDto) {
+        return await this.deputeModel.create(createDeputeDto);
     }
-    async createDepute(deputeData) {
-        return this.deputeModel.create(deputeData);
+    async findAll() {
+        return await this.deputeModel.findAll();
+    }
+    async findOne(id) {
+        return await this.deputeModel.findOne({
+            where: {
+                id,
+            },
+        });
+    }
+    async update(id, updateDeputeDto) {
+        return await this.deputeModel.update(updateDeputeDto, {
+            where: {
+                id,
+            },
+            returning: true,
+        });
+    }
+    async delete(id) {
+        const depute = await this.findOne(id);
+        await depute.destroy();
     }
 };
-exports.DepsearchService = DepsearchService;
-exports.DepsearchService = DepsearchService = __decorate([
+exports.DeputeRepository = DeputeRepository;
+exports.DeputeRepository = DeputeRepository = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, sequelize_1.InjectModel)(deputes_model_1.Deputes)),
     __metadata("design:paramtypes", [Object])
-], DepsearchService);
-//# sourceMappingURL=depsearch.service.js.map
+], DeputeRepository);
+//# sourceMappingURL=deputes.repository.js.map

@@ -26,12 +26,24 @@ __decorate([
     __metadata("design:type", String)
 ], Partis.prototype, "nom", void 0);
 __decorate([
+    (0, sequelize_typescript_1.ForeignKey)(() => deputes_model_1.Deputes),
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.INTEGER,
+        allowNull: true,
+    }),
+    __metadata("design:type", Number)
+], Partis.prototype, "presidentId", void 0);
+__decorate([
+    (0, sequelize_typescript_1.BelongsTo)(() => deputes_model_1.Deputes, "presidentId"),
+    __metadata("design:type", deputes_model_1.Deputes)
+], Partis.prototype, "president", void 0);
+__decorate([
     (0, sequelize_typescript_1.HasMany)(() => deputes_model_1.Deputes),
     __metadata("design:type", Array)
 ], Partis.prototype, "deputes", void 0);
 exports.Partis = Partis = __decorate([
     (0, sequelize_typescript_1.Table)({
-        tableName: 'partis',
+        tableName: "partis",
         timestamps: false,
     })
 ], Partis);

@@ -12,25 +12,44 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DepsearchService = void 0;
+exports.VoteRepository = void 0;
 const common_1 = require("@nestjs/common");
-const deputes_model_1 = require("../../models/deputes.model");
 const sequelize_1 = require("@nestjs/sequelize");
-let DepsearchService = class DepsearchService {
-    constructor(deputeModel) {
-        this.deputeModel = deputeModel;
+const votes_model_1 = require("../models/votes.model");
+let VoteRepository = class VoteRepository {
+    constructor(voteModel) {
+        this.voteModel = voteModel;
     }
-    async findDepute(deputeId) {
-        return this.deputeModel.findOne({ where: { id: deputeId } });
+    async create(createVoteDto) {
+        return await this.voteModel.create(createVoteDto);
     }
-    async createDepute(deputeData) {
-        return this.deputeModel.create(deputeData);
+    async findAll() {
+        return await this.voteModel.findAll();
+    }
+    async findOne(id) {
+        return await this.voteModel.findOne({
+            where: {
+                id,
+            },
+        });
+    }
+    async update(id, updateVoteDto) {
+        return await this.voteModel.update(updateVoteDto, {
+            where: {
+                id,
+            },
+            returning: true,
+        });
+    }
+    async delete(id) {
+        const vote = await this.findOne(id);
+        await vote.destroy();
     }
 };
-exports.DepsearchService = DepsearchService;
-exports.DepsearchService = DepsearchService = __decorate([
+exports.VoteRepository = VoteRepository;
+exports.VoteRepository = VoteRepository = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, sequelize_1.InjectModel)(deputes_model_1.Deputes)),
+    __param(0, (0, sequelize_1.InjectModel)(votes_model_1.Votes)),
     __metadata("design:paramtypes", [Object])
-], DepsearchService);
-//# sourceMappingURL=depsearch.service.js.map
+], VoteRepository);
+//# sourceMappingURL=votes.repository.js.map

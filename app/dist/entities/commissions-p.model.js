@@ -9,35 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Deputes = void 0;
+exports.CommissionsPermanentes = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
-const partis_model_1 = require("./partis.model");
-let Deputes = class Deputes extends sequelize_typescript_1.Model {
+let CommissionsPermanentes = class CommissionsPermanentes extends sequelize_typescript_1.Model {
 };
-exports.Deputes = Deputes;
+exports.CommissionsPermanentes = CommissionsPermanentes;
 __decorate([
     sequelize_typescript_1.PrimaryKey,
     sequelize_typescript_1.AutoIncrement,
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
     __metadata("design:type", Number)
-], Deputes.prototype, "id", void 0);
+], CommissionsPermanentes.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
     __metadata("design:type", String)
-], Deputes.prototype, "nom", void 0);
+], CommissionsPermanentes.prototype, "nom", void 0);
 __decorate([
-    (0, sequelize_typescript_1.ForeignKey)(() => partis_model_1.Partis),
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
-    __metadata("design:type", Number)
-], Deputes.prototype, "parti_id", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => partis_model_1.Partis),
-    __metadata("design:type", partis_model_1.Partis)
-], Deputes.prototype, "parti", void 0);
-exports.Deputes = Deputes = __decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    __metadata("design:type", String)
+], CommissionsPermanentes.prototype, "objet", void 0);
+exports.CommissionsPermanentes = CommissionsPermanentes = __decorate([
     (0, sequelize_typescript_1.Table)({
-        tableName: 'deputes',
+        tableName: "commissions-p",
         timestamps: false,
     })
-], Deputes);
-//# sourceMappingURL=deputes.model.js.map
+], CommissionsPermanentes);
+//# sourceMappingURL=commissions-p.model.js.map

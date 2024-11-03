@@ -12,25 +12,44 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DepsearchService = void 0;
+exports.PartiRepository = void 0;
 const common_1 = require("@nestjs/common");
-const deputes_model_1 = require("../../models/deputes.model");
 const sequelize_1 = require("@nestjs/sequelize");
-let DepsearchService = class DepsearchService {
-    constructor(deputeModel) {
-        this.deputeModel = deputeModel;
+const partis_model_1 = require("../models/partis.model");
+let PartiRepository = class PartiRepository {
+    constructor(partiModel) {
+        this.partiModel = partiModel;
     }
-    async findDepute(deputeId) {
-        return this.deputeModel.findOne({ where: { id: deputeId } });
+    async create(createPartiDto) {
+        return await this.partiModel.create(createPartiDto);
     }
-    async createDepute(deputeData) {
-        return this.deputeModel.create(deputeData);
+    async findAll() {
+        return await this.partiModel.findAll();
+    }
+    async findOne(id) {
+        return await this.partiModel.findOne({
+            where: {
+                id,
+            },
+        });
+    }
+    async update(id, updatePartiDto) {
+        return await this.partiModel.update(updatePartiDto, {
+            where: {
+                id,
+            },
+            returning: true,
+        });
+    }
+    async delete(id) {
+        const parti = await this.findOne(id);
+        await parti.destroy();
     }
 };
-exports.DepsearchService = DepsearchService;
-exports.DepsearchService = DepsearchService = __decorate([
+exports.PartiRepository = PartiRepository;
+exports.PartiRepository = PartiRepository = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, sequelize_1.InjectModel)(deputes_model_1.Deputes)),
+    __param(0, (0, sequelize_1.InjectModel)(partis_model_1.Partis)),
     __metadata("design:paramtypes", [Object])
-], DepsearchService);
-//# sourceMappingURL=depsearch.service.js.map
+], PartiRepository);
+//# sourceMappingURL=partis.repository.js.map

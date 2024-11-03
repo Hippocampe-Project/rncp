@@ -8,28 +8,32 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeputesResolver = void 0;
+exports.DepsearchResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const depsearch_service_1 = require("./depsearch.service");
 const deputes_model_1 = require("../../models/deputes.model");
-let DeputesResolver = class DeputesResolver {
+let DepsearchResolver = class DepsearchResolver {
     constructor(depsearchService) {
         this.depsearchService = depsearchService;
     }
-    async deputes() {
-        return this.depsearchService.findAll();
+    async depute(deputeId) {
+        return this.depsearchService.findDepute(deputeId);
     }
 };
-exports.DeputesResolver = DeputesResolver;
+exports.DepsearchResolver = DepsearchResolver;
 __decorate([
-    (0, graphql_1.Query)(() => [deputes_model_1.Deputes]),
+    (0, graphql_1.Query)(() => deputes_model_1.Deputes, { nullable: true }),
+    __param(0, (0, graphql_1.Args)("id", { type: () => graphql_1.Int })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
-], DeputesResolver.prototype, "deputes", null);
-exports.DeputesResolver = DeputesResolver = __decorate([
+], DepsearchResolver.prototype, "depute", null);
+exports.DepsearchResolver = DepsearchResolver = __decorate([
     (0, graphql_1.Resolver)(() => deputes_model_1.Deputes),
     __metadata("design:paramtypes", [depsearch_service_1.DepsearchService])
-], DeputesResolver);
+], DepsearchResolver);
 //# sourceMappingURL=depsearch.resolver.js.map

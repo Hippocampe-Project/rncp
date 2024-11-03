@@ -9,30 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Partis = void 0;
+exports.CommissionsPermanentes = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
-const deputes_model_1 = require("./deputes.model");
-let Partis = class Partis extends sequelize_typescript_1.Model {
+let CommissionsPermanentes = class CommissionsPermanentes extends sequelize_typescript_1.Model {
 };
-exports.Partis = Partis;
+exports.CommissionsPermanentes = CommissionsPermanentes;
 __decorate([
     sequelize_typescript_1.PrimaryKey,
     sequelize_typescript_1.AutoIncrement,
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
     __metadata("design:type", Number)
-], Partis.prototype, "id", void 0);
+], CommissionsPermanentes.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
     __metadata("design:type", String)
-], Partis.prototype, "nom", void 0);
+], CommissionsPermanentes.prototype, "nom", void 0);
 __decorate([
-    (0, sequelize_typescript_1.HasMany)(() => deputes_model_1.Deputes),
-    __metadata("design:type", Array)
-], Partis.prototype, "deputes", void 0);
-exports.Partis = Partis = __decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    __metadata("design:type", String)
+], CommissionsPermanentes.prototype, "objet", void 0);
+exports.CommissionsPermanentes = CommissionsPermanentes = __decorate([
     (0, sequelize_typescript_1.Table)({
-        tableName: 'partis',
+        tableName: "commissions-p",
         timestamps: false,
     })
-], Partis);
-//# sourceMappingURL=partis.model.js.map
+], CommissionsPermanentes);
+//# sourceMappingURL=commissions-p.model.js.map
