@@ -1,4 +1,6 @@
 import os
+import time
+
 from logging_utils import info_logger, error_logger
 from chrome_driver_handler import ChromeDriverHandler
 from get_web_page_urls import (
@@ -17,15 +19,23 @@ entry_point_url = "https://www.assemblee-nationale.fr/dyn/les-groupes-politiques
 def main():
     info_logger.info(" -- Starting main() function --")
 
+    start_time = time.time()
+
     driver_handler = ChromeDriverHandler(chrome_bin, chrome_driver)
 
     political_groups_links = scrape_political_parties_urls(entry_point_url)
     parties_table, all_representatives_urls = scrape_representatives_personal_page_url(
         driver_handler, political_groups_links
     )
-    info_logger(f"Final parties table : {parties_table}")
+    info_logger.info(f"Final parties table : {parties_table}")
+    info_logger.info(
+        f"Number of representatives personnal page url retrieved : {len(all_representatives_urls)}"
+    )
     representatives_table = scrape_every_representative(all_representatives_urls)
-    info_logger(f"Final representatives table : {representatives_table}")
+    info_logger.info(f"Final representatives table : {representatives_table}")
+
+    end_time = time.time()
+    info_logger.info(f" ~ Execution time : {end_time - start_time} ~ ")
 
     info_logger.info(" -- Exiting main() function --")
 
