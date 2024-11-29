@@ -7,6 +7,7 @@ export declare class Deputes extends Model<InferAttributes<Deputes>, InferCreati
     id: number;
     nom: string;
     dateNaissance: Date;
+    sexe: string;
     departement_id: number;
     departement: Departements;
     circonscription: number;

@@ -27,10 +27,13 @@ export class Deputes extends Model<
   id!: number;
 
   @Column(DataType.STRING)
-  nom: string;
+  nom!: string;
 
   @Column(DataType.STRING)
   dateNaissance!: Date;
+
+  @Column(DataType.STRING)
+  sexe!: string;
 
   //Table level decorator. Indicates that this column references the primary key of the foreign table, here under the name 'departement_id'.
   @ForeignKey(() => Departements)
@@ -45,7 +48,7 @@ export class Deputes extends Model<
   circonscription!: number;
 
   //Table level decorator. Indicates that this column references the primary key of the foreign table, here under the name 'commissionPermanente_id'.
-  @ForeignKey(() => Departements)
+  @ForeignKey(() => CommissionsPermanentes)
   @Column(DataType.INTEGER)
   commissionPermanente_id!: number;
 

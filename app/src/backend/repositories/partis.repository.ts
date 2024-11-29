@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { Partis } from "../models/partis.model";
-import { CreatePartiDto } from "../dto/create-parti.dto";
+// import { CreatePartiDto } from "../dto/create-parti.dto";
 
 @Injectable()
 export class PartiRepository {
@@ -10,20 +10,22 @@ export class PartiRepository {
     private readonly partiModel: typeof Partis,
   ) {}
 
-  async create(createPartiDto: CreatePartiDto): Promise<Partis> {
-    return await this.partiModel.create(createPartiDto);
-  }
+  // async create(createPartiDto: CreatePartiDto): Promise<Partis> {
+  //   return await this.partiModel.create(createPartiDto);
+  // }
 
   async findAll(): Promise<Partis[]> {
     return await this.partiModel.findAll();
   }
 
   async findOne(id: number): Promise<Partis> {
-    return await this.partiModel.findOne({
-      where: {
-        id,
-      },
+    const parti = await this.partiModel.findOne({
+      where: { id },
     });
+    if (!parti) {
+      throw new NotFoundException(`Parti with ID ${id} not found`);
+    }
+    return parti;
   }
 
   async update(id: number, updatePartiDto: any): Promise<[number, Partis[]]> {

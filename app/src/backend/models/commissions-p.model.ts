@@ -7,8 +7,11 @@ import {
   PrimaryKey,
   AutoIncrement,
   BelongsTo,
+  HasOne,
+  HasMany,
 } from "sequelize-typescript";
 import { InferAttributes, InferCreationAttributes } from "sequelize";
+import { Deputes } from "./deputes.model";
 
 @Table({
   tableName: "commissions-p",
@@ -24,8 +27,14 @@ export class CommissionsPermanentes extends Model<
   id!: number;
 
   @Column(DataType.STRING)
-  nom: string;
+  nom!: string;
 
   @Column(DataType.STRING)
-  objet: string;
+  objet!: string;
+
+  @HasMany(() => Deputes)
+  Deputesid?: Deputes[];
+
+  @Column(DataType.STRING)
+  deputes?: string[];
 }

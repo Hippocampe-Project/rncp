@@ -20,18 +20,17 @@ let PartiRepository = class PartiRepository {
     constructor(partiModel) {
         this.partiModel = partiModel;
     }
-    async create(createPartiDto) {
-        return await this.partiModel.create(createPartiDto);
-    }
     async findAll() {
         return await this.partiModel.findAll();
     }
     async findOne(id) {
-        return await this.partiModel.findOne({
-            where: {
-                id,
-            },
+        const parti = await this.partiModel.findOne({
+            where: { id },
         });
+        if (!parti) {
+            throw new common_1.NotFoundException(`Parti with ID ${id} not found`);
+        }
+        return parti;
     }
     async update(id, updatePartiDto) {
         return await this.partiModel.update(updatePartiDto, {

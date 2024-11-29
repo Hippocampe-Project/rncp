@@ -1,7 +1,7 @@
-import { Injectable, Inject } from "@nestjs/common";
+import { Injectable, Inject, NotFoundException } from "@nestjs/common";
 import { Deputes } from "../models/deputes.model";
 import { InjectModel } from "@nestjs/sequelize";
-import { CreateDeputeDto } from "../dto/create-depute.dto";
+// import { CreateDeputeDto } from "../dto/create-depute.dto";
 
 @Injectable()
 export class DeputeRepository {
@@ -10,20 +10,22 @@ export class DeputeRepository {
     private readonly deputeModel: typeof Deputes,
   ) {}
 
-  async create(createDeputeDto: CreateDeputeDto): Promise<Deputes> {
-    return await this.deputeModel.create(createDeputeDto);
-  }
+  // async create(createDeputeDto: CreateDeputeDto): Promise<Deputes> {
+  //   return await this.deputeModel.create(createDeputeDto);
+  // }
 
   async findAll(): Promise<Deputes[]> {
     return await this.deputeModel.findAll();
   }
 
   async findOne(id: number): Promise<Deputes> {
-    return await this.deputeModel.findOne({
-      where: {
-        id,
-      },
+    const depute = await this.deputeModel.findOne({
+      where: { id },
     });
+    if (!depute) {
+      throw new NotFoundException(`Depute with ID ${id} not found`);
+    }
+    return depute;
   }
 
   async update(id: number, updateDeputeDto: any): Promise<[number, Deputes[]]> {

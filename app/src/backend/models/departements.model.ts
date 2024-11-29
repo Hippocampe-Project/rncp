@@ -24,5 +24,5 @@ export class Departements extends Model<
   id!: number;
 
   @Column(DataType.STRING)
-  nom: string;
+  nom!: string;
 }

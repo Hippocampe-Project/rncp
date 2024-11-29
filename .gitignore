@@ -1,3 +1,5 @@
-node_modules/
+node_modules
 scraping/__pycache__/scrap_Deputes.cpython-313.pyc
 .gitignore
+.env
+app/src/backend/testconnection.ts

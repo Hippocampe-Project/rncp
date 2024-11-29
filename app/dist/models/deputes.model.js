@@ -32,6 +32,10 @@ __decorate([
     __metadata("design:type", Date)
 ], Deputes.prototype, "dateNaissance", void 0);
 __decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    __metadata("design:type", String)
+], Deputes.prototype, "sexe", void 0);
+__decorate([
     (0, sequelize_typescript_1.ForeignKey)(() => departements_model_1.Departements),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
     __metadata("design:type", Number)
@@ -45,7 +49,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Deputes.prototype, "circonscription", void 0);
 __decorate([
-    (0, sequelize_typescript_1.ForeignKey)(() => departements_model_1.Departements),
+    (0, sequelize_typescript_1.ForeignKey)(() => commissions_p_model_1.CommissionsPermanentes),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
     __metadata("design:type", Number)
 ], Deputes.prototype, "commissionPermanente_id", void 0);

@@ -20,18 +20,17 @@ let DeputeRepository = class DeputeRepository {
     constructor(deputeModel) {
         this.deputeModel = deputeModel;
     }
-    async create(createDeputeDto) {
-        return await this.deputeModel.create(createDeputeDto);
-    }
     async findAll() {
         return await this.deputeModel.findAll();
     }
     async findOne(id) {
-        return await this.deputeModel.findOne({
-            where: {
-                id,
-            },
+        const depute = await this.deputeModel.findOne({
+            where: { id },
         });
+        if (!depute) {
+            throw new common_1.NotFoundException(`Depute with ID ${id} not found`);
+        }
+        return depute;
     }
     async update(id, updateDeputeDto) {
         return await this.deputeModel.update(updateDeputeDto, {

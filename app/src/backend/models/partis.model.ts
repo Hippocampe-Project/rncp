@@ -19,10 +19,10 @@ export class Partis extends Model<Partis> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
-  id: number;
+  id!: number;
 
   @Column(DataType.STRING)
-  nom: string;
+  nom!: string;
 
   //Table level decorator. Indicates that this column references the primary key of the foreign table, here under the name 'president_id'.
   @ForeignKey(() => Deputes)
@@ -30,14 +30,14 @@ export class Partis extends Model<Partis> {
     type: DataType.INTEGER,
     allowNull: true,
   })
-  presidentId: number;
+  presidentId?: number;
 
   //Model level decorator. Establishes a one-to-one relationship with Deputes model,and specifies where it is located in the present table ('president_id'). Allows sequelize to automatize data fetching.
   @BelongsTo(() => Deputes, "presidentId")
-  president: Deputes;
+  president?: Deputes;
 
   //Model level decorator. Establishes a one-to-many relationship with the Deputes table,
   //without it being a column here.
   @HasMany(() => Deputes)
-  deputes: Deputes[];
+  deputes?: Deputes[];
 }

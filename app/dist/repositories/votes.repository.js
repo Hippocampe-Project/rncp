@@ -20,18 +20,17 @@ let VoteRepository = class VoteRepository {
     constructor(voteModel) {
         this.voteModel = voteModel;
     }
-    async create(createVoteDto) {
-        return await this.voteModel.create(createVoteDto);
-    }
     async findAll() {
         return await this.voteModel.findAll();
     }
     async findOne(id) {
-        return await this.voteModel.findOne({
-            where: {
-                id,
-            },
+        const vote = await this.voteModel.findOne({
+            where: { id },
         });
+        if (!vote) {
+            throw new common_1.NotFoundException(`Parti with ID ${id} not found`);
+        }
+        return vote;
     }
     async update(id, updateVoteDto) {
         return await this.voteModel.update(updateVoteDto, {
