@@ -10,6 +10,7 @@ def scrape_every_representative(representatives_infos: list[dict]) -> list[dict]
     info_logger.info(" -- Starting scraping each representative personal page ")
 
     # TODO : append representativ to a list that you return
+    representatives_table = []
 
     for dict in representatives_infos:
 
@@ -72,11 +73,15 @@ def scrape_every_representative(representatives_infos: list[dict]) -> list[dict]
             )
 
             # print(representative)
-            return representative
-        
+            representatives_table.append(representative)
+
         except Exception as scraping_error:
             error_logger.error(f"Error while scraping {name} personal page : {scraping_error}")
             
+    return representatives_table
+
+
+
 
 # TEST
 # test_list = [

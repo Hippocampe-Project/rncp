@@ -58,6 +58,9 @@ def scrape_representatives_personal_page_url(
     parties = []
     representatives_urls = []
 
+    info_logger.info(
+        "Scraping each political group name and president \n Scraping all representatives personal page url + some infos"
+    )
     for party in political_groups:
 
         try:
@@ -78,7 +81,6 @@ def scrape_representatives_personal_page_url(
             page_source = driver.page_source
             soup = BeautifulSoup(page_source, "html.parser")
 
-            info_logger.info("Scraping each political group name and president")
             try:
                 political_group = soup.h1.text
                 president_section = soup.find(
@@ -97,9 +99,6 @@ def scrape_representatives_personal_page_url(
             except Exception as scraping_error:
                 print(f"Error scraping political group or president: {scraping_error}")
 
-            info_logger.info(
-                "Scraping all representatives personal page url + some infos"
-            )
             try:
                 representatives_section = soup.find("h3", string="Membres")
 
@@ -144,7 +143,6 @@ def scrape_representatives_personal_page_url(
         except Exception as driver_error:
             print(f"An error occured while requesting {party} : {driver_error}")
 
-        finally:
-            driver_handler.quit_driver()
+    driver_handler.quit_driver()
 
     return parties, representatives_urls
