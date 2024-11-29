@@ -2,3 +2,5 @@ beautifulsoup4
 selenium
 requests
 tqdm
+psycopg2
+python-dotenv
