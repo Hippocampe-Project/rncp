@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+from tqdm import tqdm
 from logging_utils import info_logger, error_logger
 from data_strucures import Representative
 
@@ -9,10 +10,9 @@ def scrape_every_representative(representatives_infos: list[dict]) -> list[dict]
 
     info_logger.info(" -- Starting scraping each representative personal page ")
 
-    # TODO : append representativ to a list that you return
     representatives_table = []
 
-    for dict in representatives_infos:
+    for dict in tqdm(representatives_infos, desc="Scraping representatives", ncols=100, ascii=True):
 
         try:
             response = requests.get(dict["url"])
