@@ -10,6 +10,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from logging_utils import info_logger, error_logger
+from base_urls import BASE_URL
 
 if typing.TYPE_CHECKING:
     from chrome_driver_handler import ChromeDriverHandler
@@ -18,9 +19,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-
-
-base_url = "https://www2.assemblee-nationale.fr"
 
 
 def scrape_political_parties_urls(url: str) -> list[str]:
@@ -44,7 +42,7 @@ def scrape_political_parties_urls(url: str) -> list[str]:
         # print(political_groups_links)
         return political_groups_links
     except Exception as scraping_error:
-        error_logger.error(f"Error while scraping {url} page : {scraping_error}")
+        error_logger.error(f"Error while scraping {div} element : {scraping_error}")
 
 
 def scrape_representatives_personal_page_url(
@@ -64,7 +62,10 @@ def scrape_representatives_personal_page_url(
     )
 
     for party in tqdm(
-        political_groups, desc="Scraping political groups and representatives urls", ncols=100, ascii=True
+        political_groups,
+        desc="Scraping political groups and representatives urls",
+        ncols=100,
+        ascii=True,
     ):
 
         try:
@@ -97,7 +98,7 @@ def scrape_representatives_personal_page_url(
                         "party_name": political_group,
                         president_section.text: president_name.replace("\xa0", " "),
                     }
-                    #print(party_infos)
+                    # print(party_infos)
                     parties.append(party_infos)
             except Exception as scraping_error:
                 print(f"Error scraping political group or president: {scraping_error}")
@@ -113,7 +114,7 @@ def scrape_representatives_personal_page_url(
                         representatives = representatives_list.find_all("li")
 
                     for representative in representatives:
-                        representative_picture = base_url + representative.find(
+                        representative_picture = BASE_URL + representative.find(
                             "img"
                         ).get("src")
                         representative_location = representative.find(
@@ -123,7 +124,7 @@ def scrape_representatives_personal_page_url(
                             "a", class_="instance-composition-commission"
                         ).text
                         representative_personal_page_url = (
-                            base_url
+                            BASE_URL
                             + representative.find(
                                 "a", class_="instance-composition-nom"
                             ).get("href")
