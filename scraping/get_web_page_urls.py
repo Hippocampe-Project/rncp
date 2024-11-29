@@ -4,6 +4,7 @@ import time
 import os
 import re
 import typing
+from tqdm import tqdm
 
 import requests
 from bs4 import BeautifulSoup
@@ -61,7 +62,10 @@ def scrape_representatives_personal_page_url(
     info_logger.info(
         "Scraping each political group name and president \n Scraping all representatives personal page url + some infos"
     )
-    for party in political_groups:
+
+    for party in tqdm(
+        political_groups, desc="Scraping political groups and representatives urls", ncols=100, ascii=True
+    ):
 
         try:
             driver.get(party)
@@ -76,7 +80,6 @@ def scrape_representatives_personal_page_url(
                 print(
                     f"Timeout waiting for AJAX content to load for {party} : {timeout}"
                 )
-                # raise/break
 
             page_source = driver.page_source
             soup = BeautifulSoup(page_source, "html.parser")
@@ -94,7 +97,7 @@ def scrape_representatives_personal_page_url(
                         "party_name": political_group,
                         president_section.text: president_name.replace("\xa0", " "),
                     }
-                    print(party_infos)
+                    #print(party_infos)
                     parties.append(party_infos)
             except Exception as scraping_error:
                 print(f"Error scraping political group or president: {scraping_error}")
