@@ -33,7 +33,7 @@ class Representative:
             f"commission={self.commission}, "
             f"profession={self.profession}, "
             f"substitute={self.substitute}, "
-            f"political_group={self.political_group})"
+            f"political_group={self.political_group}), "
             f"picture={self.picture})"
         )
 
