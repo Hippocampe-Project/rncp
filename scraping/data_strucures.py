@@ -46,6 +46,16 @@ class Representative:
             return "Error in parsing representative gender"
 
     def format_birth_date(self, birth_date):
+
+        # TODO: from datetime import datetime
+        # import locale
+
+        # locale.setlocale(locale.LC_ALL, 'de_DE')
+        # date_str_de_DE = '16-Dezember-2022 Freitag'  # de_DE locale
+        # datetime_object = datetime.strptime(date_str_de_DE, '%d-%B-%Y %A')
+        # print(type(datetime_object))
+        # print(datetime_object)
+
         try:
             # Month mapping from French to numerical format
             month_mapping = {
