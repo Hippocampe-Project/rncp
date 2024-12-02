@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 
 from base_urls import BASE_URL
+from data_strucures import Departement, StandingCommittees
 
 
 def scrape_departements(url: str) -> list[str]:
@@ -21,7 +22,8 @@ def scrape_departements(url: str) -> list[str]:
         h4_list = soup.find_all("h4")
         for h4 in tqdm(h4_list, desc="Scraping departemens", ncols=100, ascii=True):
             departement_title = h4.text
-            departements_list.append(departement_title)
+            departement = Departement(name=departement_title)
+            departements_list.append(departement)
         return departements_list
     except Exception as scraping_error:
         logging.error(f"Error while scraping {h4} element : {scraping_error}")
@@ -44,26 +46,23 @@ def scrape_commissions(url: str) -> list[str]:
         for div in tqdm(divs, desc="Scraping commissions infos", ncols=100, ascii=True):
             logo_element = div.find("img")
             name_element = div.find("span")
-            objet_url = div.find_next_sibling("a")
+            mission_element = div.find_next_sibling("a")
 
             logo = logo_element.get("src")
             name = name_element.text
-            objet = objet_url.get("href")
+            mission_url = mission_element.get("href")
 
             try:
-                res = requests.get(BASE_URL + objet)
+                res = requests.get(BASE_URL + mission_url)
                 soup = BeautifulSoup(res.content, "html.parser", from_encoding="utf-8")
-                objet = soup.find("h1").text
+                mission = soup.find("h1").text
             except Exception as request_error:
-                logging.error(f"Error while requesting {objet_url} : {request_error}")
+                logging.error(f"Error while requesting {res} : {request_error}")
 
-            commission = {
-                "name": name,
-                "logo": BASE_URL + logo,
-                "objet": objet,
-            }
+            commission = StandingCommittees(name=name, mission=mission, logo=logo)
+
             commissions_list.append(commission)
-        print(commissions_list)
+
         return commissions_list
 
     except Exception as scraping_error:

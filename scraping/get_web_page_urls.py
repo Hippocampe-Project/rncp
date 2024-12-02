@@ -20,6 +20,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
+from data_strucures import PoliticalGroup
+
 
 def scrape_political_parties_urls(url: str) -> list[str]:
     info_logger.info(" -- Starting scraping political groups urls")
@@ -94,11 +96,15 @@ def scrape_representatives_personal_page_url(
                     president_name = president_section.find_next(
                         "a", class_="instance-composition-nom"
                     ).text
-                    party_infos = {
-                        "party_name": political_group,
-                        president_section.text: president_name.replace("\xa0", " "),
-                    }
-                    # print(party_infos)
+                    party_infos = PoliticalGroup(
+                        name=political_group,
+                        president=president_name,
+                        title=president_section.text,
+                    )
+                    # party_infos = {
+                    #     "party_name": political_group,
+                    #     president_section.text: president_name.replace("\xa0", " "),
+                    # }
                     parties.append(party_infos)
             except Exception as scraping_error:
                 print(f"Error scraping political group or president: {scraping_error}")
