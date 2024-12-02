@@ -2,8 +2,13 @@ import os
 import time
 import logging
 
+logging.basicConfig(
+    level=logging.INFO,  # Set the logging level to INFO
+    format="%(asctime)s - %(levelname)s - %(message)s",  # Customize log message format
+)
 
-from logging_utils import info_logger, error_logger
+
+# from logging_utils import info_logger, error_logger
 from base_urls import POLITICAL_GROUPS_URLS, COMMISSIONS_URL, DEPARTEMENTS_URLS
 from chrome_driver_handler import ChromeDriverHandler
 from get_web_page_urls import (
@@ -20,7 +25,7 @@ chrome_driver = os.getenv("CHROME_DRIVER")
 
 def main():
 
-    info_logger.info(" -- Starting main() function --")
+    logging.info(" -- Starting main() function --")
 
     start_time = time.time()
 
