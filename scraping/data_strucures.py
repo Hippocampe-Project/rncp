@@ -1,3 +1,8 @@
+import locale
+from datetime import datetime
+import re
+
+
 class Representative:
     def __init__(
         self,
@@ -33,7 +38,7 @@ class Representative:
             f"commission={self.commission}, "
             f"profession={self.profession}, "
             f"substitute={self.substitute}, "
-            f"political_group={self.political_group}), "
+            f"political_group={self.political_group}, "
             f"picture={self.picture})"
         )
 
@@ -46,6 +51,13 @@ class Representative:
             return "Error in parsing representative gender"
 
     def format_birth_date(self, birth_date):
+
+        parts = birth_date.split(" ")
+        day = parts[2]
+        month = parts[3]
+        year = parts[4]
+
+        date = f"{day} {month} {year}"
 
         # TODO: from datetime import datetime
         # import locale
@@ -73,14 +85,10 @@ class Representative:
                 "décembre": "12",
             }
 
-            parts = birth_date.split(" ")
-            day = parts[2]
-            month = parts[3]
-            year = parts[4]
-
             month_number = month_mapping.get(month.lower())
-            formatted_date = f"{year}-{month_number}-{day.zfill(2)}"
+            formatted_date = f"{day.zfill(2)}-{month_number}-{year}"
 
+            print(formatted_date)
             return formatted_date
 
         except (IndexError, ValueError) as e:
@@ -92,12 +100,39 @@ class Representative:
 
 
 class PoliticalGroup:
-    def __init__(self, name, president):
+    def __init__(self, name, president, title):
         self.name = name
-        self.president = president
+        self.president = self.format_president_name(president)
+        self.title = title
+
+    def format_president_name(self, name):
+        return name.replace("\xa0", " ")
+
+    def __repr__(self):
+        return (
+            f"PoliticalGroup(name={self.name}, "
+            f"president={self.president}, "
+            f"title={self.title})"
+        )
 
 
 class StandingCommittees:
-    def __init__(self, name, object):
+    def __init__(self, name, mission, logo):
         self.name = name
-        self.object = object
+        self.mission = mission
+        self.logo = logo
+
+    def __repr__(self):
+        return (
+            f"StandingCommittees(name={self.name}, "
+            f"mission={self.mission}, "
+            f"logo={self.logo})"
+        )
+
+
+class Departement:
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return f"Departement(name={self.name})"
