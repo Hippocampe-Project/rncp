@@ -73,13 +73,13 @@ def scrape_representative_bio(biography, name):
 
 
 # TEST
-# test_list = [
-#     {
-#         "url": "https://www.assemblee-nationale.fr/dyn/deputes/PA794718",
-#         "commission": "Défense",
-#         "departement_and_circonscription": "Haute-Loire (1)",
-#         "picture": "some_image",
-#     }
-# ]
+test_list = [
+    {
+        "url": "https://www.assemblee-nationale.fr/dyn/deputes/PA794718",
+        "commission": "Défense",
+        "departement_and_circonscription": "Haute-Loire (1)",
+        "picture": "some_image",
+    }
+]
 
-# scrape_every_representative(test_list)
+scrape_every_representative(test_list)

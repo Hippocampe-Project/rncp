@@ -1,6 +1,7 @@
 import logging
 from tqdm import tqdm
 import typing
+import re
 from bs4 import BeautifulSoup
 
 if typing.TYPE_CHECKING:
