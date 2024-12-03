@@ -7,14 +7,13 @@ logging.basicConfig(
     format="[%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)d] - %(message)s",
 )
 
-from base_urls import POLITICAL_GROUPS_URLS, COMMISSIONS_URL, DEPARTEMENTS_URLS
+from config_urls import POLITICAL_GROUPS_URLS, COMMISSIONS_URL, DEPARTEMENTS_URLS
 from chrome_driver_handler import ChromeDriverHandler
-from get_web_page_urls import (
-    scrape_political_parties_urls,
-    scrape_representatives_personal_page_url,
-)
-from scrape_representatives import scrape_every_representative
-from scrape_permanent_infos import scrape_departements, scrape_commissions
+from scrape.scrape_political_parties_urls import scrape_political_parties_urls
+from scrape.scrape_representatives import scrape_every_representative
+from scrape.scrape_permanent_infos import scrape_departements, scrape_commissions
+from scrape.scrape_each_political_group_page import scrape_each_political_group_page
+
 
 # Access the environment variables
 chrome_bin = os.getenv("CHROME_BIN")
@@ -36,7 +35,7 @@ def main():
     logging.info(commissions_table)
 
     political_groups_links = scrape_political_parties_urls(POLITICAL_GROUPS_URLS)
-    parties_table, all_representatives_urls = scrape_representatives_personal_page_url(
+    parties_table, all_representatives_urls = scrape_each_political_group_page(
         driver_handler, political_groups_links
     )
     logging.info(parties_table)
