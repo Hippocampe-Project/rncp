@@ -42,6 +42,20 @@ class Representative:
             f"picture={self.picture})"
         )
 
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "gender": self.gender,
+            "birth_date": self.birth_date,
+            "department": self.department,
+            "circonscription": self.circonscription,
+            "commission": self.commission,
+            "profession": self.profession,
+            "substitute": self.substitute,
+            "political_group": self.political_group,
+            "picture": self.picture,
+        }
+
     def get_gender(self, gender):
         if gender == "M.":
             return "male"
@@ -115,6 +129,13 @@ class PoliticalGroup:
             f"title={self.title})"
         )
 
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "president": self.president,
+            "title": self.title,
+        }
+
 
 class StandingCommittees:
     def __init__(self, name, mission, logo):
@@ -129,6 +150,13 @@ class StandingCommittees:
             f"logo={self.logo})"
         )
 
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "mission": self.mission,
+            "logo": self.logo,
+        }
+
 
 class Departement:
     def __init__(self, name):
@@ -136,3 +164,6 @@ class Departement:
 
     def __repr__(self):
         return f"Departement(name={self.name})"
+
+    def to_dict(self):
+        return {"name": self.name}

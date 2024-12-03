@@ -1,15 +1,13 @@
 """ Scrape the political parties currently represented in the Assembly, as well as their representatives and their information """
 
-import time
-import os
 import re
 import typing
+import logging
 from tqdm import tqdm
 
 import requests
 from bs4 import BeautifulSoup
 
-from logging_utils import info_logger, error_logger
 from base_urls import BASE_URL
 
 if typing.TYPE_CHECKING:
@@ -24,14 +22,14 @@ from data_strucures import PoliticalGroup
 
 
 def scrape_political_parties_urls(url: str) -> list[str]:
-    info_logger.info(" -- Starting scraping political groups urls")
+    logging.info(" -- Starting scraping political groups urls")
 
     political_groups_links = []
 
     try:
         response = requests.get(url)
     except Exception as request_error:
-        error_logger.error(f"Error while requesting {url} : {request_error}")
+        logging.error(f"Error while requesting {url} : {request_error}")
 
     try:
         soup = BeautifulSoup(response.content, "html.parser", from_encoding="utf-8")
@@ -44,7 +42,7 @@ def scrape_political_parties_urls(url: str) -> list[str]:
         # print(political_groups_links)
         return political_groups_links
     except Exception as scraping_error:
-        error_logger.error(f"Error while scraping {div} element : {scraping_error}")
+        logging.warning(f"Error while scraping {div} element : {scraping_error}")
 
 
 def scrape_representatives_personal_page_url(
@@ -52,14 +50,14 @@ def scrape_representatives_personal_page_url(
     political_groups: list[str],
 ) -> list[dict]:
 
-    info_logger.info(" -- Starting scraping each political group page")
+    logging.info(" -- Starting scraping each political group page")
 
     driver = driver_handler.get_driver()
 
     parties = []
     representatives_urls = []
 
-    info_logger.info(
+    logging.info(
         "Scraping each political group name and president \n Scraping all representatives personal page url + some infos"
     )
 
@@ -80,7 +78,7 @@ def scrape_representatives_personal_page_url(
                     )
                 )
             except TimeoutException as timeout:
-                print(
+                logging.error(
                     f"Timeout waiting for AJAX content to load for {party} : {timeout}"
                 )
 
@@ -101,13 +99,11 @@ def scrape_representatives_personal_page_url(
                         president=president_name,
                         title=president_section.text,
                     )
-                    # party_infos = {
-                    #     "party_name": political_group,
-                    #     president_section.text: president_name.replace("\xa0", " "),
-                    # }
-                    parties.append(party_infos)
+                    parties.append(party_infos.to_dict())
             except Exception as scraping_error:
-                print(f"Error scraping political group or president: {scraping_error}")
+                logging.warning(
+                    f"Error scraping political group {political_group} : {scraping_error}"
+                )
 
             try:
                 representatives_section = soup.find("h3", string="Membres")
@@ -146,12 +142,12 @@ def scrape_representatives_personal_page_url(
                         representatives_urls.append(representative_infos)
 
             except Exception as scraping_error:
-                print(
+                logging.warning(
                     f"Error scraping representatives for party {party}: {scraping_error}"
                 )
 
         except Exception as driver_error:
-            print(f"An error occured while requesting {party} : {driver_error}")
+            logging.error(f"An error occured while requesting {party} : {driver_error}")
 
     driver_handler.quit_driver()
 

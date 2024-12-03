@@ -3,12 +3,10 @@ import time
 import logging
 
 logging.basicConfig(
-    level=logging.INFO,  # Set the logging level to INFO
-    format="%(asctime)s - %(levelname)s - %(message)s",  # Customize log message format
+    level=logging.INFO,
+    format="[%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)d] - %(message)s",
 )
 
-
-# from logging_utils import info_logger, error_logger
 from base_urls import POLITICAL_GROUPS_URLS, COMMISSIONS_URL, DEPARTEMENTS_URLS
 from chrome_driver_handler import ChromeDriverHandler
 from get_web_page_urls import (

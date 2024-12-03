@@ -1,6 +1,7 @@
+import logging
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from logging_utils import info_logger, error_logger
 
 
 class ChromeDriverHandler:
@@ -24,7 +25,7 @@ class ChromeDriverHandler:
     def get_driver(self) -> webdriver.Chrome:
         """Create and return a Chrome WebDriver instance."""
         if self.driver is None:
-            info_logger.info("Instantiating chrome web driver...")
+            logging.info("Instantiating chrome web driver...")
             chrome_options = self._set_chrome_options()
             service = Service(executable_path=self.chrome_driver_path)
             self.driver = webdriver.Chrome(service=service, options=chrome_options)
@@ -33,6 +34,6 @@ class ChromeDriverHandler:
     def quit_driver(self):
         """Quit the Chrome driver."""
         if self.driver is not None:
-            info_logger.info("Closing chrome web driver")
+            logging.info("Closing chrome web driver")
             self.driver.quit()
             self.driver = None

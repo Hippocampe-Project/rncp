@@ -1,14 +1,14 @@
+import logging
 import requests
 from bs4 import BeautifulSoup
 import re
 from tqdm import tqdm
-from logging_utils import info_logger, error_logger
 from data_strucures import Representative
 
 
 def scrape_every_representative(representatives_infos: list[dict]) -> list[dict]:
 
-    info_logger.info(" -- Starting scraping each representative personal page ")
+    logging.info(" -- Starting scraping each representative personal page ")
 
     representatives_table = []
 
@@ -17,7 +17,7 @@ def scrape_every_representative(representatives_infos: list[dict]) -> list[dict]
         try:
             response = requests.get(dict["url"])
         except Exception as request_error:
-            error_logger.error(f"Error while requesting {dict["url"]} : {request_error}")
+            logging.error(f"Error while requesting {dict["url"]} : {request_error}")
 
         try:
 
@@ -73,10 +73,10 @@ def scrape_every_representative(representatives_infos: list[dict]) -> list[dict]
             )
 
             # print(representative)
-            representatives_table.append(representative)
+            representatives_table.append(representative.to_dict())
 
         except Exception as scraping_error:
-            error_logger.error(f"Error while scraping {name} personal page : {scraping_error}")
+            logging.warning(f"Error while scraping {name} personal page : {scraping_error}")
             
     return representatives_table
 

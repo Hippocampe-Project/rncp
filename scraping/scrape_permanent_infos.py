@@ -23,7 +23,7 @@ def scrape_departements(url: str) -> list[str]:
         for h4 in tqdm(h4_list, desc="Scraping departemens", ncols=100, ascii=True):
             departement_title = h4.text
             departement = Departement(name=departement_title)
-            departements_list.append(departement)
+            departements_list.append(departement.to_dict())
         return departements_list
     except Exception as scraping_error:
         logging.error(f"Error while scraping {h4} element : {scraping_error}")
@@ -37,7 +37,7 @@ def scrape_commissions(url: str) -> list[str]:
     try:
         response = requests.get(url)
     except Exception as request_error:
-        logging.error(f"Error while requestions {url} : {request_error}")
+        logging.error(f"Error while requesting {url} : {request_error}")
 
     try:
         soup = BeautifulSoup(response.content, "html.parser", from_encoding="utf-8")
@@ -61,9 +61,9 @@ def scrape_commissions(url: str) -> list[str]:
 
             commission = StandingCommittees(name=name, mission=mission, logo=logo)
 
-            commissions_list.append(commission)
+            commissions_list.append(commission.to_dict())
 
         return commissions_list
 
     except Exception as scraping_error:
-        logging.error(f"Error while scraping {div} : {scraping_error}")
+        logging.warning(f"Error while scraping {div} : {scraping_error}")
