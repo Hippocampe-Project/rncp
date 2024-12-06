@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from tqdm import tqdm
-from scrape_models import Representative
+from scrape.scrape_models import Representative
 
 
 def scrape_every_representative(representatives_infos: list[dict]) -> list[dict]:
@@ -65,8 +65,10 @@ def scrape_representative_bio(biography, name):
                     index = last_match.start()
                     birth_date = text[:index].strip()
                     profession = text[index + 1 :].strip()
-            elif bio.text == "Suppléant":
+            if bio.text == "Suppléant":
                 substitute = bio.find_next("span").text
+            else:
+                substitute = "None"
         return birth_date, profession, substitute
     except Exception as scraping_error:
         logging.warning(f"Error while scraping the bio of {name} : {scraping_error}")
@@ -75,7 +77,7 @@ def scrape_representative_bio(biography, name):
 # TEST
 test_list = [
     {
-        "url": "https://www.assemblee-nationale.fr/dyn/deputes/PA794718",
+        "url": "https://www.assemblee-nationale.fr/dyn/deputes/PA795962",
         "commission": "Défense",
         "departement_and_circonscription": "Haute-Loire (1)",
         "picture": "some_image",

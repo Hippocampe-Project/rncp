@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 if typing.TYPE_CHECKING:
     from chrome_driver_handler import ChromeDriverHandler
 
-from scrape_models import PoliticalGroup
+from scrape.scrape_models import PoliticalGroup
 from config_urls import BASE_URL
 
 from selenium.webdriver.common.by import By

@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 
 from config_urls import BASE_URL
-from scrape_models import Departement, StandingCommittees
+from scrape.scrape_models import Departement, StandingCommittees
 
 
 def scrape_departements(url: str) -> list[str]:
