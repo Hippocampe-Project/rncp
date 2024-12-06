@@ -13,7 +13,7 @@ from scrape.scrape_political_parties_urls import scrape_political_parties_urls
 from scrape.scrape_representatives import scrape_every_representative
 from scrape.scrape_permanent_infos import scrape_departements, scrape_commissions
 from scrape.scrape_each_political_group_page import scrape_each_political_group_page
-from database.db_insertions import database_insertion, test_db_conn
+from database.db_insertions import database_insertion
 
 # Access the environment variables
 chrome_bin = os.getenv("CHROME_BIN")
