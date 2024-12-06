@@ -71,7 +71,7 @@ class HandleDatabase:
         logging.info(self)
         self.close()
 
-    @classmethod
+    @staticmethod
     def define_insert_query(data: list[dict], table_name: str) -> str:
         if not data:
             raise ValueError("Data cannot be empty.")
@@ -83,7 +83,7 @@ class HandleDatabase:
         query = f"INSERT INTO {table_name} ({column_name}) VALUES ({placeholders})"
         return query
 
-    @classmethod
+    @staticmethod
     def define_insert_values(data: list[dict]) -> list[tuple]:
         if not data:
             raise ValueError("Data cannot be empty.")
@@ -114,8 +114,8 @@ class HandleDatabase:
             logging.error(f"Error executing batch query {query}: {error}")
 
     def execute_insertion(self, data: list[dict], table_name: str):
-        insertion_query = self.define_insert_query(data, table_name)
-        insertion_values = self.define_insert_values(data)
+        insertion_query = HandleDatabase.define_insert_query(data, table_name)
+        insertion_values = HandleDatabase.define_insert_values(data)
         self.execute_batch_query(insertion_query, insertion_values)
 
     def commit(self):
