@@ -48,7 +48,7 @@ def main():
     end_scraping = time.time()
     logging.info(f" ~ Scraping execution time : {start_scraping - end_scraping} ~ ")
 
-    logging.info(" - Starting database insertion")
+    logging.info(" - Starting database insertion - ")
     start_db_insertion = time.time()
 
     database_insertion(
@@ -57,7 +57,7 @@ def main():
 
     end_db_insertion = time.time()
     logging.info(
-        f" ~ Database insertion execution time : {start_db_insertion - end_db_insertion}"
+        f" ~ Database insertion execution time : {start_db_insertion - end_db_insertion} ~ "
     )
     end_time = time.time()
     logging.info(f" ~ Execution time : {end_time - start_time} ~ ")
