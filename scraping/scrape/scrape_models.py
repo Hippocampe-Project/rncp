@@ -3,6 +3,8 @@ import logging
 from datetime import datetime
 import re
 
+# N.b. : to_dict keys corresponds to databse collumns names
+
 
 class Representative:
     def __init__(
@@ -45,16 +47,16 @@ class Representative:
 
     def to_dict(self):
         return {
-            "name": self.name,
-            "gender": self.gender,
-            "birth_date": self.birth_date,
+            "nom": self.name,
+            "sexe": self.gender,
+            "dateNaissance": self.birth_date,
             "department": self.department,
             "circonscription": self.circonscription,
-            "commission": self.commission,
+            "commissionPermanente": self.commission,
             "profession": self.profession,
-            "substitute": self.substitute,
-            "political_group": self.political_group,
-            "picture": self.picture,
+            "suppleant": self.substitute,
+            "parti": self.political_group,
+            "photo": self.picture,
         }
 
     def get_gender(self, gender):
@@ -133,7 +135,7 @@ class PoliticalGroup:
 
     def to_dict(self):
         return {
-            "name": self.name,
+            "nom": self.name,
             "president": self.president,
             "title": self.title,
         }
@@ -148,7 +150,7 @@ class PoliticalGroup:
             return None
 
 
-class StandingCommittees:
+class Commissions:
     def __init__(self, name, mission, logo):
         self.name = name
         self.mission = mission
@@ -156,15 +158,15 @@ class StandingCommittees:
 
     def __repr__(self):
         return (
-            f"StandingCommittees(name={self.name}, "
+            f"Commissions(name={self.name}, "
             f"mission={self.mission}, "
             f"logo={self.logo})"
         )
 
     def to_dict(self):
         return {
-            "name": self.name,
-            "mission": self.mission,
+            "nom": self.name,
+            "objet": self.mission,
             "logo": self.logo,
         }
 
@@ -177,7 +179,7 @@ class Departement:
         return f"Departement(name={self.name})"
 
     def to_dict(self):
-        return {"name": self.name}
+        return {"nom": self.name}
 
     def format_departement_name(self, name):
         parts = name.split(" ", 1)

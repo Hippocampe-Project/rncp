@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 
 from config_urls import BASE_URL
-from scrape.scrape_models import Departement, StandingCommittees
+from scrape.scrape_models import Departement, Commissions
 
 
 def scrape_departements(url: str) -> list[str]:
@@ -59,7 +59,7 @@ def scrape_commissions(url: str) -> list[str]:
             except Exception as request_error:
                 logging.error(f"Error while requesting {res} : {request_error}")
 
-            commission = StandingCommittees(name=name, mission=mission, logo=logo)
+            commission = Commissions(name=name, mission=mission, logo=logo)
 
             commissions_list.append(commission.to_dict())
 
