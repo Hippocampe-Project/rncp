@@ -47,6 +47,9 @@ export class Deputes extends Model<
   @Column(DataType.STRING)
   circonscription!: number;
 
+  @Column(DataType.STRING)
+  titre?: string;
+
   //Table level decorator. Indicates that this column references the primary key of the foreign table, here under the name 'commissionPermanente_id'.
   @ForeignKey(() => CommissionsPermanentes)
   @Column(DataType.INTEGER)

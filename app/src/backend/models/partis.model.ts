@@ -36,6 +36,9 @@ export class Partis extends Model<Partis> {
   @BelongsTo(() => Deputes, "presidentId")
   president?: Deputes;
 
+  @Column(DataType.STRING)
+  title!: string;;
+
   //Model level decorator. Establishes a one-to-many relationship with the Deputes table,
   //without it being a column here.
   @HasMany(() => Deputes)

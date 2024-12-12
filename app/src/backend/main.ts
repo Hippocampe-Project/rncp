@@ -9,7 +9,7 @@ async function bootstrap() {
 
   const sequelize = app.get<Sequelize>(Sequelize);
   await sequelize.sync({ alter: true });
-  console.log('Sequelize has been synced!');
+  console.log('Sequelize has been loaded!');
   
   // Cors = utile si le back et le front sont hébergés séparéments
 

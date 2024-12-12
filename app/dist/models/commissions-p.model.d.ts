@@ -7,4 +7,5 @@ export declare class CommissionsPermanentes extends Model<InferAttributes<Commis
     objet: string;
     Deputesid?: Deputes[];
     deputes?: string[];
+    logo: Blob;
 }

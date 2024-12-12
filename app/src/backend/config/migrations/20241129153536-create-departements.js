@@ -1,4 +1,6 @@
 
+const { development } = require('./config/database.config').default;
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('departements', {

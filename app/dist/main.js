@@ -8,7 +8,7 @@ async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const sequelize = app.get(sequelize_typescript_1.Sequelize);
     await sequelize.sync({ alter: true });
-    console.log('Sequelize has been synced!');
+    console.log('Sequelize has been loaded!');
     const port = process.env.PORT || 3000;
     await app.listen(port);
     common_1.Logger.log(`Application is running on: http://localhost:${port}`);

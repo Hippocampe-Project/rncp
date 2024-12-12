@@ -37,4 +37,8 @@ export class CommissionsPermanentes extends Model<
 
   @Column(DataType.STRING)
   deputes?: string[];
+
+  //BLOB = Binary Large OBject
+  @Column(DataType.BLOB)
+  logo!: Blob;
 }

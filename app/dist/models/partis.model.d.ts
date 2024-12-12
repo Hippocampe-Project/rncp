@@ -5,5 +5,6 @@ export declare class Partis extends Model<Partis> {
     nom: string;
     presidentId?: number;
     president?: Deputes;
+    title: string;
     deputes?: Deputes[];
 }

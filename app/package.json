@@ -17,7 +17,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/jest/bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "build:sequelize": "tsc --project tsconfig.sequelize.json"
+    "build:sequelize": "tsc --project tsconfig.sequelize.json",
+    "migrate": "dotenv -e ../../.env sequelize-cli db:migrate --env development",
+    "migrate:undo": "dotenv -e ../../.env sequelize-cli db:migrate:undo --env development"
   },
   "engines": {
     "npm": ">=8.0.0",
@@ -27,6 +29,7 @@
     "@apollo/server": "^4.11.2",
     "@nestjs/apollo": "^12.2.1",
     "@nestjs/common": "^10.3.2",
+    "@nestjs/config": "^3.3.0",
     "@nestjs/core": "^10.4.4",
     "@nestjs/graphql": "^12.2.1",
     "@nestjs/platform-express": "^10.4.4",
@@ -53,6 +56,7 @@
     "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
+    "dotenv-cli": "^7.4.4",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",

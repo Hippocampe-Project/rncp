@@ -11,6 +11,7 @@ export declare class Deputes extends Model<InferAttributes<Deputes>, InferCreati
     departement_id: number;
     departement: Departements;
     circonscription: number;
+    titre?: string;
     commissionPermanente_id: number;
     commissionPermanente: CommissionsPermanentes;
     profession: string;

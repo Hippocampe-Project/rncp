@@ -37,6 +37,10 @@ __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
     __metadata("design:type", Array)
 ], CommissionsPermanentes.prototype, "deputes", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.BLOB),
+    __metadata("design:type", Blob)
+], CommissionsPermanentes.prototype, "logo", void 0);
 exports.CommissionsPermanentes = CommissionsPermanentes = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: "commissions-p",

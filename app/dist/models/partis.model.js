@@ -13,6 +13,7 @@ exports.Partis = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const deputes_model_1 = require("./deputes.model");
 let Partis = class Partis extends sequelize_typescript_1.Model {
+    ;
 };
 exports.Partis = Partis;
 __decorate([
@@ -37,6 +38,10 @@ __decorate([
     (0, sequelize_typescript_1.BelongsTo)(() => deputes_model_1.Deputes, "presidentId"),
     __metadata("design:type", deputes_model_1.Deputes)
 ], Partis.prototype, "president", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    __metadata("design:type", String)
+], Partis.prototype, "title", void 0);
 __decorate([
     (0, sequelize_typescript_1.HasMany)(() => deputes_model_1.Deputes),
     __metadata("design:type", Array)
