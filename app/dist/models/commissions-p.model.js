@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommissionsPermanentes = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
-const deputes_model_1 = require("./deputes.model");
 let CommissionsPermanentes = class CommissionsPermanentes extends sequelize_typescript_1.Model {
 };
 exports.CommissionsPermanentes = CommissionsPermanentes;
@@ -30,20 +29,16 @@ __decorate([
     __metadata("design:type", String)
 ], CommissionsPermanentes.prototype, "objet", void 0);
 __decorate([
-    (0, sequelize_typescript_1.HasMany)(() => deputes_model_1.Deputes),
-    __metadata("design:type", Array)
-], CommissionsPermanentes.prototype, "Deputesid", void 0);
-__decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
     __metadata("design:type", Array)
 ], CommissionsPermanentes.prototype, "deputes", void 0);
 __decorate([
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.BLOB),
-    __metadata("design:type", Blob)
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    __metadata("design:type", String)
 ], CommissionsPermanentes.prototype, "logo", void 0);
 exports.CommissionsPermanentes = CommissionsPermanentes = __decorate([
     (0, sequelize_typescript_1.Table)({
-        tableName: "commissions-p",
+        tableName: "commissions_p",
         timestamps: false,
     })
 ], CommissionsPermanentes);

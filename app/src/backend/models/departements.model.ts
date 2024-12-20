@@ -6,9 +6,10 @@ import {
   DataType,
   PrimaryKey,
   AutoIncrement,
-  BelongsTo,
+  HasMany,
 } from "sequelize-typescript";
 import { InferAttributes, InferCreationAttributes } from "sequelize";
+import { Deputes } from "./deputes.model";
 
 @Table({
   tableName: "departements",
@@ -25,4 +26,9 @@ export class Departements extends Model<
 
   @Column(DataType.STRING)
   nom!: string;
+
+  //Model level decorator. Establishes a one-to-many relationship with the Deputes table,
+  //without it being a column here.
+  // @HasMany(() => Deputes, "departement_name")
+  // deputes?: Deputes[];
 }

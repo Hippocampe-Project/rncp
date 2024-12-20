@@ -30,51 +30,42 @@ export class Deputes extends Model<
   nom!: string;
 
   @Column(DataType.STRING)
-  dateNaissance!: Date;
+  date_naissance!: string;
 
   @Column(DataType.STRING)
   sexe!: string;
 
-  //Table level decorator. Indicates that this column references the primary key of the foreign table, here under the name 'departement_id'.
-  @ForeignKey(() => Departements)
-  @Column(DataType.INTEGER)
-  departement_id!: number;
+  @Column(DataType.STRING)
+  departement_name!: string;
 
-  //Model level decorator. Establishes a one-to-one relationship with Departments model. Allows sequelize to automatize data fetching.
-  @BelongsTo(() => Departements)
-  departement!: Departements;
+  //Model level decorator. Establishes a one-to-many relationship with Departments model. Allows sequelize to automatize data fetching.
+  // @BelongsTo(() => Departements, "departement_name")
+  // departement!: Departements;
 
   @Column(DataType.STRING)
-  circonscription!: number;
+  circonscription!: string;
 
   @Column(DataType.STRING)
-  titre?: string;
-
-  //Table level decorator. Indicates that this column references the primary key of the foreign table, here under the name 'commissionPermanente_id'.
-  @ForeignKey(() => CommissionsPermanentes)
-  @Column(DataType.INTEGER)
-  commissionPermanente_id!: number;
+  commission_permanente_name?: string;
 
   //Model level decorator. Establishes a one-to-one relationship with CommissionsPermanentes model. Allows sequelize to automatize data fetching.
-  @BelongsTo(() => CommissionsPermanentes)
-  commissionPermanente!: CommissionsPermanentes;
+  // @BelongsTo(() => CommissionsPermanentes)
+  // commissionPermanente?: CommissionsPermanentes;
 
   @Column(DataType.STRING)
   profession!: string;
 
   @Column(DataType.STRING)
-  suppleant!: string;
+  suppleant?: string;
 
-  //Table level decorator. Indicates that this column references the primary key of the foreign table, here under the name 'parti_id'.
-  @ForeignKey(() => Partis)
-  @Column(DataType.INTEGER)
-  parti_id!: number;
+  @Column(DataType.STRING)
+  parti_name!: string;
 
   //Model level decorator. Establishes a one-to-one relationship with Partis model. Allows sequelize to automatize data fetching.
-  @BelongsTo(() => Partis)
-  parti!: Partis;
+  // @BelongsTo(() => Partis)
+  // parti!: Partis;
 
   //BLOB = Binary Large OBject
-  @Column(DataType.BLOB)
-  photo!: Blob;
+  @Column(DataType.STRING)
+  photo?: string;
 }

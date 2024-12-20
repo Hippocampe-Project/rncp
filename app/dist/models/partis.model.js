@@ -11,9 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Partis = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
-const deputes_model_1 = require("./deputes.model");
 let Partis = class Partis extends sequelize_typescript_1.Model {
-    ;
 };
 exports.Partis = Partis;
 __decorate([
@@ -27,25 +25,13 @@ __decorate([
     __metadata("design:type", String)
 ], Partis.prototype, "nom", void 0);
 __decorate([
-    (0, sequelize_typescript_1.ForeignKey)(() => deputes_model_1.Deputes),
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.INTEGER,
-        allowNull: true,
-    }),
-    __metadata("design:type", Number)
-], Partis.prototype, "presidentId", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => deputes_model_1.Deputes, "presidentId"),
-    __metadata("design:type", deputes_model_1.Deputes)
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    __metadata("design:type", String)
 ], Partis.prototype, "president", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
     __metadata("design:type", String)
 ], Partis.prototype, "title", void 0);
-__decorate([
-    (0, sequelize_typescript_1.HasMany)(() => deputes_model_1.Deputes),
-    __metadata("design:type", Array)
-], Partis.prototype, "deputes", void 0);
 exports.Partis = Partis = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: "partis",

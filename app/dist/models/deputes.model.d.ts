@@ -1,22 +1,15 @@
 import { Model } from "sequelize-typescript";
-import { Partis } from "./partis.model";
-import { Departements } from "./departements.model";
-import { CommissionsPermanentes } from "./commissions-p.model";
 import { InferAttributes, InferCreationAttributes } from "sequelize";
 export declare class Deputes extends Model<InferAttributes<Deputes>, InferCreationAttributes<Deputes>> {
     id: number;
     nom: string;
-    dateNaissance: Date;
+    date_naissance: string;
     sexe: string;
-    departement_id: number;
-    departement: Departements;
-    circonscription: number;
-    titre?: string;
-    commissionPermanente_id: number;
-    commissionPermanente: CommissionsPermanentes;
+    departement_name: string;
+    circonscription: string;
+    commission_permanente_name?: string;
     profession: string;
-    suppleant: string;
-    parti_id: number;
-    parti: Partis;
-    photo: Blob;
+    suppleant?: string;
+    parti_name: string;
+    photo?: string;
 }

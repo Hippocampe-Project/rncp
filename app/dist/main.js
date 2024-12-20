@@ -7,7 +7,6 @@ const sequelize_typescript_1 = require("sequelize-typescript");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const sequelize = app.get(sequelize_typescript_1.Sequelize);
-    await sequelize.sync({ alter: true });
     console.log('Sequelize has been loaded!');
     const port = process.env.PORT || 3000;
     await app.listen(port);

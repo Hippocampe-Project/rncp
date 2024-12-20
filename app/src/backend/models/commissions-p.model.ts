@@ -14,7 +14,7 @@ import { InferAttributes, InferCreationAttributes } from "sequelize";
 import { Deputes } from "./deputes.model";
 
 @Table({
-  tableName: "commissions-p",
+  tableName: "commissions_p",
   timestamps: false,
 })
 export class CommissionsPermanentes extends Model<
@@ -32,13 +32,13 @@ export class CommissionsPermanentes extends Model<
   @Column(DataType.STRING)
   objet!: string;
 
-  @HasMany(() => Deputes)
-  Deputesid?: Deputes[];
+  // @HasMany(() => Deputes)
+  // deputes_id?: Deputes[];
 
   @Column(DataType.STRING)
   deputes?: string[];
 
   //BLOB = Binary Large OBject
-  @Column(DataType.BLOB)
-  logo!: Blob;
+  @Column(DataType.STRING)
+  logo?: string;
 }

@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const sequelize = app.get<Sequelize>(Sequelize);
-  await sequelize.sync({ alter: true });
+  // await sequelize.sync({ force: true });
   console.log('Sequelize has been loaded!');
   
   // Cors = utile si le back et le front sont hébergés séparéments
