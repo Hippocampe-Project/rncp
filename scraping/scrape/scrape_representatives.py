@@ -56,6 +56,7 @@ def scrape_every_representative(representatives_infos: list[dict]) -> list[dict]
 
 def scrape_representative_bio(biography, name):
     try:
+        substitute = None
         for bio in biography:
             if bio.text == "Biographie":
                 text = bio.find_next("p").text
@@ -67,21 +68,19 @@ def scrape_representative_bio(biography, name):
                     profession = text[index + 1 :].strip()
             if bio.text == "Suppléant":
                 substitute = bio.find_next("span").text
-            else:
-                substitute = "None"
         return birth_date, profession, substitute
     except Exception as scraping_error:
         logging.warning(f"Error while scraping the bio of {name} : {scraping_error}")
 
 
 # TEST
-test_list = [
-    {
-        "url": "https://www.assemblee-nationale.fr/dyn/deputes/PA795962",
-        "commission": "Défense",
-        "departement_and_circonscription": "Haute-Loire (1)",
-        "picture": "some_image",
-    }
-]
+# test_list = [
+#     {
+#         "url": "https://www.assemblee-nationale.fr/dyn/deputes/PA722046",
+#         "commission": "Défense",
+#         "departement_and_circonscription": "Haute-Loire (1)",
+#         "picture": "some_image",
+#     }
+# ]
 
-scrape_every_representative(test_list)
+# scrape_every_representative(test_list)

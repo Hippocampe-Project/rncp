@@ -4,3 +4,4 @@ requests
 tqdm
 psycopg2
 python-dotenv
+sqlalchemy

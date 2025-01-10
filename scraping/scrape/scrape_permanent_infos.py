@@ -48,7 +48,8 @@ def scrape_commissions(url: str) -> list[str]:
             name_element = div.find("span")
             mission_element = div.find_next_sibling("a")
 
-            logo = logo_element.get("src")
+            logo_url = logo_element.get("src")
+            logo = BASE_URL + logo_url
             name = name_element.text
             mission_url = mission_element.get("href")
 

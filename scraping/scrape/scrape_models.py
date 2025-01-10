@@ -49,13 +49,13 @@ class Representative:
         return {
             "nom": self.name,
             "sexe": self.gender,
-            "dateNaissance": self.birth_date,
-            "department": self.department,
+            "date_naissance": self.birth_date,
+            "departement_name": self.department,  # FK
             "circonscription": self.circonscription,
-            "commissionPermanente": self.commission,
+            "commission_permanente_name": self.commission,  # FK
             "profession": self.profession,
             "suppleant": self.substitute,
-            "parti": self.political_group,
+            "parti_name": self.political_group,  # FK
             "photo": self.picture,
         }
 
@@ -75,10 +75,10 @@ class Representative:
         month = parts[3]
         year = parts[4]
 
-        date = f"{day} {month} {year}"
-
         # TODO: from datetime import datetime
         # import locale
+
+        # date = f"{day} {month} {year}"
 
         # locale.setlocale(locale.LC_ALL, 'de_DE')
         # date_str_de_DE = '16-Dezember-2022 Freitag'  # de_DE locale
