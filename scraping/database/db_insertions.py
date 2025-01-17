@@ -14,7 +14,7 @@ from database.config_database import (
 #     db.test_db_conn()
 
 
-def database_insertion(
+def first_scraping_database_insertion(
     departements: list[dict],
     commissions: list[dict],
     parties: list[dict],
@@ -52,3 +52,7 @@ def database_insertion(
     logging.info("Databse update of table deputes completed successfully")
 
     db.close()
+
+
+def second_scraping_database_insertion():
+    pass

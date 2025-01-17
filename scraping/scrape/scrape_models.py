@@ -184,3 +184,138 @@ class Departement:
     def format_departement_name(self, name):
         parts = name.split(" ", 1)
         return parts[0]
+
+
+class Bill:
+    def __init__(self, title, state):
+        self.title = title
+        self.state = state
+
+    def __repr__(self):
+        return f"Bills(title={self.title}, state={self.state}"
+
+    def to_dict(self):
+        return {"title": self.title, "state": self.state}
+
+
+class Vote:
+    def __init__(
+        self,
+        title,
+        legislative_file,
+        date,
+        num_voters,
+        num_for,
+        num_against,
+        num_abstention,
+        vote_adoption_status,
+        for_voters,
+        against_voters,
+        abstention_voters,
+        non_voters,
+    ):
+        self.title = title
+        self.legislative_file = legislative_file
+        self.vote_number = self.get_vote_number(title)
+        self.date = self.format_date(date)
+        self.num_voters = int(num_voters)
+        self.num_for = int(num_for)
+        self.num_against = int(num_against)
+        self.num_abstention = int(num_abstention)
+        self.non_voters = non_voters if non_voters else None
+        self.num_non_voters = len(non_voters)
+        self.num_absentee = 577 - (self.num_voters + self.num_non_voters)
+        self.adopted = self.is_vote_adopted(vote_adoption_status)
+        self.for_voters = for_voters if for_voters else None
+        self.against_voters = against_voters if against_voters else None
+        self.abstention_voters = abstention_voters if abstention_voters else None
+
+    def __repr__(self):
+        return (
+            f"Votes(title={self.title}, "
+            f"legislative_file={self.legislative_file}, "
+            f"vote_number={self.vote_number}, "
+            f"date={self.date}, "
+            f"num_voters={self.num_voters}, "
+            f"num_for={self.num_for}, "
+            f"num_against={self.num_against}, "
+            f"num_abstention={self.num_abstention}, "
+            f"num_absentee={self.num_absentee}, "
+            f"num_non_voters={self.num_non_voters}, "
+            f"adopted={self.adopted}, "
+            f"for_voters={self.for_voters}, "
+            f"against_voters={self.against_voters}, "
+            f"abstention_voters={self.abstention_voters}, "
+            f"non_voters={self.non_voters})"
+        )
+
+    def to_dict(self):
+        return {
+            "title": self.title,
+            "legislative_file": self.legislative_file,
+            "vote_number": self.vote_number,
+            "date": self.date,
+            "num_voters": self.num_voters,
+            "num_for": self.num_for,
+            "num_against": self.num_against,
+            "num_abstention": self.num_abstention,
+            "num_absentee": self.num_absentee,
+            "num_non_voters": self.num_non_voters,
+            "adopted": self.adopted,
+            "for_voters": self.for_voters,
+            "against_voters": self.against_voters,
+            "abstention_voters": self.abstention_voters,
+            "non_voters": self.non_voters,
+        }
+
+    def format_date(self, date_str):
+
+        date_match = re.search(r"\d{1,2} \w+ \d{4}", date_str)
+        if not date_match:
+            return None
+        else:
+            date_str = date_match.group()
+
+            parts = date_str.split(" ")
+            day = parts[0]
+            month = parts[1]
+            year = parts[2]
+
+            try:
+                # Month mapping from French to numerical format
+                month_mapping = {
+                    "janvier": "01",
+                    "février": "02",
+                    "mars": "03",
+                    "avril": "04",
+                    "mai": "05",
+                    "juin": "06",
+                    "juillet": "07",
+                    "août": "08",
+                    "septembre": "09",
+                    "octobre": "10",
+                    "novembre": "11",
+                    "décembre": "12",
+                }
+
+                month_number = month_mapping.get(month.lower())
+                formatted_date = f"{day.zfill(2)}-{month_number}-{year}"
+                return formatted_date
+
+            except (IndexError, ValueError) as e:
+                print(f"Error in parsing date for {self.title} vote : {e}")
+
+    def get_vote_number(self, vote_title):
+        match = re.search(r"n°\d+", vote_title)
+        if match:
+            return match.group()
+        else:
+            return None
+
+    def is_vote_adopted(self, vote_status):
+        if vote_status == "L'Assemblée nationale n'a pas adopté":
+            return False
+        elif vote_status == "L'Assemblée nationale a adopté":
+            return True
+        else:
+            return None
