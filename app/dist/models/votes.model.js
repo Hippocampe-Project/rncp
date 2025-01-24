@@ -11,8 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Votes = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
-const deputes_model_1 = require("./deputes.model");
-const scrutins_model_1 = require("./scrutins.model");
 let Votes = class Votes extends sequelize_typescript_1.Model {
 };
 exports.Votes = Votes;
@@ -23,27 +21,65 @@ __decorate([
     __metadata("design:type", Number)
 ], Votes.prototype, "id", void 0);
 __decorate([
-    (0, sequelize_typescript_1.ForeignKey)(() => deputes_model_1.Deputes),
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
-    __metadata("design:type", Number)
-], Votes.prototype, "depute_id", void 0);
-__decorate([
-    (0, sequelize_typescript_1.ForeignKey)(() => scrutins_model_1.Scrutins),
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
-    __metadata("design:type", Number)
-], Votes.prototype, "scrutin_id", void 0);
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    __metadata("design:type", String)
+], Votes.prototype, "titre", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
     __metadata("design:type", String)
-], Votes.prototype, "vote_state", void 0);
+], Votes.prototype, "dossier_legislatif", void 0);
 __decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => deputes_model_1.Deputes),
-    __metadata("design:type", deputes_model_1.Deputes)
-], Votes.prototype, "depute", void 0);
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    __metadata("design:type", String)
+], Votes.prototype, "numero_vote", void 0);
 __decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => scrutins_model_1.Scrutins),
-    __metadata("design:type", scrutins_model_1.Scrutins)
-], Votes.prototype, "scrutin", void 0);
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    __metadata("design:type", String)
+], Votes.prototype, "date", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    __metadata("design:type", Number)
+], Votes.prototype, "num_votants", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    __metadata("design:type", Number)
+], Votes.prototype, "num_pour", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    __metadata("design:type", Number)
+], Votes.prototype, "num_contre", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    __metadata("design:type", Number)
+], Votes.prototype, "num_abstention", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.ARRAY(sequelize_typescript_1.DataType.STRING)),
+    __metadata("design:type", Array)
+], Votes.prototype, "non_votants", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    __metadata("design:type", Number)
+], Votes.prototype, "num_non_votants", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.BOOLEAN),
+    __metadata("design:type", Boolean)
+], Votes.prototype, "adopte", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    __metadata("design:type", Number)
+], Votes.prototype, "num_absents", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.ARRAY(sequelize_typescript_1.DataType.STRING)),
+    __metadata("design:type", Array)
+], Votes.prototype, "votants_pour", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.ARRAY(sequelize_typescript_1.DataType.STRING)),
+    __metadata("design:type", Array)
+], Votes.prototype, "votants_contre", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.ARRAY(sequelize_typescript_1.DataType.STRING)),
+    __metadata("design:type", Array)
+], Votes.prototype, "votants_abstention", void 0);
 exports.Votes = Votes = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: "votes",

@@ -2,10 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger } from '@nestjs/common';
 import { Sequelize } from 'sequelize-typescript';
+import { ExpressAdapter } from '@nestjs/platform-express';
 
 async function bootstrap() {
   
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, new ExpressAdapter());
 
   const sequelize = app.get<Sequelize>(Sequelize);
   // await sequelize.sync({ force: true });
@@ -13,7 +14,7 @@ async function bootstrap() {
   
   // Cors = utile si le back et le front sont hébergés séparéments
 
-  // app.enableCors();
+  app.enableCors();
 
   // préfixe global = permet de centraliser les appels d'api askip
 

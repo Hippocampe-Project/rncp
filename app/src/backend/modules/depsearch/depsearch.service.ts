@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Deputes } from "../../models/deputes.model";
 import { InjectModel } from "@nestjs/sequelize";
 import { InferAttributes, InferCreationAttributes } from "sequelize";
-import { Depute } from "src/backend/entities/deputes";
+// import { Depute } from "src/backend/entities/deputes";
 
 @Injectable()
 export class DepsearchService {

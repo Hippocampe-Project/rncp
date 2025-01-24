@@ -23,6 +23,18 @@ __decorate([
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
     __metadata("design:type", String)
+], Scrutins.prototype, "titre", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    __metadata("design:type", String)
+], Scrutins.prototype, "dossier_legislatif", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    __metadata("design:type", String)
+], Scrutins.prototype, "date", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    __metadata("design:type", String)
 ], Scrutins.prototype, "nom", void 0);
 exports.Scrutins = Scrutins = __decorate([
     (0, sequelize_typescript_1.Table)({
