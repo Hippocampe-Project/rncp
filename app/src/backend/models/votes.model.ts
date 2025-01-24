@@ -25,24 +25,48 @@ export class Votes extends Model<
   @Column(DataType.INTEGER)
   id!: number;
 
-  //Table level decorator. Indicates that this column references the primary key of the foreign table, here under the name 'depute_id'.
-  @ForeignKey(() => Deputes)
-  @Column(DataType.INTEGER)
-  depute_id!: number;
-
-  //Table level decorator. Indicates that this column references the primary key of the foreign table, here under the name 'scrutin_id'.
-  @ForeignKey(() => Scrutins)
-  @Column(DataType.INTEGER)
-  scrutin_id!: number;
+  @Column(DataType.STRING)
+  titre!: string;
 
   @Column(DataType.STRING)
-  vote_state!: string;
+  dossier_legislatif?: string;
 
-  //Model level decorator. Establishes a one-to-one relationship with Deputes model. Allows sequelize to automatize data fetching.
-  @BelongsTo(() => Deputes)
-  depute!: Deputes;
+  @Column(DataType.STRING)
+  numero_vote!: string;
 
-  //Model level decorator. Establishes a one-to-one relationship with Scrutins model. Allows sequelize to automatize data fetching.
-  @BelongsTo(() => Scrutins)
-  scrutin!: Scrutins;
+  @Column(DataType.STRING)
+  date!: string;
+
+  @Column(DataType.INTEGER)
+  num_votants!: number;
+
+  @Column(DataType.INTEGER)
+  num_pour!: number;
+
+  @Column(DataType.INTEGER)
+  num_contre!: number;
+
+  @Column(DataType.INTEGER)
+  num_abstention!: number;
+
+  @Column(DataType.ARRAY(DataType.STRING))
+  non_votants!: string[];
+
+  @Column(DataType.INTEGER)
+  num_non_votants!: number;
+
+  @Column(DataType.BOOLEAN)
+  adopte?: boolean;
+
+  @Column(DataType.INTEGER)
+  num_absents!: number;
+
+  @Column(DataType.ARRAY(DataType.STRING))
+  votants_pour!: string[];
+
+  @Column(DataType.ARRAY(DataType.STRING))
+  votants_contre!: string[];
+
+  @Column(DataType.ARRAY(DataType.STRING))
+  votants_abstention!: string[];
 }

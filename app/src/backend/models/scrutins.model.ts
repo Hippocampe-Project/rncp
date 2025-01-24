@@ -24,5 +24,16 @@ export class Scrutins extends Model<
   id!: number;
 
   @Column(DataType.STRING)
+  titre!: string;
+
+  @Column(DataType.STRING)
+  dossier_legislatif?: string;
+
+  @Column(DataType.STRING)
+  date!: string;
+  
+  @Column(DataType.STRING)
   nom!: string;
+
+  
 }
