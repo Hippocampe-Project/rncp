@@ -251,21 +251,21 @@ class Vote:
 
     def to_dict(self):
         return {
-            "title": self.title,
-            "legislative_file": self.legislative_file,
-            "vote_number": self.vote_number,
+            "titre": self.title,
+            "dossier_legislatif": self.legislative_file,
+            "numero_vote": self.vote_number,
             "date": self.date,
-            "num_voters": self.num_voters,
-            "num_for": self.num_for,
-            "num_against": self.num_against,
+            "num_votants": self.num_voters,
+            "num_pour": self.num_for,
+            "num_contre": self.num_against,
             "num_abstention": self.num_abstention,
-            "num_absentee": self.num_absentee,
-            "num_non_voters": self.num_non_voters,
-            "adopted": self.adopted,
-            "for_voters": self.for_voters,
-            "against_voters": self.against_voters,
-            "abstention_voters": self.abstention_voters,
-            "non_voters": self.non_voters,
+            "num_absents": self.num_absentee,
+            "num_non_votants": self.num_non_voters,
+            "adopte": self.adopted,
+            "votants_pour": self.for_voters,
+            "votants_contre": self.against_voters,
+            "votants_abstention": self.abstention_voters,
+            "non_votants": self.non_voters,
         }
 
     def format_date(self, date_str):

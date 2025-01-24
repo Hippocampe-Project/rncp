@@ -4,9 +4,10 @@ import logging
 from database.db_operations import HandleDatabase
 from database.config_database import (
     DEPARTEMENTS_TABLE,
-    COMMISSIONS_TABLES,
-    PARTIES_TABLES,
-    REPRESENTATIVES_TABLES,
+    COMMISSIONS_TABLE,
+    PARTIES_TABLE,
+    REPRESENTATIVES_TABLE,
+    VOTES_TABLE,
 )
 
 # def test_db_conn():
@@ -34,9 +35,9 @@ def first_scraping_database_insertion(
 
     # Inserting raw data
     db.execute_insertion(departements, DEPARTEMENTS_TABLE)
-    db.execute_insertion(commissions, COMMISSIONS_TABLES)
-    db.execute_insertion(parties, PARTIES_TABLES)
-    db.execute_insertion(representatives, REPRESENTATIVES_TABLES)
+    db.execute_insertion(commissions, COMMISSIONS_TABLE)
+    db.execute_insertion(parties, PARTIES_TABLE)
+    db.execute_insertion(representatives, REPRESENTATIVES_TABLE)
 
     db.commit()
     db.cursor.close()
@@ -54,5 +55,13 @@ def first_scraping_database_insertion(
     db.close()
 
 
-def second_scraping_database_insertion():
-    pass
+def second_scraping_database_insertion(votes: list[dict]):
+
+    db = HandleDatabase()
+    db.connect()
+    db.create_cursor()
+
+    db.execute_insertion(votes, VOTES_TABLE)
+
+    db.commit()
+    logging.info("Database insertion completed successfully")

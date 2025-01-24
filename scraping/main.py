@@ -33,7 +33,7 @@ chrome_driver = os.getenv("CHROME_DRIVER")
 first_scraping = False
 # votes
 second_scraping = True
-database_insertion = False
+database_insertion = True
 
 
 def main():
@@ -81,7 +81,7 @@ def main():
         )
 
     if second_scraping and database_insertion:
-        second_scraping_database_insertion()
+        second_scraping_database_insertion(all_votes_infos_sorted)
 
     end_db_insertion = time.time()
     logging.info(

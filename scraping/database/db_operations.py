@@ -81,7 +81,7 @@ class HandleDatabase:
         self.close()
 
     @staticmethod
-    def define_insert_query(data: list[dict], table_name: str) -> str:
+    def define_insert_query(data: list[dict], table_name: str) -> psycopg2.sql.Composed:
         if not data:
             raise ValueError("Data cannot be empty.")
         # Dynamically defines which columns the INSERT statement should target.
@@ -303,8 +303,16 @@ class HandleDatabase:
             )
 
     def execute_insertion(self, data: list[dict], table_name: str):
-        insertion_query = HandleDatabase.define_insert_query(data, table_name)
-        insertion_values = HandleDatabase.define_insert_values(data)
+        """Takes the list of dictionaries containing the scrapped data of a single scrape model
+            and extract the sql query and the values to inject and perform a batch injection.
+        Args:
+            data (list[dict]): a list of dictionnaries formated with the same scrappe model
+            table_name (str): the name of the db table we want to inject into
+        """
+        insertion_query: psycopg2.sql.Composed = HandleDatabase.define_insert_query(
+            data, table_name
+        )
+        insertion_values: list[tuple] = HandleDatabase.define_insert_values(data)
         self.execute_batch_insertion_query(
             insertion_query, insertion_values, table_name
         )

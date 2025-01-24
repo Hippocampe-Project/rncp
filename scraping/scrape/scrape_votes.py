@@ -52,7 +52,7 @@ def scrape_all_votes_urls(driver_handler: "ChromeDriverHandler", url: str) -> li
 
         except Exception as scraping_error:
             logging.error(
-                f"An errror occured while scraping {current_url} : {scraping_error}"
+                f"An error occured while scraping {current_url} : {scraping_error}"
             )
 
         try:
@@ -124,7 +124,7 @@ def scrape_vote_page(vote_page_url: str) -> dict:
         # Scrape general vote infos
         date = soup.h2.text
         title = soup.find("p", class_="h6 _colored").get_text(strip=True)
-        vote_list = soup.find("ul", class_="votes_list")
+        vote_list = soup.find("ul", class_="votes-list")
         if vote_list:
             num_of_voters = get_num_of_votes(soup, "_colored-primary")
             num_of_for = get_num_of_votes(soup, "_colored-travaux")
