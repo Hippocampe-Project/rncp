@@ -16,33 +16,17 @@ exports.DeputeRepository = void 0;
 const common_1 = require("@nestjs/common");
 const deputes_model_1 = require("../models/deputes.model");
 const sequelize_1 = require("@nestjs/sequelize");
+const sequelize_2 = require("sequelize");
 let DeputeRepository = class DeputeRepository {
     constructor(deputeModel) {
         this.deputeModel = deputeModel;
     }
-    async findAll() {
-        return await this.deputeModel.findAll();
-    }
-    async findOne(id) {
-        const depute = await this.deputeModel.findOne({
-            where: { id },
-        });
-        if (!depute) {
-            throw new common_1.NotFoundException(`Depute with ID ${id} not found`);
-        }
-        return depute;
-    }
-    async update(id, updateDeputeDto) {
-        return await this.deputeModel.update(updateDeputeDto, {
+    async findDepute(deputeName) {
+        return this.deputeModel.findOne({
             where: {
-                id,
+                nom: { [sequelize_2.Op.iLike]: deputeName },
             },
-            returning: true,
         });
-    }
-    async delete(id) {
-        const depute = await this.findOne(id);
-        await depute.destroy();
     }
 };
 exports.DeputeRepository = DeputeRepository;

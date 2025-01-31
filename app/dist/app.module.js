@@ -8,6 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const graphql_1 = require("@nestjs/graphql");
+const apollo_1 = require("@nestjs/apollo");
+const path_1 = require("path");
+const depsearch_module_1 = require("./modules/depsearch/depsearch.module");
 const sequelize_1 = require("@nestjs/sequelize");
 const config_1 = require("@nestjs/config");
 const database_config_1 = require("./config/database.config");
@@ -23,21 +27,34 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            graphql_1.GraphQLModule.forRoot({
+                driver: apollo_1.ApolloDriver,
+                autoSchemaFile: (0, path_1.join)(process.cwd(), "src/schema.gql"),
+                playground: true,
+                debug: true,
+            }),
             config_1.ConfigModule.forRoot({
                 load: [database_config_1.default],
             }),
             sequelize_1.SequelizeModule.forRootAsync({
                 imports: [config_1.ConfigModule],
                 useFactory: (configService) => ({
-                    dialect: 'postgres',
-                    host: configService.get('database.host'),
-                    port: configService.get('database.port'),
-                    username: configService.get('database.username'),
-                    password: configService.get('database.password'),
-                    database: configService.get('database.database'),
+                    dialect: "postgres",
+                    host: configService.get("database.host"),
+                    port: configService.get("database.port"),
+                    username: configService.get("database.username"),
+                    password: configService.get("database.password"),
+                    database: configService.get("database.database"),
                     autoLoadModels: true,
-                    synchronize: true,
-                    models: [partis_model_1.Partis, deputes_model_1.Deputes, votes_model_1.Votes, scrutins_model_1.Scrutins, departements_model_1.Departements, commissions_p_model_1.CommissionsPermanentes],
+                    synchronize: false,
+                    models: [
+                        partis_model_1.Partis,
+                        deputes_model_1.Deputes,
+                        votes_model_1.Votes,
+                        scrutins_model_1.Scrutins,
+                        departements_model_1.Departements,
+                        commissions_p_model_1.CommissionsPermanentes,
+                    ],
                     dialectOptions: {
                         ssl: {
                             require: true,
@@ -53,7 +70,7 @@ exports.AppModule = AppModule = __decorate([
                 }),
                 inject: [config_1.ConfigService],
             }),
-            sequelize_1.SequelizeModule.forFeature([partis_model_1.Partis]),
+            depsearch_module_1.DepsearchModule,
         ],
         providers: [database_config_1.DatabaseService],
     })

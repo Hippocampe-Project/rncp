@@ -8,26 +8,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DepsearchService = void 0;
 const common_1 = require("@nestjs/common");
-const deputes_model_1 = require("../../models/deputes.model");
-const sequelize_1 = require("@nestjs/sequelize");
+const deputes_repository_1 = require("repositories/deputes.repository");
 let DepsearchService = class DepsearchService {
-    constructor(deputeModel) {
-        this.deputeModel = deputeModel;
+    constructor(deputeRepository) {
+        this.deputeRepository = deputeRepository;
     }
     async findDepute(deputeName) {
-        return this.deputeModel.findOne({ where: { nom: deputeName } });
+        return this.deputeRepository.findDepute(deputeName);
     }
 };
 exports.DepsearchService = DepsearchService;
 exports.DepsearchService = DepsearchService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, sequelize_1.InjectModel)(deputes_model_1.Deputes)),
-    __metadata("design:paramtypes", [Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof deputes_repository_1.DeputeRepository !== "undefined" && deputes_repository_1.DeputeRepository) === "function" ? _a : Object])
 ], DepsearchService);
 //# sourceMappingURL=depsearch.service.js.map

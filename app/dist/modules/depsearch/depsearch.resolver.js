@@ -14,26 +14,26 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DepsearchResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
-const depsearch_service_1 = require("./depsearch.service");
 const deputes_model_1 = require("../../models/deputes.model");
+const deputes_repository_1 = require("../../repositories/deputes.repository");
 let DepsearchResolver = class DepsearchResolver {
-    constructor(depsearchService) {
-        this.depsearchService = depsearchService;
+    constructor(deputeRepository) {
+        this.deputeRepository = deputeRepository;
     }
-    async depute(deputeId) {
-        return this.depsearchService.findDepute(deputeId);
+    async depute(deputeName) {
+        return this.deputeRepository.findDepute(deputeName);
     }
 };
 exports.DepsearchResolver = DepsearchResolver;
 __decorate([
     (0, graphql_1.Query)(() => deputes_model_1.Deputes, { nullable: true }),
-    __param(0, (0, graphql_1.Args)("id", { type: () => graphql_1.Int })),
+    __param(0, (0, graphql_1.Args)("nom", { type: () => String })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], DepsearchResolver.prototype, "depute", null);
 exports.DepsearchResolver = DepsearchResolver = __decorate([
     (0, graphql_1.Resolver)(() => deputes_model_1.Deputes),
-    __metadata("design:paramtypes", [depsearch_service_1.DepsearchService])
+    __metadata("design:paramtypes", [deputes_repository_1.DeputeRepository])
 ], DepsearchResolver);
 //# sourceMappingURL=depsearch.resolver.js.map
