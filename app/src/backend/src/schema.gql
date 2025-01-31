@@ -1,0 +1,21 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Deputes {
+  id: Float!
+  nom: String!
+  date_naissance: String!
+  sexe: String!
+  departement_id: Float!
+  circonscription: String!
+  commission_permanente_id: Float
+  profession: String!
+  suppleant: String
+  parti_id: Float!
+  photo: String
+}
+
+type Query {
+  depute(nom: String!): Deputes
+}

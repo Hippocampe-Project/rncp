@@ -15,13 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DepsearchResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const deputes_model_1 = require("../../models/deputes.model");
-const deputes_repository_1 = require("../../repositories/deputes.repository");
+const depsearch_service_1 = require("./depsearch.service");
 let DepsearchResolver = class DepsearchResolver {
-    constructor(deputeRepository) {
-        this.deputeRepository = deputeRepository;
+    constructor(depsearchService) {
+        this.depsearchService = depsearchService;
     }
     async depute(deputeName) {
-        return this.deputeRepository.findDepute(deputeName);
+        return this.depsearchService.getDeputeByName(deputeName);
     }
 };
 exports.DepsearchResolver = DepsearchResolver;
@@ -34,6 +34,6 @@ __decorate([
 ], DepsearchResolver.prototype, "depute", null);
 exports.DepsearchResolver = DepsearchResolver = __decorate([
     (0, graphql_1.Resolver)(() => deputes_model_1.Deputes),
-    __metadata("design:paramtypes", [deputes_repository_1.DeputeRepository])
+    __metadata("design:paramtypes", [depsearch_service_1.DepsearchService])
 ], DepsearchResolver);
 //# sourceMappingURL=depsearch.resolver.js.map

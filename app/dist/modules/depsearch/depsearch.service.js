@@ -17,7 +17,7 @@ let DepsearchService = class DepsearchService {
     constructor(deputeRepository) {
         this.deputeRepository = deputeRepository;
     }
-    async findDepute(deputeName) {
+    async getDeputeByName(deputeName) {
         return this.deputeRepository.findDepute(deputeName);
     }
 };

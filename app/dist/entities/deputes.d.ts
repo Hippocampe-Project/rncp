@@ -4,11 +4,11 @@ export type Depute = {
     nom: string;
     dateNaissance: string;
     sexe: string;
-    departementName: string;
+    departementId: number;
     circonscription: string;
     profession: string;
-    partiName: string;
-    commissionPermanenteName?: string;
+    partiId: number;
+    commissionPermanenteId?: number;
     suppleant?: string;
     photo?: string;
 };

@@ -7,13 +7,13 @@ function toEntity(model) {
         nom: model.nom,
         dateNaissance: model.date_naissance,
         sexe: model.sexe,
-        departementName: model.departement_name,
+        departementId: model.departement_id,
         circonscription: model.circonscription,
         profession: model.profession,
-        partiName: model.parti_name,
-        commissionPermanenteName: model.commission_permanente_name,
+        partiId: model.parti_id,
+        commissionPermanenteId: model.commission_permanente_id,
         suppleant: model.suppleant,
-        photo: model.photo
+        photo: model.photo,
     };
 }
 exports.toEntity = toEntity;
@@ -23,11 +23,11 @@ function toModel(entity) {
         nom: entity.nom,
         date_naissance: entity.dateNaissance,
         sexe: entity.sexe,
-        departement_name: entity.departementName,
+        departement_id: entity.departementId,
         circonscription: entity.circonscription,
         profession: entity.profession,
-        parti_name: entity.partiName,
-        commission_permanente_name: entity.commissionPermanenteName,
+        parti_id: entity.partiId,
+        commission_permanente_id: entity.commissionPermanenteId,
         suppleant: entity.suppleant,
         photo: entity.photo,
     };

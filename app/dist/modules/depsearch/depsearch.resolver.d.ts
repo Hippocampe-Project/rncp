@@ -1,9 +1,6 @@
-import { Deputes } from "../../models/deputes.model";
-import { DeputeRepository } from "../../repositories/deputes.repository";
+import { DepsearchService } from "./depsearch.service";
 export declare class DepsearchResolver {
-    private deputeRepository;
-    constructor(deputeRepository: DeputeRepository);
-    depute(deputeName: string): Promise<import("sequelize").InferAttributes<Deputes, {
-        omit: never;
-    }>>;
+    private depsearchService;
+    constructor(depsearchService: DepsearchService);
+    depute(deputeName: string): Promise<any>;
 }

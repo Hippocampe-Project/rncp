@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Deputes = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
+const graphql_1 = require("@nestjs/graphql");
 let Deputes = class Deputes extends sequelize_typescript_1.Model {
 };
 exports.Deputes = Deputes;
@@ -18,49 +19,61 @@ __decorate([
     sequelize_typescript_1.PrimaryKey,
     sequelize_typescript_1.AutoIncrement,
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    (0, graphql_1.Field)(() => Number),
     __metadata("design:type", Number)
 ], Deputes.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Deputes.prototype, "nom", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Deputes.prototype, "date_naissance", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Deputes.prototype, "sexe", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
-    __metadata("design:type", String)
-], Deputes.prototype, "departement_name", void 0);
+    (0, graphql_1.Field)(() => Number),
+    __metadata("design:type", Number)
+], Deputes.prototype, "departement_id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Deputes.prototype, "circonscription", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
-    __metadata("design:type", String)
-], Deputes.prototype, "commission_permanente_name", void 0);
+    (0, graphql_1.Field)(() => Number, { nullable: true }),
+    __metadata("design:type", Number)
+], Deputes.prototype, "commission_permanente_id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Deputes.prototype, "profession", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], Deputes.prototype, "suppleant", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
-    __metadata("design:type", String)
-], Deputes.prototype, "parti_name", void 0);
+    (0, graphql_1.Field)(() => Number),
+    __metadata("design:type", Number)
+], Deputes.prototype, "parti_id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], Deputes.prototype, "photo", void 0);
 exports.Deputes = Deputes = __decorate([
+    (0, graphql_1.ObjectType)(),
     (0, sequelize_typescript_1.Table)({
         tableName: "deputes",
         timestamps: false,

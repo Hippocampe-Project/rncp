@@ -1,15 +1,14 @@
 import { Model } from "sequelize-typescript";
-import { InferAttributes, InferCreationAttributes } from "sequelize";
-export declare class Deputes extends Model<InferAttributes<Deputes>, InferCreationAttributes<Deputes>> {
+export declare class Deputes extends Model {
     id: number;
     nom: string;
     date_naissance: string;
     sexe: string;
-    departement_name: string;
+    departement_id: number;
     circonscription: string;
-    commission_permanente_name?: string;
+    commission_permanente_id?: number;
     profession: string;
     suppleant?: string;
-    parti_name: string;
+    parti_id: number;
     photo?: string;
 }
