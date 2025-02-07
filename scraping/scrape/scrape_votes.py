@@ -1,6 +1,7 @@
 import logging
 from tqdm import tqdm
 import typing
+import re
 import requests
 from bs4 import BeautifulSoup
 import concurrent.futures
@@ -14,17 +15,26 @@ from selenium.common.exceptions import TimeoutException
 if typing.TYPE_CHECKING:
     from chrome_driver_handler import ChromeDriverHandler
 
-from config_urls import BASE_URL
+from config_urls import BASE_URL, LAST_VOTE_FILE
 from scrape.scrape_models import Bill, Vote
+from scrape_utils import load_json
 
 # TEST import
 # BASE_URL = "https://www2.assemblee-nationale.fr"
 # from scrape_models import Bill, Vote
 
 
-def scrape_all_votes_urls(driver_handler: "ChromeDriverHandler", url: str) -> list[str]:
+def scrape_all_votes_urls(
+    driver_handler: "ChromeDriverHandler", url: str, updating=False
+) -> list[str]:
 
     logging.info(" -- Starting scraping votes ulrs ")
+
+    if updating:
+        logging.info("Updating votes, retrieving last vote number")
+        last_vote = load_json(LAST_VOTE_FILE)
+        last_vote_number = last_vote.get("vote_number")
+        logging.info(f"Last scrapped vote number : {last_vote_number}")
 
     driver = driver_handler.get_driver()
 
@@ -48,6 +58,18 @@ def scrape_all_votes_urls(driver_handler: "ChromeDriverHandler", url: str) -> li
             all_votes = soup.find_all("a", class_="link h6")
             for vote in all_votes:
                 vote_url = vote.get("href")
+
+                if updating:
+                    # Regex to capture digits after the last '/' in the url
+                    pattern = r"/(\d+)(?:/|$)"
+                    match = re.search(pattern, vote_url)
+                    vote_number = match.group(1)
+                    if last_vote_number[2:] == vote_number:
+                        logging.info(
+                            f"{last_vote_number[2:]} == {vote_number} : breaking the scraping of votes urls."
+                        )
+                        break
+
                 votes_urls.append(BASE_URL + vote_url)
 
         except Exception as scraping_error:

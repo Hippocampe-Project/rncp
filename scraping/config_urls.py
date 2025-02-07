@@ -8,3 +8,7 @@ RECORDED_VOTE_URL = f"{BASE_URL}/dyn/17/scrutins?limit=100"  # 100 results / pag
 GOVERNMENT_BILLS = f"{BASE_URL}/documents/liste/(type)/projets-loi"
 PARLEMENT_BILLS = f"{BASE_URL}/documents/liste/(type)/propositions-loi"
 ENACTED_BILLS = f"{BASE_URL}/documents/liste/(type)/ta"  # à vérifier
+
+
+LAST_VOTE_DIR = "/home/umoya/RNCP_Pipou_Marion"
+LAST_VOTE_FILE = "/home/umoya/RNCP_Pipou_Marion/last_scrapped_vote.json"

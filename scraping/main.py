@@ -12,7 +12,9 @@ from config_urls import (
     COMMISSIONS_URL,
     DEPARTEMENTS_URLS,
     RECORDED_VOTE_URL,
+    LAST_VOTE_DIR,
 )
+
 from chrome_driver_handler import ChromeDriverHandler
 from scrape.scrape_political_parties_urls import scrape_political_parties_urls
 from scrape.scrape_representatives import scrape_every_representative
@@ -23,7 +25,7 @@ from database.db_insertions import (
     first_scraping_database_insertion,
     second_scraping_database_insertion,
 )
-from scrape_utils import sort_votes_by_date
+from scrape_utils import sort_votes_by_vote_number, save_json
 
 # Access the environment variables
 chrome_bin = os.getenv("CHROME_BIN")
@@ -34,6 +36,7 @@ first_scraping = False
 # votes
 second_scraping = True
 database_insertion = True
+updating_votes = False
 
 
 def main():
@@ -64,9 +67,22 @@ def main():
         logging.info(representatives_table)
 
     if second_scraping:
-        all_votes_pages_urls = scrape_all_votes_urls(driver_handler, RECORDED_VOTE_URL)
+        if updating_votes:
+            all_votes_pages_urls = scrape_all_votes_urls(
+                driver_handler, RECORDED_VOTE_URL, updating=True
+            )
+        else:
+            all_votes_pages_urls = scrape_all_votes_urls(
+                driver_handler, RECORDED_VOTE_URL
+            )
         all_votes_data = scrape_each_vote(all_votes_pages_urls)
-        all_votes_infos_sorted = sort_votes_by_date(all_votes_data)
+        all_votes_infos_sorted = sort_votes_by_vote_number(all_votes_data)
+        save_json(
+            {"last_scrapped_vote": all_votes_infos_sorted[0]["vote_number"]},
+            "last_scrapped_vote.json",
+            LAST_VOTE_DIR,
+        )
+
         logging.info(f"all votes length : {len(all_votes_infos_sorted)}")
 
     end_scraping = time.time()
