@@ -1,5 +1,6 @@
 import logging
 from tqdm import tqdm
+import sys
 import typing
 import re
 import requests
@@ -33,7 +34,7 @@ def scrape_all_votes_urls(
     if updating:
         logging.info("Updating votes, retrieving last vote number")
         last_vote = load_json(LAST_VOTE_FILE)
-        last_vote_number = last_vote.get("vote_number")
+        last_vote_number = last_vote.get("last_scrapped_vote")
         logging.info(f"Last scrapped vote number : {last_vote_number}")
 
     driver = driver_handler.get_driver()
@@ -61,14 +62,14 @@ def scrape_all_votes_urls(
 
                 if updating:
                     # Regex to capture digits after the last '/' in the url
-                    pattern = r"/(\d+)(?:/|$)"
+                    pattern = r"/(\d+)$"
                     match = re.search(pattern, vote_url)
                     vote_number = match.group(1)
                     if last_vote_number[2:] == vote_number:
                         logging.info(
                             f"{last_vote_number[2:]} == {vote_number} : breaking the scraping of votes urls."
                         )
-                        break
+                        return
 
                 votes_urls.append(BASE_URL + vote_url)
 
@@ -76,18 +77,20 @@ def scrape_all_votes_urls(
             logging.error(
                 f"An error occured while scraping {current_url} : {scraping_error}"
             )
+            sys.exit(1)
 
         try:
 
-            next_page_button = driver.find_element(
+            next_page_button = driver.find_elements(
                 By.CSS_SELECTOR, ".an-pagination--item.trigger.next a.inner"
             )
 
-            if not next_page_button:
+            if len(next_page_button) == 0:
+                logging.info("No next page button found. Ending the loop.")
                 break
 
             # Click on next page button
-            driver.execute_script("arguments[0].click();", next_page_button)
+            driver.execute_script("arguments[0].click();", next_page_button[0])
 
             page += 1
 
@@ -95,7 +98,7 @@ def scrape_all_votes_urls(
             logging.error(
                 f"An errror occured while trying to click on next page button : {click_error}"
             )
-            break
+            sys.exit(1)
 
     logging.info(f"Length of all votes urls list : {len(votes_urls)}")
     return votes_urls
