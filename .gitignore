@@ -1,3 +1,5 @@
 backend/scraping/venv
 
 .env
+
+__pycache__/
