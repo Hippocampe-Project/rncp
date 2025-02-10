@@ -19,6 +19,7 @@ services:
       dockerfile: dockerfile
     volumes:
       - ./scraping:/scraping
+      - /home/marion/dev/rncp_project:/scraping/persistent_data
 
 
 # Manage container dependencies with DB (eg)
