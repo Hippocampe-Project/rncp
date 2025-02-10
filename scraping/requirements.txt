@@ -2,6 +2,6 @@ beautifulsoup4
 selenium
 requests
 tqdm
-psycopg2
+psycopg2-binary
 python-dotenv
 sqlalchemy
