@@ -9,6 +9,5 @@ GOVERNMENT_BILLS = f"{BASE_URL}/documents/liste/(type)/projets-loi"
 PARLEMENT_BILLS = f"{BASE_URL}/documents/liste/(type)/propositions-loi"
 ENACTED_BILLS = f"{BASE_URL}/documents/liste/(type)/ta"  # à vérifier
 
+LAST_VOTE_FILE = "/scraping/persistent_data/last_scrapped_vote.json" # this is the container mount point to "/home/marion/dev/rncp_project/last_scrapped_vote.json"
 
-LAST_VOTE_DIR = "/home/umoya/RNCP_Pipou_Marion"
-LAST_VOTE_FILE = "/home/umoya/RNCP_Pipou_Marion/last_scrapped_vote.json"
