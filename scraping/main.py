@@ -12,7 +12,7 @@ from config_urls import (
     COMMISSIONS_URL,
     DEPARTEMENTS_URLS,
     RECORDED_VOTE_URL,
-    LAST_VOTE_DIR,
+    LAST_VOTE_FILE,
 )
 
 from chrome_driver_handler import ChromeDriverHandler
@@ -35,8 +35,9 @@ chrome_driver = os.getenv("CHROME_DRIVER")
 first_scraping = False
 # votes
 second_scraping = True
+
 database_insertion = True
-updating_votes = False
+updating_votes = True
 
 
 def main():
@@ -77,32 +78,32 @@ def main():
             )
         all_votes_data = scrape_each_vote(all_votes_pages_urls)
         all_votes_infos_sorted = sort_votes_by_vote_number(all_votes_data)
+        logging.info(f"all votes length : {len(all_votes_infos_sorted)}")
         save_json(
-            {"last_scrapped_vote": all_votes_infos_sorted[0]["vote_number"]},
-            "last_scrapped_vote.json",
-            LAST_VOTE_DIR,
+            {"last_scrapped_vote": all_votes_infos_sorted[0]["numero_vote"]},
+            LAST_VOTE_FILE,
         )
 
-        logging.info(f"all votes length : {len(all_votes_infos_sorted)}")
 
     end_scraping = time.time()
     logging.info(f" ~ Scraping execution time : {start_scraping - end_scraping} ~ ")
 
-    logging.info(" - Starting database insertion - ")
-    start_db_insertion = time.time()
+    if database_insertion:
+        logging.info(" - Starting database insertion - ")
+        start_db_insertion = time.time()
 
-    if first_scraping and database_insertion:
-        first_scraping_database_insertion(
-            departements_table, commissions_table, parties_table, representatives_table
+        if first_scraping:
+            first_scraping_database_insertion(
+                departements_table, commissions_table, parties_table, representatives_table
+            )
+
+        if second_scraping:
+            second_scraping_database_insertion(all_votes_infos_sorted)
+
+        end_db_insertion = time.time()
+        logging.info(
+            f" ~ Database insertion execution time : {start_db_insertion - end_db_insertion} ~ "
         )
-
-    if second_scraping and database_insertion:
-        second_scraping_database_insertion(all_votes_infos_sorted)
-
-    end_db_insertion = time.time()
-    logging.info(
-        f" ~ Database insertion execution time : {start_db_insertion - end_db_insertion} ~ "
-    )
 
     end_time = time.time()
     logging.info(f" ~ Execution time : {end_time - start_time} ~ ")
