@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 import os
 import logging
+import re
 
 from config_urls import LAST_VOTE_FILE
 
@@ -23,6 +24,7 @@ def save_json(data: dict, file_path: str):
     except Exception as e:
         logging.error(f"Eror saving JSON : {e}")
 
+
 def load_json(file_path: str) -> dict:
     try:
         with open(file_path, "r", encoding="utf-8") as file:
@@ -30,3 +32,36 @@ def load_json(file_path: str) -> dict:
         return data
     except Exception as e:
         logging.error(f"Error loading JSON : {e}")
+
+
+def format_date(date_str):
+    """date_str format == '13 février 2025'"""
+
+    parts = date_str.split(" ")
+    day = parts[0]
+    month = parts[1]
+    year = parts[2]
+
+    try:
+        # Month mapping from French to numerical format
+        month_mapping = {
+            "janvier": "01",
+            "février": "02",
+            "mars": "03",
+            "avril": "04",
+            "mai": "05",
+            "juin": "06",
+            "juillet": "07",
+            "août": "08",
+            "septembre": "09",
+            "octobre": "10",
+            "novembre": "11",
+            "décembre": "12",
+        }
+
+        month_number = month_mapping.get(month.lower())
+        formatted_date = f"{day.zfill(2)}-{month_number}-{year}"
+        return formatted_date
+
+    except (IndexError, ValueError) as e:
+        print(f"Error in parsing {date_str} : {e}")
