@@ -8,22 +8,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a;
+var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DepsearchService = void 0;
 const common_1 = require("@nestjs/common");
 const deputes_repository_1 = require("repositories/deputes.repository");
+const votes_repository_1 = require("repositories/votes.repository");
+const depsearch_errors_1 = require("./depsearch.errors");
 let DepsearchService = class DepsearchService {
-    constructor(deputeRepository) {
+    constructor(deputeRepository, voteRepository) {
         this.deputeRepository = deputeRepository;
+        this.voteRepository = voteRepository;
     }
     async getDeputeByName(deputeName) {
-        return this.deputeRepository.findDepute(deputeName);
+        const depute = await this.deputeRepository.findDepute(deputeName);
+        if (!depute) {
+            throw new depsearch_errors_1.DeputeNotFoundError(deputeName);
+        }
+        const votes = await this.voteRepository.deputeVotes(deputeName);
+        return { depute, votes };
     }
 };
 exports.DepsearchService = DepsearchService;
 exports.DepsearchService = DepsearchService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [typeof (_a = typeof deputes_repository_1.DeputeRepository !== "undefined" && deputes_repository_1.DeputeRepository) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof deputes_repository_1.DeputeRepository !== "undefined" && deputes_repository_1.DeputeRepository) === "function" ? _a : Object, typeof (_b = typeof votes_repository_1.VoteRepository !== "undefined" && votes_repository_1.VoteRepository) === "function" ? _b : Object])
 ], DepsearchService);
 //# sourceMappingURL=depsearch.service.js.map

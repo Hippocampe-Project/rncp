@@ -16,33 +16,25 @@ exports.VoteRepository = void 0;
 const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
 const votes_model_1 = require("../models/votes.model");
+const sequelize_2 = require("sequelize");
 let VoteRepository = class VoteRepository {
     constructor(voteModel) {
         this.voteModel = voteModel;
     }
-    async findAll() {
-        return await this.voteModel.findAll();
-    }
-    async findOne(id) {
-        const vote = await this.voteModel.findOne({
-            where: { id },
-        });
-        if (!vote) {
-            throw new common_1.NotFoundException(`Parti with ID ${id} not found`);
+    async deputeVotes(deputeName) {
+        const whereCondition = {
+            [sequelize_2.Op.or]: [
+                { votants_pour: { [sequelize_2.Op.overlap]: [deputeName] } },
+                { votants_contre: { [sequelize_2.Op.overlap]: [deputeName] } },
+                { votants_abstention: { [sequelize_2.Op.overlap]: [deputeName] } },
+            ],
+        };
+        try {
+            return this.voteModel.findAll({ where: whereCondition });
         }
-        return vote;
-    }
-    async update(id, updateVoteDto) {
-        return await this.voteModel.update(updateVoteDto, {
-            where: {
-                id,
-            },
-            returning: true,
-        });
-    }
-    async delete(id) {
-        const vote = await this.findOne(id);
-        await vote.destroy();
+        catch (error) {
+            throw new common_1.InternalServerErrorException("Database error", error);
+        }
     }
 };
 exports.VoteRepository = VoteRepository;

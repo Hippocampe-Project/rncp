@@ -22,11 +22,16 @@ let DeputeRepository = class DeputeRepository {
         this.deputeModel = deputeModel;
     }
     async findDepute(deputeName) {
-        return this.deputeModel.findOne({
-            where: {
-                nom: { [sequelize_2.Op.iLike]: deputeName },
-            },
-        });
+        try {
+            return this.deputeModel.findOne({
+                where: {
+                    nom: { [sequelize_2.Op.iLike]: deputeName },
+                },
+            });
+        }
+        catch (error) {
+            throw new common_1.InternalServerErrorException("Database error", error);
+        }
     }
 };
 exports.DeputeRepository = DeputeRepository;

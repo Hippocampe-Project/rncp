@@ -10,7 +10,7 @@ import {
 } from "sequelize-typescript";
 import { Deputes } from "./deputes.model";
 import { Scrutins } from "./scrutins.model";
-import { InferAttributes, InferCreationAttributes } from "sequelize";
+import { HasMany, InferAttributes, InferCreationAttributes } from "sequelize";
 
 @Table({
   tableName: "votes",
@@ -69,4 +69,11 @@ export class Votes extends Model<
 
   @Column(DataType.ARRAY(DataType.STRING))
   votants_abstention!: string[];
+
+  @ForeignKey(() => Deputes)
+  @Column(DataType.INTEGER)
+  deputeId!: number;
+
+  @BelongsTo(() => Deputes)
+  depute!: Deputes;
 }

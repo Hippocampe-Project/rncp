@@ -4,6 +4,8 @@ import { DepsearchService } from "./depsearch.service";
 import { DeputeRepository } from "../../repositories/deputes.repository";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { Deputes } from "models/deputes.model";
+import { VoteRepository } from "repositories/votes.repository";
+import { Votes } from "models/votes.model";
 
 // DepsearchModule acts as the intermediary that connects:
 
@@ -13,8 +15,14 @@ import { Deputes } from "models/deputes.model";
 //     The DepsearchResolver (GraphQL API layer)
 
 @Module({
-  imports: [SequelizeModule.forFeature([Deputes])], // Register Deputes model
-  providers: [DepsearchResolver, DepsearchService, DeputeRepository],
-  exports: [DeputeRepository], // Export repository if needed elsewhere
+  imports: [SequelizeModule.forFeature([Deputes, Votes])],
+
+  providers: [
+    DepsearchResolver,
+    DepsearchService,
+    DeputeRepository,
+    VoteRepository,
+  ],
+  exports: [DeputeRepository, VoteRepository],
 })
 export class DepsearchModule {}

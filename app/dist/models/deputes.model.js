@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Deputes = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const graphql_1 = require("@nestjs/graphql");
+const votes_model_1 = require("./votes.model");
 let Deputes = class Deputes extends sequelize_typescript_1.Model {
 };
 exports.Deputes = Deputes;
@@ -68,10 +69,19 @@ __decorate([
     __metadata("design:type", Number)
 ], Deputes.prototype, "parti_id", void 0);
 __decorate([
+    (0, sequelize_typescript_1.HasMany)(() => votes_model_1.Votes),
+    __metadata("design:type", Array)
+], Deputes.prototype, "votes", void 0);
+__decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
     (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], Deputes.prototype, "photo", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.BOOLEAN, defaultValue: true }),
+    (0, graphql_1.Field)(() => Boolean),
+    __metadata("design:type", Boolean)
+], Deputes.prototype, "activite", void 0);
 exports.Deputes = Deputes = __decorate([
     (0, graphql_1.ObjectType)(),
     (0, sequelize_typescript_1.Table)({

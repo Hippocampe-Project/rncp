@@ -1,7 +1,12 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { Votes } from "../models/votes.model";
-// import { CreateVoteDto } from "../dto/create-vote.dto";
+import { Deputes } from "models/deputes.model";
+import { InferAttributes, Op, WhereOptions } from "sequelize";
 
 @Injectable()
 export class VoteRepository {
@@ -10,35 +15,18 @@ export class VoteRepository {
     private readonly voteModel: typeof Votes,
   ) {}
 
-  // async create(createVoteDto: CreateVoteDto): Promise<Votes> {
-  //   return await this.voteModel.create(createVoteDto);
-  // }
-
-  async findAll(): Promise<Votes[]> {
-    return await this.voteModel.findAll();
-  }
-
-  async findOne(id: number): Promise<Votes> {
-    const vote = await this.voteModel.findOne({
-      where: { id },
-    });
-    if (!vote) {
-      throw new NotFoundException(`Parti with ID ${id} not found`);
+  async deputeVotes(deputeName: string): Promise<InferAttributes<Votes>[]> {
+    const whereCondition: WhereOptions<Votes> = {
+      [Op.or]: [
+        { votants_pour: { [Op.overlap]: [deputeName] } },
+        { votants_contre: { [Op.overlap]: [deputeName] } },
+        { votants_abstention: { [Op.overlap]: [deputeName] } },
+      ],
+    };
+    try {
+      return this.voteModel.findAll({ where: whereCondition });
+    } catch (error) {
+      throw new InternalServerErrorException("Database error", error);
     }
-    return vote;
-  }
-
-  async update(id: number, updateVoteDto: any): Promise<[number, Votes[]]> {
-    return await this.voteModel.update(updateVoteDto, {
-      where: {
-        id,
-      },
-      returning: true,
-    });
-  }
-
-  async delete(id: number): Promise<void> {
-    const vote = await this.findOne(id);
-    await vote.destroy();
   }
 }

@@ -13,14 +13,21 @@ const depsearch_service_1 = require("./depsearch.service");
 const deputes_repository_1 = require("../../repositories/deputes.repository");
 const sequelize_1 = require("@nestjs/sequelize");
 const deputes_model_1 = require("models/deputes.model");
+const votes_repository_1 = require("repositories/votes.repository");
+const votes_model_1 = require("models/votes.model");
 let DepsearchModule = class DepsearchModule {
 };
 exports.DepsearchModule = DepsearchModule;
 exports.DepsearchModule = DepsearchModule = __decorate([
     (0, common_1.Module)({
-        imports: [sequelize_1.SequelizeModule.forFeature([deputes_model_1.Deputes])],
-        providers: [depsearch_resolver_1.DepsearchResolver, depsearch_service_1.DepsearchService, deputes_repository_1.DeputeRepository],
-        exports: [deputes_repository_1.DeputeRepository],
+        imports: [sequelize_1.SequelizeModule.forFeature([deputes_model_1.Deputes, votes_model_1.Votes])],
+        providers: [
+            depsearch_resolver_1.DepsearchResolver,
+            depsearch_service_1.DepsearchService,
+            deputes_repository_1.DeputeRepository,
+            votes_repository_1.VoteRepository,
+        ],
+        exports: [deputes_repository_1.DeputeRepository, votes_repository_1.VoteRepository],
     })
 ], DepsearchModule);
 //# sourceMappingURL=depsearch.module.js.map

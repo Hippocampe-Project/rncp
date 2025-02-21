@@ -1,4 +1,5 @@
 import { Model } from "sequelize-typescript";
+import { Votes } from "./votes.model";
 export declare class Deputes extends Model {
     id: number;
     nom: string;
@@ -10,5 +11,7 @@ export declare class Deputes extends Model {
     profession: string;
     suppleant?: string;
     parti_id: number;
+    votes: Votes[];
     photo?: string;
+    activite: boolean;
 }

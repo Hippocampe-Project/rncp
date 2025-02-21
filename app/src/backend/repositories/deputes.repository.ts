@@ -1,4 +1,9 @@
-import { Injectable, Inject, NotFoundException } from "@nestjs/common";
+import {
+  Injectable,
+  Inject,
+  NotFoundException,
+  InternalServerErrorException,
+} from "@nestjs/common";
 import { Deputes } from "../models/deputes.model";
 import { InjectModel } from "@nestjs/sequelize";
 import { InferAttributes, Op } from "sequelize";
@@ -16,10 +21,14 @@ export class DeputeRepository {
   async findDepute(
     deputeName: string,
   ): Promise<InferAttributes<Deputes> | null> {
-    return this.deputeModel.findOne({
-      where: {
-        nom: { [Op.iLike]: deputeName },
-      },
-    });
+    try {
+      return this.deputeModel.findOne({
+        where: {
+          nom: { [Op.iLike]: deputeName },
+        },
+      });
+    } catch (error) {
+      throw new InternalServerErrorException("Database error", error);
+    }
   }
 }

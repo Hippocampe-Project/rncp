@@ -5,8 +5,10 @@ import {
   PrimaryKey,
   AutoIncrement,
   DataType,
+  HasMany,
 } from "sequelize-typescript";
 import { ObjectType, Field } from "@nestjs/graphql"; // GraphQL decorators
+import { Votes } from "./votes.model";
 
 @ObjectType() // This marks the class as a GraphQL object type
 @Table({
@@ -25,11 +27,11 @@ export class Deputes extends Model {
   nom!: string;
 
   @Column(DataType.STRING)
-  @Field() // GraphQL will treat this as a String
+  @Field()
   date_naissance!: string;
 
   @Column(DataType.STRING)
-  @Field() // GraphQL will treat this as a String
+  @Field()
   sexe!: string;
 
   @Column(DataType.STRING)
@@ -37,7 +39,7 @@ export class Deputes extends Model {
   departement_id!: number;
 
   @Column(DataType.STRING)
-  @Field() // GraphQL will treat this as a String
+  @Field()
   circonscription!: string;
 
   @Column(DataType.STRING)
@@ -45,18 +47,25 @@ export class Deputes extends Model {
   commission_permanente_id?: number;
 
   @Column(DataType.STRING)
-  @Field() // GraphQL will treat this as a String
+  @Field()
   profession!: string;
 
   @Column(DataType.STRING)
-  @Field({ nullable: true }) // Nullable field
+  @Field({ nullable: true })
   suppleant?: string;
 
   @Column(DataType.STRING)
   @Field(() => Number)
   parti_id!: number;
 
+  @HasMany(() => Votes)
+  votes: Votes[];
+
   @Column(DataType.STRING)
-  @Field({ nullable: true }) // Nullable field
+  @Field({ nullable: true })
   photo?: string;
+
+  @Column({ type: DataType.BOOLEAN, defaultValue: true })
+  @Field(() => Boolean)
+  activite!: boolean;
 }

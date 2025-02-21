@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Votes = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
+const deputes_model_1 = require("./deputes.model");
 let Votes = class Votes extends sequelize_typescript_1.Model {
 };
 exports.Votes = Votes;
@@ -80,6 +81,15 @@ __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.ARRAY(sequelize_typescript_1.DataType.STRING)),
     __metadata("design:type", Array)
 ], Votes.prototype, "votants_abstention", void 0);
+__decorate([
+    (0, sequelize_typescript_1.ForeignKey)(() => deputes_model_1.Deputes),
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    __metadata("design:type", Number)
+], Votes.prototype, "deputeId", void 0);
+__decorate([
+    (0, sequelize_typescript_1.BelongsTo)(() => deputes_model_1.Deputes),
+    __metadata("design:type", deputes_model_1.Deputes)
+], Votes.prototype, "depute", void 0);
 exports.Votes = Votes = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: "votes",
