@@ -1,2 +1,9 @@
 {
+    "editor.formatOnSave": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "black-formatter.path": [
+        "/home/marion/.local/bin/black"
+    ]
 }
