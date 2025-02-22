@@ -29,6 +29,7 @@ class HandleDatabase:
         self.db_port = os.getenv("DB_PORT")
         self.conn = None
         self.cursor = None
+        self.query_success = None
 
     def __repr__(self):
         return (
@@ -181,7 +182,6 @@ class HandleDatabase:
                 table=sql.Identifier(table_name),
                 id_column=sql.Identifier(id_column),
             )
-            logging.info(add_id_column_query)
 
             logging.info(f"Adding column {id_column} to table {table_name}")
             self.cursor.execute(add_id_column_query)
@@ -280,10 +280,12 @@ class HandleDatabase:
                     self.update_table_with_fk_mapping(
                         deputes_table, foreign_table, key, new_id_column
                     )
-
+            logging.info("Deputes table's foreign keys updated successfully")
+            self.query_success = True
         except psycopg2.DatabaseError as error:
             self.conn.rollback()
             logging.error(f"Error executing table deputes update query : {error}")
+            self.query_success = False
 
     def execute_batch_insertion_query(
         self, query: str, data: list[tuple], table_name: str
@@ -296,14 +298,16 @@ class HandleDatabase:
             logging.info(
                 f"Batch insertion query executed successfully for table {table_name}."
             )
+            self.query_success = True
         except psycopg2.DatabaseError as error:
             self.conn.rollback()
             logging.error(
                 f"Error executing batch insertion query for table {table_name} : {error}"
             )
+            self.query_success = False
 
     def execute_insertion(self, data: list[dict], table_name: str):
-        """Takes the list of dictionaries containing the scrapped data of a single scrape model
+        """Takes the list of dictionaries containing the scraped data of a single scrape model
             and extract the sql query and the values to inject and perform a batch injection.
         Args:
             data (list[dict]): a list of dictionnaries formated with the same scrappe model
@@ -316,6 +320,117 @@ class HandleDatabase:
         self.execute_batch_insertion_query(
             insertion_query, insertion_values, table_name
         )
+
+    def create_new_table(self, temp_table_name, data: list[dict]):
+        try:
+            columns = data[0].keys()
+            columns_definitions = []
+            type_mapping = {
+                int: "INTEGER",
+                str: "TEXT",
+                float: "FLOAT",
+                bool: "BOOLEAN",
+                type(None): "NULL",
+            }
+            columns_definitions.append("id SERIAL PRIMARY KEY")
+            for col in columns:
+                value_type = type(data[0][col])
+                psql_type = type_mapping.get(value_type)
+                columns_definitions.append(f"{col} {psql_type}")
+
+            columns_definition_str = ", ".join(columns_definitions)
+            logging.info(
+                f"New table '{temp_table_name}' collumns definition : {columns_definition_str}"
+            )
+
+            query = sql.SQL(
+                # "CREATE TEMPORARY TABLE IF NOT EXISTS {temp_table} ({columns})"
+                "CREATE TABLE IF NOT EXISTS {temp_table} ({columns})"
+            ).format(
+                temp_table=sql.Identifier(temp_table_name),
+                columns=sql.SQL(columns_definition_str),
+            )
+
+            self.cursor.execute(query)
+            logging.info(f"Temporary table '{temp_table_name}' successfully created")
+        except psycopg2.DatabaseError as error:
+            logging.error(f"Error creating {temp_table_name} : {error}")
+
+    def drop_table(self, table_name):
+        if not self.cursor:
+            logging.error("No cursor available to execute the query.")
+            return
+        try:
+            query = f"DROP TABLE IF EXISTS {table_name}"
+            self.cursor.execute(query)
+            logging.info(f"{table_name} successfully deleted")
+        except psycopg2.DatabaseError as error:
+            logging.error(f"Error droping table: {table_name} : {error}")
+
+    def compare_deputes_with_temp_deputes_table(
+        self, main_table: str, temp_table_name: str, data: list[dict]
+    ):
+        if not self.cursor:
+            logging.error("No cursor available to execute the query.")
+            return
+        try:
+            # Step 1 : create new deputes table and insert newly scraped value in it.
+            self.create_new_table(temp_table_name, data)
+            self.execute_insertion(data, temp_table_name)
+            self.commit()
+            self.cursor.close()
+            self.cursor = None
+            # Step 2 : map deputes table foreign key.
+            self.create_cursor()
+            self.execute_deputes_update_queries(
+                data, deputes_table=temp_table_name
+            )  # this function is not reusable bc of this method
+            self.commit()
+            # Step 3 : compare the new temporary deputes table with the former one and update the later.
+            coll_order = "nom, date_naissance, sexe, circonscription, profession, suppleant, photo, departement_id, commission_permanente_id, parti_id, activite"
+            self.insert_missing_data(main_table, temp_table_name, coll_order)
+            self.mark_outdated_data(main_table, temp_table_name)
+            # Step 4 : drop temporary deputes table.
+            self.drop_table(temp_table_name)
+            self.commit()
+            logging.info("Database insertion completed successfully")
+            self.query_success = True
+        except psycopg2.DatabaseError as error:
+            logging.error(
+                f"Error updating {main_table} with {temp_table_name} : {error}"
+            )
+            self.drop_table(temp_table_name)
+            self.query_success = False
+
+    def insert_missing_data(self, main_table: str, temp_table: str, coll_order: str):
+        try:
+            query = f"""
+                INSERT INTO {main_table} ({coll_order})
+                SELECT {coll_order}
+                FROM {temp_table} 
+                WHERE NOT EXISTS (
+                    SELECT 1 FROM {main_table} 
+                    WHERE {main_table}.nom = {temp_table}.nom
+                );
+            """
+            self.cursor.execute(query)
+            logging.info("Successfully inserted new deputies")
+        except psycopg2.DatabaseError as error:
+            logging.error(f"Error inserting new deputies : {error}")
+
+    def mark_outdated_data(self, main_table: str, temp_table: str):
+        try:
+            query = f"""
+                UPDATE {main_table}
+                SET activite = FALSE
+                WHERE nom NOT IN (
+                    SELECT nom FROM {temp_table}
+                );
+            """
+            self.cursor.execute(query)
+            logging.info("Successfully updated inactive deputes")
+        except psycopg2.DatabaseError as error:
+            logging.error(f"Error updating inactive deputes : {error}")
 
     def commit(self):
         self.conn.commit()
