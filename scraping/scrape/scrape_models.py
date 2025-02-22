@@ -19,6 +19,7 @@ class Representative:
         substitute,
         political_group,
         picture,
+        active,
     ):
         self.name = name
         self.gender = self.get_gender(gender)
@@ -30,6 +31,7 @@ class Representative:
         self.substitute = substitute
         self.political_group = political_group
         self.picture = picture
+        self.active = active
 
     def __repr__(self):
         return (
@@ -42,7 +44,8 @@ class Representative:
             f"profession={self.profession}, "
             f"substitute={self.substitute}, "
             f"political_group={self.political_group}, "
-            f"picture={self.picture})"
+            f"picture={self.picture}, "
+            f"active={self.active})"
         )
 
     def to_dict(self):
@@ -57,6 +60,7 @@ class Representative:
             "suppleant": self.substitute,
             "parti_name": self.political_group,  # FK
             "photo": self.picture,
+            "activite": self.active,
         }
 
     def get_gender(self, gender):
@@ -226,9 +230,9 @@ class Vote:
         self.num_non_voters = len(non_voters)
         self.num_absentee = 577 - (self.num_voters + self.num_non_voters)
         self.adopted = self.is_vote_adopted(vote_adoption_status)
-        self.for_voters = for_voters if for_voters else None
-        self.against_voters = against_voters if against_voters else None
-        self.abstention_voters = abstention_voters if abstention_voters else None
+        self.for_voters = for_voters if for_voters else []
+        self.against_voters = against_voters if against_voters else []
+        self.abstention_voters = abstention_voters if abstention_voters else []
 
     def __repr__(self):
         return (
@@ -305,10 +309,10 @@ class Vote:
             except (IndexError, ValueError) as e:
                 print(f"Error in parsing date for {self.title} vote : {e}")
 
-    def get_vote_number(self, vote_title):
-        match = re.search(r"n°\d+", vote_title)
+    def get_vote_number(self, vote_title) -> int:
+        match = re.search(r"n°(\d+)", vote_title)  # retrieve only the number
         if match:
-            return match.group()
+            return int(match.group(1))
         else:
             return None
 
