@@ -243,7 +243,7 @@ def scrape_each_vote(votes_urls: list[str], max_threads: int = 10) -> list[dict]
                     sys.exit(1)
 
     except KeyboardInterrupt:
-        logging.error("Process interrupted, cleaning up and exiting.")
+        logging.warning("Process interrupted, cleaning up and exiting.")
         sys.exit(0)
 
     return votes_infos
