@@ -1,6 +1,7 @@
 import logging
 from tqdm import tqdm
 import typing
+import sys
 import re
 from bs4 import BeautifulSoup
 
@@ -52,6 +53,7 @@ def scrape_each_political_group_page(
                 logging.error(
                     f"Timeout waiting for AJAX content to load for {party} : {timeout}"
                 )
+                sys.exit(1)
 
             page_source = driver.page_source
             soup = BeautifulSoup(page_source, "html.parser")
