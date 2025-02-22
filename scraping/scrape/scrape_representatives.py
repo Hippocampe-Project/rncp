@@ -2,57 +2,58 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 import re
+import sys
+import signal
 from tqdm import tqdm
+import concurrent.futures
 from scrape.scrape_models import Representative
 
 
-def scrape_every_representative(representatives_infos: list[dict]) -> list[dict]:
+def scrape_representative_page(representative_infos) -> dict:
 
-    logging.info(" -- Starting scraping each representative personal page ")
+    try:
+        response = requests.get(representative_infos["url"])
+    except Exception as request_error:
+        logging.error(
+            f"Error while requesting {representative_infos["url"]} : {request_error}"
+        )
 
-    representatives_table = []
+    try:
 
-    for dict in tqdm(representatives_infos, desc="Scraping representatives", ncols=100, ascii=True):
+        soup = BeautifulSoup(response.content, "html.parser", from_encoding="utf-8")
 
-        try:
-            response = requests.get(dict["url"])
-        except Exception as request_error:
-            logging.error(f"Error while requesting {dict["url"]} : {request_error}")
+        name = soup.h1.text.split(" ", 1)[1]
+        gender = soup.h1.text.split(" ", 1)[0]
+        political_group = soup.find("a", class_="h4 _colored link").text.strip()
+        sectors = representative_infos["departement_and_circonscription"].split()
+        departement = sectors[0]
+        circonscription = sectors[1]
+        commission = representative_infos["commission"]
+        biographical_elements = soup.find_all("span", class_="h5 _colored-deputes")
+        birth_date, profession, substitute = scrape_representative_bio(
+            biographical_elements, name
+        )
+        picture = representative_infos["picture"]
 
-        try:
+        representative = Representative(
+            name=name,
+            gender=gender,
+            birth_date=birth_date,
+            department=departement,
+            circonscription=circonscription,
+            commission=commission,
+            profession=profession,
+            substitute=substitute,
+            political_group=political_group,
+            picture=picture,
+            active=True,
+        )
 
-            soup = BeautifulSoup(response.content, "html.parser", from_encoding="utf-8")
+    except Exception as scraping_error:
+        logging.warning(f"Error while scraping {name} personal page : {scraping_error}")
 
-            name = soup.h1.text.split(" ", 1)[1]
-            gender = soup.h1.text.split(" ", 1)[0]
-            political_group = soup.find("a", class_="h4 _colored link").text.strip()
-            sectors = dict["departement_and_circonscription"].split()
-            departement = sectors[0]
-            circonscription = sectors[1]
-            commission = dict["commission"]
-            biographical_elements = soup.find_all("span", class_="h5 _colored-deputes")
-            birth_date, profession, substitute = scrape_representative_bio(biographical_elements, name)
-            picture = dict["picture"]
-            
-            representative = Representative(
-                name=name,
-                gender=gender,
-                birth_date=birth_date,
-                department=departement,
-                circonscription=circonscription,
-                commission=commission,
-                profession=profession,
-                substitute=substitute,
-                political_group=political_group,
-                picture=picture,
-            )
+    return representative.to_dict()
 
-            representatives_table.append(representative.to_dict())
-
-        except Exception as scraping_error:
-            logging.warning(f"Error while scraping {name} personal page : {scraping_error}")
-            
-    return representatives_table
 
 def scrape_representative_bio(biography, name):
     try:
@@ -71,6 +72,52 @@ def scrape_representative_bio(biography, name):
         return birth_date, profession, substitute
     except Exception as scraping_error:
         logging.warning(f"Error while scraping the bio of {name} : {scraping_error}")
+
+
+def scrape_each_representative(
+    representatives_infos: list[dict], max_threads: int = 10
+) -> list[dict]:
+
+    logging.info(" -- Starting scraping each representative personal page ")
+
+    representatives_table = []
+
+    def signal_handler(sig, frame):
+        logging.error("Process interrupted, cleaning up threads...")
+        sys.exit(0)
+
+    signal.signal(signal.SIGINT, signal_handler)
+
+    try:
+        with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
+
+            future_to_url = {
+                executor.submit(
+                    scrape_representative_page, representative_infos
+                ): representative_infos
+                for representative_infos in representatives_infos
+            }
+
+            for future in tqdm(
+                concurrent.futures.as_completed(future_to_url),
+                total=len(representatives_infos),
+                desc="Scraping each representative page",
+                ncols=100,
+                ascii=True,
+            ):
+                try:
+                    result = future.result()
+                    if result:
+                        representatives_table.append(result)
+                except Exception as e:
+                    logging.error(f"Error processing a representative page: {e}")
+                    sys.exit(1)
+
+    except KeyboardInterrupt:
+        logging.warning("Process interrupted, cleaning up and exiting")
+        sys.exit(0)
+
+    return representatives_table
 
 
 # TEST
