@@ -1,10 +1,38 @@
-"Changes to the composition of the groups"
+"""Scrape the political group modification web page to see if deputes table update is necessary"""
 
-"""
-1. Scrape : https://www2.assemblee-nationale.fr/17/les-groupes-politiques/modifications-a-la-composition-des-groupes
-2. Check for new date entry (create a file to store last modification date)
-3. If new entry : 
-    get supressed name > supress them from db
-    get added name > scrape them and add them to db
+import requests
+from bs4 import BeautifulSoup
+import logging
+from datetime import datetime
 
-"""
+from scrape_utils import format_date
+from config_urls import POL_GROUP_CHANGES
+
+# BASE_URL = "https://www2.assemblee-nationale.fr"
+# POL_GROUP_CHANGES = (
+#     f"{BASE_URL}/17/les-groupes-politiques/modifications-a-la-composition-des-groupes"
+# )
+
+
+def scrape_last_groupe_composition_change(
+    url: str = POL_GROUP_CHANGES,
+) -> datetime:  # format : 13-02-2025
+    logging.info(" Starting scraping last groupe change date")
+
+    try:
+        response = requests.get(url)
+    except Exception as request_error:
+        logging.error(f"Error while requestions {url} : {request_error}")
+
+    try:
+        soup = BeautifulSoup(response.content, "html.parser", from_encoding="utf-8")
+        year_div = soup.find("div", class_="interieur")
+        last_entry = year_div.find_next("b").text
+        last_modification_date = " ".join(last_entry.split()[:3])
+        return format_date(last_modification_date)
+    except Exception as scraping_error:
+        logging.error(f"Error while scraping element : {scraping_error}")
+
+
+# data = scrape_last_groupe_composition_change()
+# print(data)
