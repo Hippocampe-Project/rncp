@@ -4,7 +4,7 @@ import os
 import logging
 import re
 
-from config_urls import LAST_VOTE_FILE
+from config_urls import LAST_SCRAPED_VOTE_FILE
 
 
 def sort_votes_by_vote_number(votes: list[dict]) -> list[dict]:
@@ -19,7 +19,7 @@ def sort_votes_by_vote_number(votes: list[dict]) -> list[dict]:
 def save_json(data: dict, file_path: str):
     try:
         with open(file_path, "w", encoding="utf-8") as file:
-            json.dump(data, file, ensure_ascii=False)
+            json.dump(data, file, ensure_ascii=False, indent=4)
         logging.info(f"{data} saved at : {file_path}")
     except Exception as e:
         logging.error(f"Eror saving JSON : {e}")
@@ -34,8 +34,10 @@ def load_json(file_path: str) -> dict:
         logging.error(f"Error loading JSON : {e}")
 
 
-def format_date(date_str):
-    """date_str format == '13 février 2025'"""
+def format_date(date_str) -> datetime:
+    """date_str format == '13 février 2025'
+    return 13-02-2025
+    """
 
     parts = date_str.split(" ")
     day = parts[0]
@@ -61,7 +63,8 @@ def format_date(date_str):
 
         month_number = month_mapping.get(month.lower())
         formatted_date = f"{day.zfill(2)}-{month_number}-{year}"
-        return formatted_date
+        to_datetime = datetime.strptime(formatted_date, "%d-%m-%Y")
+        return to_datetime
 
     except (IndexError, ValueError) as e:
         print(f"Error in parsing {date_str} : {e}")
