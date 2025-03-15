@@ -21,7 +21,7 @@ let DeputeRepository = class DeputeRepository {
     constructor(deputeModel) {
         this.deputeModel = deputeModel;
     }
-    async findDepute(deputeName) {
+    async findDeputeByName(deputeName) {
         try {
             return this.deputeModel.findOne({
                 where: {

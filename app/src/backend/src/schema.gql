@@ -14,6 +14,7 @@ type Deputes {
   suppleant: String
   parti_id: Float!
   photo: String
+  activite: Boolean!
 }
 
 type Query {

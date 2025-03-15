@@ -1,5 +1,4 @@
 import { Model } from "sequelize-typescript";
-import { Deputes } from "./deputes.model";
 import { InferAttributes, InferCreationAttributes } from "sequelize";
 export declare class Votes extends Model<InferAttributes<Votes>, InferCreationAttributes<Votes>> {
     id: number;
@@ -19,5 +18,4 @@ export declare class Votes extends Model<InferAttributes<Votes>, InferCreationAt
     votants_contre: string[];
     votants_abstention: string[];
     deputeId: number;
-    depute: Deputes;
 }

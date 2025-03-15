@@ -16,12 +16,18 @@ exports.DepsearchResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const deputes_model_1 = require("../../models/deputes.model");
 const depsearch_service_1 = require("./depsearch.service");
+const votes_deputes_service_1 = require("./votes-deputes.service");
+const common_1 = require("@nestjs/common");
 let DepsearchResolver = class DepsearchResolver {
-    constructor(depsearchService) {
+    constructor(depsearchService, votesDeputeService) {
         this.depsearchService = depsearchService;
+        this.votesDeputeService = votesDeputeService;
+        this.logger = common_1.Logger;
     }
     async depute(deputeName) {
-        return this.depsearchService.getDeputeByName(deputeName);
+        this.logger.debug({ deputeName }, "Trying to resolve Query.depsearch");
+        const deputeId = await this.votesDeputeService.createPayload(deputeName);
+        return this.depsearchService.retrievePayload(deputeId);
     }
 };
 exports.DepsearchResolver = DepsearchResolver;
@@ -34,6 +40,7 @@ __decorate([
 ], DepsearchResolver.prototype, "depute", null);
 exports.DepsearchResolver = DepsearchResolver = __decorate([
     (0, graphql_1.Resolver)(() => deputes_model_1.Deputes),
-    __metadata("design:paramtypes", [depsearch_service_1.DepsearchService])
+    __metadata("design:paramtypes", [depsearch_service_1.DepsearchService,
+        votes_deputes_service_1.VotesDeputesService])
 ], DepsearchResolver);
 //# sourceMappingURL=depsearch.resolver.js.map

@@ -86,10 +86,6 @@ __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
     __metadata("design:type", Number)
 ], Votes.prototype, "deputeId", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => deputes_model_1.Deputes),
-    __metadata("design:type", deputes_model_1.Deputes)
-], Votes.prototype, "depute", void 0);
 exports.Votes = Votes = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: "votes",

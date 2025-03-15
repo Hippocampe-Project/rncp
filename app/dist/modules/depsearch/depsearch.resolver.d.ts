@@ -1,9 +1,17 @@
 import { DepsearchService } from "./depsearch.service";
+import { VotesDeputesService } from "./votes-deputes.service";
+import { Logger } from "@nestjs/common";
+export type Depsearch = {
+    vote_id: number;
+    depute_id: number;
+    vote_category: string;
+    depute_nom: string;
+    vote_titre: string;
+};
 export declare class DepsearchResolver {
     private depsearchService;
-    constructor(depsearchService: DepsearchService);
-    depute(deputeName: string): Promise<{
-        depute: any;
-        votes: any;
-    }>;
+    private votesDeputeService;
+    constructor(depsearchService: DepsearchService, votesDeputeService: VotesDeputesService);
+    logger: typeof Logger;
+    depute(deputeName: string): Promise<Depsearch[]>;
 }

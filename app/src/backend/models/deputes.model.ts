@@ -6,6 +6,7 @@ import {
   AutoIncrement,
   DataType,
   HasMany,
+  BelongsToMany,
 } from "sequelize-typescript";
 import { ObjectType, Field } from "@nestjs/graphql"; // GraphQL decorators
 import { Votes } from "./votes.model";
@@ -58,9 +59,6 @@ export class Deputes extends Model {
   @Field(() => Number)
   parti_id!: number;
 
-  @HasMany(() => Votes)
-  votes: Votes[];
-
   @Column(DataType.STRING)
   @Field({ nullable: true })
   photo?: string;
@@ -68,4 +66,8 @@ export class Deputes extends Model {
   @Column({ type: DataType.BOOLEAN, defaultValue: true })
   @Field(() => Boolean)
   activite!: boolean;
+
+  @Column(DataType.DATE)
+  @Field(() => Date)
+  activite_timestamp: Date;
 }

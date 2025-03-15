@@ -13,3 +13,11 @@ export class DeputeNotFoundError extends Error {
     super(`${nom} was not found`);
   }
 }
+
+export class VotesNotFoundError extends Error {
+  readonly code = "Votes_NotFound";
+
+  constructor(nom: string) {
+    super(`No votes associated with ${nom} were found`);
+  }
+}

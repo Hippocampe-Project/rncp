@@ -18,7 +18,7 @@ export class DeputeRepository {
 
   //Use InferAttributes & InferCreationAttributes here to infer the data type being interacted with or created:
 
-  async findDepute(
+  async findDeputeByName(
     deputeName: string,
   ): Promise<InferAttributes<Deputes> | null> {
     try {

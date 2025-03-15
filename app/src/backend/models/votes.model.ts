@@ -6,11 +6,9 @@ import {
   DataType,
   PrimaryKey,
   AutoIncrement,
-  BelongsTo,
 } from "sequelize-typescript";
 import { Deputes } from "./deputes.model";
-import { Scrutins } from "./scrutins.model";
-import { HasMany, InferAttributes, InferCreationAttributes } from "sequelize";
+import { InferAttributes, InferCreationAttributes } from "sequelize";
 
 @Table({
   tableName: "votes",
@@ -73,7 +71,4 @@ export class Votes extends Model<
   @ForeignKey(() => Deputes)
   @Column(DataType.INTEGER)
   deputeId!: number;
-
-  @BelongsTo(() => Deputes)
-  depute!: Deputes;
 }

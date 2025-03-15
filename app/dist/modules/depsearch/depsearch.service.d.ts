@@ -1,11 +1,7 @@
-import { DeputeRepository } from "repositories/deputes.repository";
-import { VoteRepository } from "repositories/votes.repository";
+import { VotesDeputesRepository } from "repositories/votes-deputes.repository";
+import { Depsearch } from "./depsearch.resolver";
 export declare class DepsearchService {
-    private deputeRepository;
-    private voteRepository;
-    constructor(deputeRepository: DeputeRepository, voteRepository: VoteRepository);
-    getDeputeByName(deputeName: string): Promise<{
-        depute: any;
-        votes: any;
-    }>;
+    private votesDeputesRepository;
+    constructor(votesDeputesRepository: VotesDeputesRepository);
+    retrievePayload(deputeId: number): Promise<Depsearch[]>;
 }

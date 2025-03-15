@@ -21,16 +21,18 @@ let VoteRepository = class VoteRepository {
     constructor(voteModel) {
         this.voteModel = voteModel;
     }
-    async deputeVotes(deputeName) {
-        const whereCondition = {
-            [sequelize_2.Op.or]: [
-                { votants_pour: { [sequelize_2.Op.overlap]: [deputeName] } },
-                { votants_contre: { [sequelize_2.Op.overlap]: [deputeName] } },
-                { votants_abstention: { [sequelize_2.Op.overlap]: [deputeName] } },
-            ],
-        };
+    async findVotesByDeputeName(deputeName) {
         try {
-            return this.voteModel.findAll({ where: whereCondition });
+            return this.voteModel.findAll({
+                where: {
+                    [sequelize_2.Op.or]: [
+                        { votants_pour: { [sequelize_2.Op.contains]: [deputeName] } },
+                        { votants_contre: { [sequelize_2.Op.contains]: [deputeName] } },
+                        { votants_abstention: { [sequelize_2.Op.contains]: [deputeName] } },
+                        { non_votants: { [sequelize_2.Op.contains]: [deputeName] } },
+                    ],
+                },
+            });
         }
         catch (error) {
             throw new common_1.InternalServerErrorException("Database error", error);

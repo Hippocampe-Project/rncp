@@ -15,16 +15,18 @@ export class VoteRepository {
     private readonly voteModel: typeof Votes,
   ) {}
 
-  async deputeVotes(deputeName: string): Promise<InferAttributes<Votes>[]> {
-    const whereCondition: WhereOptions<Votes> = {
-      [Op.or]: [
-        { votants_pour: { [Op.overlap]: [deputeName] } },
-        { votants_contre: { [Op.overlap]: [deputeName] } },
-        { votants_abstention: { [Op.overlap]: [deputeName] } },
-      ],
-    };
+  async findVotesByDeputeName(deputeName: string): Promise<Votes[] | null> {
     try {
-      return this.voteModel.findAll({ where: whereCondition });
+      return this.voteModel.findAll({
+        where: {
+          [Op.or]: [
+            { votants_pour: { [Op.contains]: [deputeName] } },
+            { votants_contre: { [Op.contains]: [deputeName] } },
+            { votants_abstention: { [Op.contains]: [deputeName] } },
+            { non_votants: { [Op.contains]: [deputeName] } },
+          ],
+        },
+      });
     } catch (error) {
       throw new InternalServerErrorException("Database error", error);
     }
