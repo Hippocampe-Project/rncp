@@ -17,5 +17,4 @@ export declare class Votes extends Model<InferAttributes<Votes>, InferCreationAt
     votants_pour: string[];
     votants_contre: string[];
     votants_abstention: string[];
-    deputeId: number;
 }

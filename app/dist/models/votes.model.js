@@ -11,13 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Votes = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
-const deputes_model_1 = require("./deputes.model");
+const votes_deputes_model_1 = require("./votes-deputes.model");
 let Votes = class Votes extends sequelize_typescript_1.Model {
 };
 exports.Votes = Votes;
 __decorate([
     sequelize_typescript_1.PrimaryKey,
     sequelize_typescript_1.AutoIncrement,
+    (0, sequelize_typescript_1.ForeignKey)(() => votes_deputes_model_1.Votes_deputes),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
     __metadata("design:type", Number)
 ], Votes.prototype, "id", void 0);
@@ -81,15 +82,10 @@ __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.ARRAY(sequelize_typescript_1.DataType.STRING)),
     __metadata("design:type", Array)
 ], Votes.prototype, "votants_abstention", void 0);
-__decorate([
-    (0, sequelize_typescript_1.ForeignKey)(() => deputes_model_1.Deputes),
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
-    __metadata("design:type", Number)
-], Votes.prototype, "deputeId", void 0);
 exports.Votes = Votes = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: "votes",
-        timestamps: true,
+        timestamps: false,
     })
 ], Votes);
 //# sourceMappingURL=votes.model.js.map

@@ -18,6 +18,7 @@ const deputes_model_1 = require("../../models/deputes.model");
 const depsearch_service_1 = require("./depsearch.service");
 const votes_deputes_service_1 = require("./votes-deputes.service");
 const common_1 = require("@nestjs/common");
+const depsearch_errors_1 = require("./depsearch.errors");
 let DepsearchResolver = class DepsearchResolver {
     constructor(depsearchService, votesDeputeService) {
         this.depsearchService = depsearchService;
@@ -27,6 +28,9 @@ let DepsearchResolver = class DepsearchResolver {
     async depute(deputeName) {
         this.logger.debug({ deputeName }, "Trying to resolve Query.depsearch");
         const deputeId = await this.votesDeputeService.createPayload(deputeName);
+        if (!deputeName) {
+            throw new depsearch_errors_1.DeputeNotFoundError(deputeName);
+        }
         return this.depsearchService.retrievePayload(deputeId);
     }
 };

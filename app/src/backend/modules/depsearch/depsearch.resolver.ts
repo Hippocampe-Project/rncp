@@ -3,6 +3,7 @@ import { Deputes } from "../../models/deputes.model";
 import { DepsearchService } from "./depsearch.service";
 import { VotesDeputesService } from "./votes-deputes.service";
 import { Logger } from "@nestjs/common";
+import { DeputeNotFoundError } from "./depsearch.errors";
 
 export type Depsearch = {
   vote_id: number;
@@ -34,7 +35,9 @@ export class DepsearchResolver {
     this.logger.debug({ deputeName }, "Trying to resolve Query.depsearch");
 
     const deputeId = await this.votesDeputeService.createPayload(deputeName); // insert the votes in the database and return the deputeId
-
+    if (!deputeName) {
+      throw new DeputeNotFoundError(deputeName);
+    }
     return this.depsearchService.retrievePayload(deputeId);
   }
 

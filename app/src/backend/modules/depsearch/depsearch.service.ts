@@ -14,6 +14,11 @@ export class DepsearchService {
   async retrievePayload(deputeId: number): Promise<Depsearch[]> {
     const votes =
       await this.votesDeputesRepository.findAllDeputeVotes(deputeId);
+    if (!votes.length) {
+      throw new NotFoundException(
+        `No votes found for depute with ID ${deputeId}`,
+      );
+    }
     //return name back to normal
     return votes;
   }

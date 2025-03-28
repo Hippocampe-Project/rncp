@@ -12,12 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Deputes = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const graphql_1 = require("@nestjs/graphql");
+const votes_deputes_model_1 = require("./votes-deputes.model");
 let Deputes = class Deputes extends sequelize_typescript_1.Model {
 };
 exports.Deputes = Deputes;
 __decorate([
     sequelize_typescript_1.PrimaryKey,
     sequelize_typescript_1.AutoIncrement,
+    (0, sequelize_typescript_1.ForeignKey)(() => votes_deputes_model_1.Votes_deputes),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
     (0, graphql_1.Field)(() => Number),
     __metadata("design:type", Number)

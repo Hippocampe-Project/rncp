@@ -5,11 +5,10 @@ import {
   PrimaryKey,
   AutoIncrement,
   DataType,
-  HasMany,
-  BelongsToMany,
+  ForeignKey,
 } from "sequelize-typescript";
 import { ObjectType, Field } from "@nestjs/graphql"; // GraphQL decorators
-import { Votes } from "./votes.model";
+import { Votes_deputes } from "./votes-deputes.model";
 
 @ObjectType() // This marks the class as a GraphQL object type
 @Table({
@@ -19,6 +18,7 @@ import { Votes } from "./votes.model";
 export class Deputes extends Model {
   @PrimaryKey
   @AutoIncrement
+  @ForeignKey(() => Votes_deputes)
   @Column(DataType.INTEGER)
   @Field(() => Number) // @Field() marks this property to be exposed in GraphQL
   id!: number;

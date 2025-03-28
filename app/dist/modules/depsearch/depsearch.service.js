@@ -19,6 +19,9 @@ let DepsearchService = class DepsearchService {
     }
     async retrievePayload(deputeId) {
         const votes = await this.votesDeputesRepository.findAllDeputeVotes(deputeId);
+        if (!votes.length) {
+            throw new common_1.NotFoundException(`No votes found for depute with ID ${deputeId}`);
+        }
         return votes;
     }
 };

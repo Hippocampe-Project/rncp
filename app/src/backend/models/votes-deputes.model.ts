@@ -14,7 +14,7 @@ import { InferAttributes, InferCreationAttributes } from "sequelize";
 @ObjectType()
 @Table({
   tableName: "votes_deputes",
-  timestamps: true,
+  timestamps: false,
 })
 export class Votes_deputes extends Model<
   InferAttributes<Votes_deputes>,

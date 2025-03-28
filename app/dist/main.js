@@ -9,6 +9,7 @@ const global_exception_filter_1 = require("global-exception.filter");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_express_1.ExpressAdapter());
     const sequelize = app.get(sequelize_typescript_1.Sequelize);
+    await sequelize.sync({ force: false });
     console.log("Sequelize has been loaded!");
     app.enableCors();
     app.useGlobalFilters(new global_exception_filter_1.GlobalExceptionFilter());

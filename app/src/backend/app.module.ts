@@ -20,7 +20,7 @@ import { CommissionsPermanentes } from "./models/commissions-p.model";
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), "src/schema.gql"), // Auto-generate schema
+      autoSchemaFile: join(process.cwd(), "schema/schema.gql"), // Auto-generate schema
       playground: true, // Enables GraphQL Playground (UI)
       debug: true, // Debugging mode for development
     }),

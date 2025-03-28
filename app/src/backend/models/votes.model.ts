@@ -7,12 +7,12 @@ import {
   PrimaryKey,
   AutoIncrement,
 } from "sequelize-typescript";
-import { Deputes } from "./deputes.model";
 import { InferAttributes, InferCreationAttributes } from "sequelize";
+import { Votes_deputes } from "./votes-deputes.model";
 
 @Table({
   tableName: "votes",
-  timestamps: true,
+  timestamps: false,
 })
 export class Votes extends Model<
   InferAttributes<Votes>,
@@ -20,6 +20,7 @@ export class Votes extends Model<
 > {
   @PrimaryKey
   @AutoIncrement
+  @ForeignKey(() => Votes_deputes)
   @Column(DataType.INTEGER)
   id!: number;
 
@@ -67,8 +68,4 @@ export class Votes extends Model<
 
   @Column(DataType.ARRAY(DataType.STRING))
   votants_abstention!: string[];
-
-  @ForeignKey(() => Deputes)
-  @Column(DataType.INTEGER)
-  deputeId!: number;
 }
