@@ -1,12 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int, Context } from "@nestjs/graphql";
 import { Deputes } from "../../models/deputes.model";
 import { DepsearchService } from "./depsearch.service";
-import { DeputeRepository } from "repositories/deputes.repository";
-import { VoteRepository } from "repositories/votes.repository";
-import { VotesDeputesRepository } from "repositories/votes-deputes.repository";
 import { VotesDeputesService } from "./votes-deputes.service";
 import { Logger } from "@nestjs/common";
-import { Model } from "sequelize";
 
 export type Depsearch = {
   vote_id: number;

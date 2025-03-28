@@ -14,6 +14,7 @@ export class DepsearchService {
   async retrievePayload(deputeId: number): Promise<Depsearch[]> {
     const votes =
       await this.votesDeputesRepository.findAllDeputeVotes(deputeId);
+    //return name back to normal
     return votes;
   }
 }
