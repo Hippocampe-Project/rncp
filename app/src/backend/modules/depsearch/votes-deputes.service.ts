@@ -46,6 +46,7 @@ export class VotesDeputesService {
   }
 
   private getVoteCategory(deputeName: string, vote: any): string {
+    //"vote" should be of type Vote from the vote entity
     if (vote.votants_pour.includes(deputeName)) return "pour";
     if (vote.votants_contre.includes(deputeName)) return "contre";
     if (vote.votants_abstention.includes(deputeName)) return "abstention";
