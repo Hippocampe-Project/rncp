@@ -21,7 +21,7 @@ __decorate([
     sequelize_typescript_1.AutoIncrement,
     (0, sequelize_typescript_1.ForeignKey)(() => votes_deputes_model_1.Votes_deputes),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
-    (0, graphql_1.Field)(() => Number),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], Deputes.prototype, "id", void 0);
 __decorate([
@@ -41,7 +41,7 @@ __decorate([
 ], Deputes.prototype, "sexe", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
-    (0, graphql_1.Field)(() => Number),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], Deputes.prototype, "departement_id", void 0);
 __decorate([
@@ -51,7 +51,7 @@ __decorate([
 ], Deputes.prototype, "circonscription", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
-    (0, graphql_1.Field)(() => Number, { nullable: true }),
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
     __metadata("design:type", Number)
 ], Deputes.prototype, "commission_permanente_id", void 0);
 __decorate([
@@ -66,7 +66,7 @@ __decorate([
 ], Deputes.prototype, "suppleant", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
-    (0, graphql_1.Field)(() => Number),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], Deputes.prototype, "parti_id", void 0);
 __decorate([
@@ -76,12 +76,12 @@ __decorate([
 ], Deputes.prototype, "photo", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.BOOLEAN, defaultValue: true }),
-    (0, graphql_1.Field)(() => Boolean),
+    (0, graphql_1.Field)(),
     __metadata("design:type", Boolean)
 ], Deputes.prototype, "activite", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.DATE),
-    (0, graphql_1.Field)(() => Date),
+    (0, graphql_1.Field)(() => graphql_1.GraphQLISODateTime),
     __metadata("design:type", Date)
 ], Deputes.prototype, "activite_timestamp", void 0);
 exports.Deputes = Deputes = __decorate([

@@ -12,5 +12,5 @@ export declare class Deputes extends Model {
     parti_id: number;
     photo?: string;
     activite: boolean;
-    activite_timestamp: Date;
+    activite_timestamp?: Date;
 }

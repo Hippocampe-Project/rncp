@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Votes = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const votes_deputes_model_1 = require("./votes-deputes.model");
+const graphql_1 = require("@nestjs/graphql");
 let Votes = class Votes extends sequelize_typescript_1.Model {
 };
 exports.Votes = Votes;
@@ -20,42 +21,52 @@ __decorate([
     sequelize_typescript_1.AutoIncrement,
     (0, sequelize_typescript_1.ForeignKey)(() => votes_deputes_model_1.Votes_deputes),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], Votes.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Votes.prototype, "titre", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], Votes.prototype, "dossier_legislatif", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Votes.prototype, "numero_vote", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Votes.prototype, "date", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], Votes.prototype, "num_votants", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], Votes.prototype, "num_pour", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], Votes.prototype, "num_contre", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], Votes.prototype, "num_abstention", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.ARRAY(sequelize_typescript_1.DataType.STRING)),
+    (0, graphql_1.Field)(() => [String]),
     __metadata("design:type", Array)
 ], Votes.prototype, "non_votants", void 0);
 __decorate([
@@ -64,25 +75,31 @@ __decorate([
 ], Votes.prototype, "num_non_votants", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.BOOLEAN),
+    (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", Boolean)
 ], Votes.prototype, "adopte", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    (0, graphql_1.Field)(),
     __metadata("design:type", Number)
 ], Votes.prototype, "num_absents", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.ARRAY(sequelize_typescript_1.DataType.STRING)),
+    (0, graphql_1.Field)(() => [String]),
     __metadata("design:type", Array)
 ], Votes.prototype, "votants_pour", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.ARRAY(sequelize_typescript_1.DataType.STRING)),
+    (0, graphql_1.Field)(() => [String]),
     __metadata("design:type", Array)
 ], Votes.prototype, "votants_contre", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.ARRAY(sequelize_typescript_1.DataType.STRING)),
+    (0, graphql_1.Field)(() => [String]),
     __metadata("design:type", Array)
 ], Votes.prototype, "votants_abstention", void 0);
 exports.Votes = Votes = __decorate([
+    (0, graphql_1.ObjectType)(),
     (0, sequelize_typescript_1.Table)({
         tableName: "votes",
         timestamps: false,

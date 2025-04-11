@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommissionsPermanentes = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
+const graphql_1 = require("@nestjs/graphql");
 let CommissionsPermanentes = class CommissionsPermanentes extends sequelize_typescript_1.Model {
 };
 exports.CommissionsPermanentes = CommissionsPermanentes;
@@ -18,25 +19,31 @@ __decorate([
     sequelize_typescript_1.PrimaryKey,
     sequelize_typescript_1.AutoIncrement,
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], CommissionsPermanentes.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], CommissionsPermanentes.prototype, "nom", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], CommissionsPermanentes.prototype, "objet", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(() => [String]),
     __metadata("design:type", Array)
 ], CommissionsPermanentes.prototype, "deputes", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], CommissionsPermanentes.prototype, "logo", void 0);
 exports.CommissionsPermanentes = CommissionsPermanentes = __decorate([
+    (0, graphql_1.ObjectType)(),
     (0, sequelize_typescript_1.Table)({
         tableName: "commissions_p",
         timestamps: false,

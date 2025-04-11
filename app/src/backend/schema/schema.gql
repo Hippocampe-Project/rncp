@@ -2,27 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Deputes {
-  id: Float!
-  nom: String!
-  date_naissance: String!
-  sexe: String!
-  departement_id: Float!
-  circonscription: String!
-  commission_permanente_id: Float
-  profession: String!
-  suppleant: String
-  parti_id: Float!
-  photo: String
-  activite: Boolean!
-  activite_timestamp: DateTime!
+type Votes_deputes {
+  vote_id: Int!
+  depute_id: Int!
+  vote_category: String!
+  depute_nom: String!
+  vote_titre: String!
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type Query {
-  depute(nom: String!): Deputes
+  depute(nom: String!): [Votes_deputes!]
 }

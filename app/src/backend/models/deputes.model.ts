@@ -7,7 +7,7 @@ import {
   DataType,
   ForeignKey,
 } from "sequelize-typescript";
-import { ObjectType, Field } from "@nestjs/graphql"; // GraphQL decorators
+import { ObjectType, Field, Int, GraphQLISODateTime } from "@nestjs/graphql"; // GraphQL decorators
 import { Votes_deputes } from "./votes-deputes.model";
 
 @ObjectType() // This marks the class as a GraphQL object type
@@ -20,7 +20,7 @@ export class Deputes extends Model {
   @AutoIncrement
   @ForeignKey(() => Votes_deputes)
   @Column(DataType.INTEGER)
-  @Field(() => Number) // @Field() marks this property to be exposed in GraphQL
+  @Field(() => Int) // @Field() marks this property to be exposed in GraphQL. Here, the id is exposed. On the other side of the relation, the relation itself will be exposed.
   id!: number;
 
   @Column(DataType.STRING)
@@ -36,7 +36,7 @@ export class Deputes extends Model {
   sexe!: string;
 
   @Column(DataType.STRING)
-  @Field(() => Number)
+  @Field(() => Int)
   departement_id!: number;
 
   @Column(DataType.STRING)
@@ -44,7 +44,7 @@ export class Deputes extends Model {
   circonscription!: string;
 
   @Column(DataType.STRING)
-  @Field(() => Number, { nullable: true }) // Nullable field
+  @Field(() => Int, { nullable: true }) // Nullable field
   commission_permanente_id?: number;
 
   @Column(DataType.STRING)
@@ -56,7 +56,7 @@ export class Deputes extends Model {
   suppleant?: string;
 
   @Column(DataType.STRING)
-  @Field(() => Number)
+  @Field(() => Int)
   parti_id!: number;
 
   @Column(DataType.STRING)
@@ -64,10 +64,10 @@ export class Deputes extends Model {
   photo?: string;
 
   @Column({ type: DataType.BOOLEAN, defaultValue: true })
-  @Field(() => Boolean)
+  @Field()
   activite!: boolean;
 
   @Column(DataType.DATE)
-  @Field(() => Date)
-  activite_timestamp: Date;
+  @Field(() => GraphQLISODateTime)
+  activite_timestamp?: Date;
 }

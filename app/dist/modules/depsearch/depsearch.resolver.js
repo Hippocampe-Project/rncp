@@ -14,11 +14,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DepsearchResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
-const deputes_model_1 = require("../../models/deputes.model");
 const depsearch_service_1 = require("./depsearch.service");
 const votes_deputes_service_1 = require("./votes-deputes.service");
 const common_1 = require("@nestjs/common");
 const depsearch_errors_1 = require("./depsearch.errors");
+const votes_deputes_model_1 = require("models/votes-deputes.model");
 let DepsearchResolver = class DepsearchResolver {
     constructor(depsearchService, votesDeputeService) {
         this.depsearchService = depsearchService;
@@ -36,14 +36,14 @@ let DepsearchResolver = class DepsearchResolver {
 };
 exports.DepsearchResolver = DepsearchResolver;
 __decorate([
-    (0, graphql_1.Query)(() => deputes_model_1.Deputes, { nullable: true }),
+    (0, graphql_1.Query)(() => [votes_deputes_model_1.Votes_deputes], { nullable: true }),
     __param(0, (0, graphql_1.Args)("nom", { type: () => String })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], DepsearchResolver.prototype, "depute", null);
 exports.DepsearchResolver = DepsearchResolver = __decorate([
-    (0, graphql_1.Resolver)(() => deputes_model_1.Deputes),
+    (0, graphql_1.Resolver)(() => [votes_deputes_model_1.Votes_deputes]),
     __metadata("design:paramtypes", [depsearch_service_1.DepsearchService,
         votes_deputes_service_1.VotesDeputesService])
 ], DepsearchResolver);

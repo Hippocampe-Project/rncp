@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Scrutins = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
+const graphql_1 = require("@nestjs/graphql");
 let Scrutins = class Scrutins extends sequelize_typescript_1.Model {
 };
 exports.Scrutins = Scrutins;
@@ -18,25 +19,31 @@ __decorate([
     sequelize_typescript_1.PrimaryKey,
     sequelize_typescript_1.AutoIncrement,
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], Scrutins.prototype, "id", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Scrutins.prototype, "titre", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Scrutins.prototype, "dossier_legislatif", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Scrutins.prototype, "date", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Scrutins.prototype, "nom", void 0);
 exports.Scrutins = Scrutins = __decorate([
+    (0, graphql_1.ObjectType)(),
     (0, sequelize_typescript_1.Table)({
         tableName: "scrutins",
         timestamps: false,

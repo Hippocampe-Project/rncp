@@ -4,6 +4,7 @@ import { DepsearchService } from "./depsearch.service";
 import { VotesDeputesService } from "./votes-deputes.service";
 import { Logger } from "@nestjs/common";
 import { DeputeNotFoundError } from "./depsearch.errors";
+import { Votes_deputes } from "models/votes-deputes.model";
 
 export type Depsearch = {
   vote_id: number;
@@ -13,7 +14,7 @@ export type Depsearch = {
   vote_titre: string;
 };
 
-@Resolver(() => Deputes)
+@Resolver(() => [Votes_deputes])
 export class DepsearchResolver {
   constructor(
     private depsearchService: DepsearchService,
@@ -23,7 +24,7 @@ export class DepsearchResolver {
   logger = Logger;
 
   //@Query marks the following query method as a graphQL handler and allows from specifying the return type of the query + data extraction
-  @Query(() => Deputes, { nullable: true })
+  @Query(() => [Votes_deputes], { nullable: true })
 
   //@Args works with @Query to specify that the expected argument comes from a graphQL query.
   //'nom' should be written in the query and specifies which value in the DB should be passed to 'deputeName'
