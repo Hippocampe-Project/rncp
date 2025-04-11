@@ -4,7 +4,10 @@ import os
 import logging
 import re
 
-from config_urls import LAST_SCRAPED_VOTE_FILE
+from dotenv import load_dotenv
+
+load_dotenv()
+LAST_SCRAPED_VOTE_FILE = os.getenv("LAST_SCRAPED_VOTE_FILE")
 
 
 def sort_votes_by_vote_number(votes: list[dict]) -> list[dict]:

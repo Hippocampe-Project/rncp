@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 import concurrent.futures
 import signal
+import os
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -17,7 +18,13 @@ from selenium.common.exceptions import TimeoutException
 if typing.TYPE_CHECKING:
     from chrome_driver_handler import ChromeDriverHandler
 
-from config_urls import BASE_URL, LAST_SCRAPED_VOTE_FILE
+from config_urls import BASE_URL
+from dotenv import load_dotenv
+
+load_dotenv()
+LAST_SCRAPED_VOTE_FILE = os.getenv("LAST_SCRAPED_VOTE_FILE")
+
+
 from scrape.scrape_models import Bill, Vote
 from scrape_utils import load_json
 

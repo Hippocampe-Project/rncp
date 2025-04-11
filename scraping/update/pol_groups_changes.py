@@ -8,11 +8,6 @@ from datetime import datetime
 from scrape_utils import format_date
 from config_urls import POL_GROUP_CHANGES
 
-# BASE_URL = "https://www2.assemblee-nationale.fr"
-# POL_GROUP_CHANGES = (
-#     f"{BASE_URL}/17/les-groupes-politiques/modifications-a-la-composition-des-groupes"
-# )
-
 
 def scrape_last_groupe_composition_change(
     url: str = POL_GROUP_CHANGES,
@@ -32,7 +27,3 @@ def scrape_last_groupe_composition_change(
         return format_date(last_modification_date)
     except Exception as scraping_error:
         logging.error(f"Error while scraping element : {scraping_error}")
-
-
-# data = scrape_last_groupe_composition_change()
-# print(data)

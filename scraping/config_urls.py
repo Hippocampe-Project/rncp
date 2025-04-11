@@ -11,8 +11,3 @@ ENACTED_BILLS = f"{BASE_URL}/documents/liste/(type)/ta"  # à vérifier
 POL_GROUP_CHANGES = (
     f"{BASE_URL}/17/les-groupes-politiques/modifications-a-la-composition-des-groupes"
 )
-
-# /scraping/persistent_data == container mount point to "/home/marion/dev/rncp_project
-LAST_SCRAPED_VOTE_FILE = "/scraping/persistent_data/last_scraped_vote.json"
-LAST_SCRAPING_INFOS = "/scraping/persistent_data/last_scraping_infos.json"
-LAST_SCRAPED_DEPUTES_FILE = "/scraping/persistent_data/last_scraped_deputes.json"

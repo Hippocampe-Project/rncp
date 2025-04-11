@@ -438,9 +438,11 @@ class HandleDatabase:
     def close(self):
         if self.cursor:
             self.cursor.close()
+            self.cursor = None
             logging.info("Database cursor closed.")
         if self.conn:
             self.conn.close()
+            self.conn = None
             logging.info("Database connection closed.")
         else:
             logging.error("Error : tried to close unexisting cursor or connection.")

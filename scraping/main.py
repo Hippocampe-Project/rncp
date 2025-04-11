@@ -14,10 +14,15 @@ from config_urls import (
     COMMISSIONS_URL,
     DEPARTEMENTS_URLS,
     RECORDED_VOTE_URL,
-    LAST_SCRAPED_VOTE_FILE,
-    LAST_SCRAPING_INFOS,
-    LAST_SCRAPED_DEPUTES_FILE,
 )
+
+from dotenv import load_dotenv
+
+load_dotenv()
+LAST_SCRAPED_VOTE_FILE = os.getenv("LAST_SCRAPED_VOTE_FILE")
+LAST_SCRAPING_INFOS = os.getenv("LAST_SCRAPING_INFOS")
+LAST_SCRAPED_DEPUTES_FILE = os.getenv("LAST_SCRAPED_DEPUTES_FILE")
+
 
 from chrome_driver_handler import ChromeDriverHandler
 from scrape.scrape_political_parties_urls import scrape_political_parties_urls
@@ -45,8 +50,8 @@ today_date = datetime.strptime(format_date, "%d-%m-%Y")
 # Scraping configuration
 permanent_infos = False
 scrape_pol_groups_and_deputes = False
-scrape_votes = False
-database_insertion = False
+scrape_votes = True
+database_insertion = True
 updating_votes = False
 updating_deputes = False
 
@@ -62,7 +67,7 @@ def main():
     driver_handler = ChromeDriverHandler(chrome_bin, chrome_driver)
 
     # fmt: off
-    scrape_pol_groups_and_deputes = database_insertion = updating_deputes = should_update_deputes(LAST_SCRAPED_DEPUTES_FILE)
+    # scrape_pol_groups_and_deputes = database_insertion = updating_deputes = should_update_deputes(LAST_SCRAPED_DEPUTES_FILE)
     # fmt: on
 
     if permanent_infos:
@@ -95,7 +100,7 @@ def main():
             )
         if (
             len(all_votes_pages_urls) == 0
-        ):  # sometimes scraping fail to retrieve any urls fo r unknown reason for some times
+        ):  # sometimes scraping fail to retrieve any urls for unknown reason for some times
             sys.exit(1)
         all_votes_data = scrape_each_vote(all_votes_pages_urls)
         all_votes_infos_sorted = sort_votes_by_vote_number(all_votes_data)
