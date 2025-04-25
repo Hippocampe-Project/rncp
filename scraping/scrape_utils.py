@@ -37,6 +37,30 @@ def load_json(file_path: str) -> dict:
         logging.error(f"Error loading JSON : {e}")
 
 
+def cleanup_logs(logs_directory):
+    current_time = datetime.now()
+
+    age_threshold = 30 * 24 * 60 * 60  # 30 days in seconds
+
+    for filename in os.listdir(logs_directory):
+        file_path = os.path.join(logs_directory, filename)
+
+        if os.path.isfile(file_path):
+            file_age = current_time - os.path.getctime(file_path)
+
+            if file_age > age_threshold:
+                logging.info(f"Deleting {filename} (older than 30 days)")
+                os.remove(file_path)
+
+
+def create_peristent_infos_json_if_needed(json_to_check: list):
+    for files in json_to_check:
+        if not os.path.exists(files):
+            with open(files, "w") as f:
+                json.dump({}, f)
+            logging.info(f"Created: {files}")
+
+
 def format_date(date_str) -> datetime:
     """date_str format == '13 février 2025'
     return 13-02-2025
