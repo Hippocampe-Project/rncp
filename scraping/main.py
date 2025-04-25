@@ -3,8 +3,20 @@ from datetime import datetime, time
 import time
 import logging
 import sys
+from dotenv import load_dotenv
 
+load_dotenv()
+LAST_SCRAPED_VOTE_FILE = os.getenv("LAST_SCRAPED_VOTE_FILE")
+LAST_SCRAPING_INFOS = os.getenv("LAST_SCRAPING_INFOS")
+LAST_SCRAPED_DEPUTES_FILE = os.getenv("LAST_SCRAPED_DEPUTES_FILE")
+LOGS_PATH = os.getenv("LOGS_PATH")
+
+format_date = datetime.now().strftime("%d-%m-%Y")
+today_date = datetime.strptime(format_date, "%d-%m-%Y")
+
+log_filename = f"{LOGS_PATH}/log_{datetime.now()}.log"
 logging.basicConfig(
+    filename=log_filename,
     level=logging.INFO,
     format="[%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)d] - %(message)s",
 )
@@ -15,13 +27,6 @@ from config_urls import (
     DEPARTEMENTS_URLS,
     RECORDED_VOTE_URL,
 )
-
-from dotenv import load_dotenv
-
-load_dotenv()
-LAST_SCRAPED_VOTE_FILE = os.getenv("LAST_SCRAPED_VOTE_FILE")
-LAST_SCRAPING_INFOS = os.getenv("LAST_SCRAPING_INFOS")
-LAST_SCRAPED_DEPUTES_FILE = os.getenv("LAST_SCRAPED_DEPUTES_FILE")
 
 
 from chrome_driver_handler import ChromeDriverHandler
@@ -36,7 +41,12 @@ from database.db_insertions import (
     update_deputes_database_table,
     permanent_infos_database_insertion,
 )
-from scrape_utils import sort_votes_by_vote_number, save_json, load_json
+from scrape_utils import (
+    sort_votes_by_vote_number,
+    save_json,
+    cleanup_logs,
+    create_peristent_infos_json_if_needed,
+)
 from update.should_update import should_update_deputes
 from database.db_operations import HandleDatabase
 
@@ -44,8 +54,6 @@ from database.db_operations import HandleDatabase
 chrome_bin = os.getenv("CHROME_BIN")
 chrome_driver = os.getenv("CHROME_DRIVER")
 
-format_date = datetime.now().strftime("%d-%m-%Y")
-today_date = datetime.strptime(format_date, "%d-%m-%Y")
 
 # Scraping configuration
 permanent_infos = False
@@ -54,6 +62,11 @@ scrape_votes = True
 database_insertion = True
 updating_votes = False
 updating_deputes = False
+
+cleanup_logs(LOGS_PATH)
+create_peristent_infos_json_if_needed(
+    [LAST_SCRAPED_VOTE_FILE, LAST_SCRAPING_INFOS, LAST_SCRAPED_DEPUTES_FILE]
+)
 
 
 def main():
@@ -67,7 +80,7 @@ def main():
     driver_handler = ChromeDriverHandler(chrome_bin, chrome_driver)
 
     # fmt: off
-    # scrape_pol_groups_and_deputes = database_insertion = updating_deputes = should_update_deputes(LAST_SCRAPED_DEPUTES_FILE)
+    scrape_pol_groups_and_deputes = database_insertion = updating_deputes = should_update_deputes(LAST_SCRAPED_DEPUTES_FILE)
     # fmt: on
 
     if permanent_infos:
