@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import os
 import logging
@@ -40,13 +40,14 @@ def load_json(file_path: str) -> dict:
 def cleanup_logs(logs_directory):
     current_time = datetime.now()
 
-    age_threshold = 30 * 24 * 60 * 60  # 30 days in seconds
+    age_threshold = timedelta(days=30)
 
     for filename in os.listdir(logs_directory):
         file_path = os.path.join(logs_directory, filename)
 
         if os.path.isfile(file_path):
-            file_age = current_time - os.path.getctime(file_path)
+            file_creation_time = datetime.fromtimestamp(os.path.getctime(file_path))
+            file_age = current_time - file_creation_time
 
             if file_age > age_threshold:
                 logging.info(f"Deleting {filename} (older than 30 days)")
