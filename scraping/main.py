@@ -13,8 +13,10 @@ LOGS_PATH = os.getenv("LOGS_PATH")
 
 format_date = datetime.now().strftime("%d-%m-%Y")
 today_date = datetime.strptime(format_date, "%d-%m-%Y")
+timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
-log_filename = f"{LOGS_PATH}/log_{datetime.now()}.log"
+
+log_filename = os.path.join(LOGS_PATH, f"log_{timestamp}.log")
 logging.basicConfig(
     filename=log_filename,
     level=logging.INFO,
