@@ -1,0 +1,15 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Votes_deputes {
+  vote_id: Int!
+  depute_id: Int!
+  vote_category: String!
+  depute_nom: String!
+  vote_titre: String!
+}
+
+type Query {
+  depute(nom: String!): [Votes_deputes!]
+}

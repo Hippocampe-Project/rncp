@@ -18,7 +18,7 @@ const depsearch_service_1 = require("./depsearch.service");
 const votes_deputes_service_1 = require("./votes-deputes.service");
 const common_1 = require("@nestjs/common");
 const depsearch_errors_1 = require("./depsearch.errors");
-const votes_deputes_model_1 = require("models/votes-deputes.model");
+const votes_deputes_model_1 = require("../../models/votes-deputes.model");
 let DepsearchResolver = class DepsearchResolver {
     constructor(depsearchService, votesDeputeService) {
         this.depsearchService = depsearchService;

@@ -5,7 +5,7 @@ const app_module_1 = require("./app.module");
 const common_1 = require("@nestjs/common");
 const sequelize_typescript_1 = require("sequelize-typescript");
 const platform_express_1 = require("@nestjs/platform-express");
-const global_exception_filter_1 = require("global-exception.filter");
+const global_exception_filter_1 = require("./global-exception.filter");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_express_1.ExpressAdapter());
     const sequelize = app.get(sequelize_typescript_1.Sequelize);

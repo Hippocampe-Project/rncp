@@ -12,12 +12,12 @@ const depsearch_resolver_1 = require("./depsearch.resolver");
 const depsearch_service_1 = require("./depsearch.service");
 const deputes_repository_1 = require("../../repositories/deputes.repository");
 const sequelize_1 = require("@nestjs/sequelize");
-const deputes_model_1 = require("models/deputes.model");
-const votes_repository_1 = require("repositories/votes.repository");
-const votes_model_1 = require("models/votes.model");
+const deputes_model_1 = require("../../models/deputes.model");
+const votes_repository_1 = require("../../repositories/votes.repository");
+const votes_model_1 = require("../../models/votes.model");
 const votes_deputes_service_1 = require("./votes-deputes.service");
-const votes_deputes_repository_1 = require("repositories/votes-deputes.repository");
-const votes_deputes_model_1 = require("models/votes-deputes.model");
+const votes_deputes_repository_1 = require("../../repositories/votes-deputes.repository");
+const votes_deputes_model_1 = require("../../models/votes-deputes.model");
 let DepsearchModule = class DepsearchModule {
 };
 exports.DepsearchModule = DepsearchModule;
