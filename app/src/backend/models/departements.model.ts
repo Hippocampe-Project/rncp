@@ -2,20 +2,17 @@ import {
   Table,
   Column,
   Model,
-  ForeignKey,
   DataType,
   PrimaryKey,
   AutoIncrement,
-  HasMany,
 } from "sequelize-typescript";
 import { InferAttributes, InferCreationAttributes } from "sequelize";
-import { Deputes } from "./deputes.model";
 import { Field, Int, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
 @Table({
   tableName: "departements",
-  timestamps: false,
+  timestamps: true,
 })
 export class Departements extends Model<
   InferAttributes<Departements>,

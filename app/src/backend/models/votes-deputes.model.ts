@@ -14,7 +14,7 @@ import { BelongsTo, InferAttributes, InferCreationAttributes } from "sequelize";
 @ObjectType()
 @Table({
   tableName: "votes_deputes",
-  timestamps: false,
+  timestamps: true,
   indexes: [
     {
       unique: true,

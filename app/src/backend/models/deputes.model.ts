@@ -13,7 +13,7 @@ import { Votes_deputes } from "./votes-deputes.model";
 @ObjectType() // This marks the class as a GraphQL object type
 @Table({
   tableName: "deputes",
-  timestamps: false,
+  timestamps: true,
 })
 export class Deputes extends Model {
   @PrimaryKey

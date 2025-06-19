@@ -5,17 +5,13 @@ import {
   DataType,
   PrimaryKey,
   AutoIncrement,
-  HasMany,
-  ForeignKey,
-  BelongsTo,
 } from "sequelize-typescript";
-import { Deputes } from "./deputes.model";
 import { Field, Int, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
 @Table({
   tableName: "partis",
-  timestamps: false,
+  timestamps: true,
 })
 export class Partis extends Model<Partis> {
   @PrimaryKey

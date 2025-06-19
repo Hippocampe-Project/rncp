@@ -14,7 +14,7 @@ import { Field, Int, ObjectType } from "@nestjs/graphql";
 @ObjectType()
 @Table({
   tableName: "scrutins",
-  timestamps: false,
+  timestamps: true,
 })
 export class Scrutins extends Model<
   InferAttributes<Scrutins>,
