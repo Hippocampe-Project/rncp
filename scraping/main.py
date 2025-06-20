@@ -9,20 +9,21 @@ logging.basicConfig(
     format="[%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)d] - %(message)s",
 )
 
-from config_urls import (
+from globals.config_urls import (
     POLITICAL_GROUPS_URLS,
     COMMISSIONS_URL,
     DEPARTEMENTS_URLS,
     RECORDED_VOTE_URL,
 )
 
-from dotenv import load_dotenv
-
-load_dotenv()
-LAST_SCRAPED_VOTE_FILE = os.getenv("LAST_SCRAPED_VOTE_FILE")
-LAST_SCRAPING_INFOS = os.getenv("LAST_SCRAPING_INFOS")
-LAST_SCRAPED_DEPUTES_FILE = os.getenv("LAST_SCRAPED_DEPUTES_FILE")
-
+from globals.config_variables import (
+    LAST_SCRAPED_VOTE_FILE,
+    LAST_SCRAPING_INFOS,
+    LAST_SCRAPED_DEPUTES_FILE,
+    LOGS_PATH,
+    CHROME_BIN,
+    CHROME_DRIVER,
+)
 
 from chrome_driver_handler import ChromeDriverHandler
 from scrape.scrape_political_parties_urls import scrape_political_parties_urls
@@ -39,10 +40,6 @@ from database.db_insertions import (
 from scrape_utils import sort_votes_by_vote_number, save_json, load_json
 from update.should_update import should_update_deputes
 from database.db_operations import HandleDatabase
-
-# Access the environment variables
-chrome_bin = os.getenv("CHROME_BIN")
-chrome_driver = os.getenv("CHROME_DRIVER")
 
 format_date = datetime.now().strftime("%d-%m-%Y")
 today_date = datetime.strptime(format_date, "%d-%m-%Y")
@@ -64,21 +61,24 @@ def main():
     logging.info(" - Starting scraping - ")
     start_scraping = time.time()
 
-    driver_handler = ChromeDriverHandler(chrome_bin, chrome_driver)
+    driver_handler = ChromeDriverHandler(CHROME_BIN, CHROME_DRIVER)
 
-    # fmt: off
-    # scrape_pol_groups_and_deputes = database_insertion = updating_deputes = should_update_deputes(LAST_SCRAPED_DEPUTES_FILE)
-    # fmt: on
+    scrape_pol_groups_and_deputes = database_insertion = updating_deputes = (
+        should_update_deputes(LAST_SCRAPED_DEPUTES_FILE)
+    )
 
     if permanent_infos:
-
+        logging.info("Scraping permanent infos : departements and commissions")
         departements_table = scrape_departements(DEPARTEMENTS_URLS)
         logging.info(departements_table)
 
         commissions_table = scrape_commissions(COMMISSIONS_URL)
         logging.info(commissions_table)
+    else:
+        logging.info("Skipping scraping of permanent infos")
 
     if scrape_pol_groups_and_deputes:
+        logging.info("Scraping political groups and deputes : {"updating" if {updating_deputes} else "first scraping" }")
 
         political_groups_links = scrape_political_parties_urls(POLITICAL_GROUPS_URLS)
         parties_table, all_representatives_urls = scrape_each_political_group_page(
@@ -92,11 +92,11 @@ def main():
     if scrape_votes:
         if updating_votes:
             all_votes_pages_urls = scrape_all_votes_urls(
-                driver_handler, RECORDED_VOTE_URL, updating=True
+                driver_handler, RECORDED_VOTE_URL, LAST_SCRAPED_VOTE_FILE, updating=True
             )
         else:
             all_votes_pages_urls = scrape_all_votes_urls(
-                driver_handler, RECORDED_VOTE_URL
+                driver_handler, RECORDED_VOTE_URL, LAST_SCRAPED_VOTE_FILE
             )
         if (
             len(all_votes_pages_urls) == 0
