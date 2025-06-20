@@ -78,7 +78,9 @@ def main():
         logging.info("Skipping scraping of permanent infos")
 
     if scrape_pol_groups_and_deputes:
-        logging.info("Scraping political groups and deputes : {"updating" if {updating_deputes} else "first scraping" }")
+        logging.info(
+            f"Scraping political groups and deputes : {'updating' if updating_deputes else 'first scraping'}"
+        )
 
         political_groups_links = scrape_political_parties_urls(POLITICAL_GROUPS_URLS)
         parties_table, all_representatives_urls = scrape_each_political_group_page(
@@ -90,6 +92,9 @@ def main():
         logging.info(representatives_table)
 
     if scrape_votes:
+        logging.info(
+            f"Scraping votes : {'updating' if updating_votes else 'first scraping'}"
+        )
         if updating_votes:
             all_votes_pages_urls = scrape_all_votes_urls(
                 driver_handler, RECORDED_VOTE_URL, LAST_SCRAPED_VOTE_FILE, updating=True
