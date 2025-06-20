@@ -4,7 +4,13 @@ import time
 import logging
 import sys
 
+format_date = datetime.now().strftime("%d-%m-%Y")
+today_date = datetime.strptime(format_date, "%d-%m-%Y")
+timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+log_filename = os.path.join(LOGS_PATH, f"log_{timestamp}.log")
 logging.basicConfig(
+    filename=log_filename,
     level=logging.INFO,
     format="[%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)d] - %(message)s",
 )
@@ -37,12 +43,25 @@ from database.db_insertions import (
     update_deputes_database_table,
     permanent_infos_database_insertion,
 )
-from scrape_utils import sort_votes_by_vote_number, save_json, load_json
+from scrape_utils import (
+    sort_votes_by_vote_number,
+    save_json,
+    cleanup_logs,
+    create_peristent_infos_json_if_needed,
+)
 from update.should_update import should_update_deputes
 from database.db_operations import HandleDatabase
 
 format_date = datetime.now().strftime("%d-%m-%Y")
 today_date = datetime.strptime(format_date, "%d-%m-%Y")
+timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+log_filename = os.path.join(LOGS_PATH, f"log_{timestamp}.log")
+logging.basicConfig(
+    filename=log_filename,
+    level=logging.INFO,
+    format="[%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)d] - %(message)s",
+)
 
 # Scraping configuration
 permanent_infos = False
@@ -51,6 +70,11 @@ scrape_votes = True
 database_insertion = True
 updating_votes = False
 updating_deputes = False
+
+cleanup_logs(LOGS_PATH)
+create_peristent_infos_json_if_needed(
+    [LAST_SCRAPED_VOTE_FILE, LAST_SCRAPING_INFOS, LAST_SCRAPED_DEPUTES_FILE]
+)
 
 
 def main():
