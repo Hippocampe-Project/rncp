@@ -9,6 +9,7 @@ import concurrent.futures
 import signal
 import os
 
+from error_handler import custom_exit
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -84,7 +85,7 @@ def scrape_all_votes_urls(
             logging.error(
                 f"An error occured while scraping votes urls : {scraping_error}"
             )
-            sys.exit(1)
+            custom_exit(scraping_error)
 
         try:
 
@@ -105,7 +106,7 @@ def scrape_all_votes_urls(
             logging.error(
                 f"An errror occured while trying to click on next page button : {click_error}"
             )
-            sys.exit(1)
+            custom_exit(click_error)
 
     return votes_urls
 
@@ -243,7 +244,7 @@ def scrape_each_vote(votes_urls: list[str], max_threads: int = 10) -> list[dict]
                         votes_infos.append(result)
                 except Exception as e:
                     logging.error(f"Error processing a vote page: {e}")
-                    sys.exit(1)
+                    custom_exit(e)
 
     except KeyboardInterrupt:
         logging.warning("Process interrupted, cleaning up and exiting.")

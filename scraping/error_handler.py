@@ -42,5 +42,5 @@ def custom_exit(error_msg: str):
         f"🧵 Stack trace:\n{stack}"
     )
     send_error_email(alert_content)
-    logging.warning("EXITING NOW")
+    logging.warning("❌ EXITING NOW ❌")
     sys.exit(1)

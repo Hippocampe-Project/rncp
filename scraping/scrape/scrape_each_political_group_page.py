@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 if typing.TYPE_CHECKING:
     from chrome_driver_handler import ChromeDriverHandler
 
+from error_handler import custom_exit
 from scrape.scrape_models import PoliticalGroup
 from globals.config_urls import BASE_URL
 
@@ -53,7 +54,9 @@ def scrape_each_political_group_page(
                 logging.error(
                     f"Timeout waiting for AJAX content to load for {party} : {timeout}"
                 )
-                sys.exit(1)
+                custom_exit(
+                    "Timeout waiting for AJAX content inside political group page"
+                )
 
             page_source = driver.page_source
             soup = BeautifulSoup(page_source, "html.parser")

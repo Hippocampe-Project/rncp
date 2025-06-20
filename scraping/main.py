@@ -31,6 +31,7 @@ from globals.config_variables import (
     CHROME_DRIVER,
 )
 
+from error_handler import custom_exit
 from chrome_driver_handler import ChromeDriverHandler
 from scrape.scrape_political_parties_urls import scrape_political_parties_urls
 from scrape.scrape_representatives import scrape_each_representative
@@ -119,7 +120,7 @@ def main():
         if (
             len(all_votes_pages_urls) == 0
         ):  # sometimes scraping fail to retrieve any urls for unknown reason for some times
-            sys.exit(1)
+            custom_exit("Scraping failed to retrieve any votes page urls")
         all_votes_data = scrape_each_vote(all_votes_pages_urls)
         all_votes_infos_sorted = sort_votes_by_vote_number(all_votes_data)
         logging.info(f"all votes length : {len(all_votes_infos_sorted)}")
