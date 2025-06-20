@@ -8,6 +8,9 @@ from update.pol_groups_changes import scrape_last_groupe_composition_change
 def should_update_deputes(filepath) -> bool:
     logging.info("Searching for changes in political group composition ...")
     last_deputes_scraping_infos = load_json(filepath)
+    if last_deputes_scraping_infos == {}:
+        logging.info("No need to update deputes table")
+        return False
     last_deputes_scraping_date: str = last_deputes_scraping_infos.get(
         "last_scraped_deputes"
     )
