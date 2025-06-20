@@ -18,11 +18,7 @@ from selenium.common.exceptions import TimeoutException
 if typing.TYPE_CHECKING:
     from chrome_driver_handler import ChromeDriverHandler
 
-from config_urls import BASE_URL
-from dotenv import load_dotenv
-
-load_dotenv()
-LAST_SCRAPED_VOTE_FILE = os.getenv("LAST_SCRAPED_VOTE_FILE")
+from globals.config_urls import BASE_URL
 
 
 from scrape.scrape_models import Bill, Vote
@@ -34,7 +30,7 @@ from scrape_utils import load_json
 
 
 def scrape_all_votes_urls(
-    driver_handler: "ChromeDriverHandler", url: str, updating=False
+    driver_handler: "ChromeDriverHandler", url: str, vote_file: str, updating=False
 ) -> list[str]:
     """votes update logic is inside the main votes scraping function because
     we know for a fact that votes are updated weekly. So it's basically inherent
@@ -45,7 +41,7 @@ def scrape_all_votes_urls(
 
     if updating:
         logging.info("Updating votes, retrieving last vote number")
-        last_vote = load_json(LAST_SCRAPED_VOTE_FILE)
+        last_vote = load_json(vote_file)
         last_vote_number = last_vote.get("last_scraped_vote")
         logging.info(f"Last scraped vote number : {last_vote_number}")
 

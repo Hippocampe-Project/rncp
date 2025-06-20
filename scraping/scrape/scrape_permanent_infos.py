@@ -3,7 +3,7 @@ import logging
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-from config_urls import BASE_URL
+from globals.config_urls import BASE_URL
 from scrape.scrape_models import Departement, Commissions
 
 
