@@ -1,7 +1,8 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import logging
 import re
+import os
 
 
 def sort_votes_by_vote_number(votes: list[dict]) -> list[dict]:
@@ -29,6 +30,31 @@ def load_json(file_path: str) -> dict:
         return data
     except Exception as e:
         logging.error(f"Error loading JSON : {e}")
+
+
+def cleanup_logs(logs_directory):
+    current_time = datetime.now()
+
+    age_threshold = timedelta(days=30)
+
+    for filename in os.listdir(logs_directory):
+        file_path = os.path.join(logs_directory, filename)
+
+        if os.path.isfile(file_path):
+            file_creation_time = datetime.fromtimestamp(os.path.getctime(file_path))
+            file_age = current_time - file_creation_time
+
+            if file_age > age_threshold:
+                logging.info(f"Deleting {filename} (older than 30 days)")
+                os.remove(file_path)
+
+
+def create_peristent_infos_json_if_needed(json_to_check: list):
+    for files in json_to_check:
+        if not os.path.exists(files):
+            with open(files, "w") as f:
+                json.dump({}, f)
+            logging.info(f"Created: {files}")
 
 
 def format_date(date_str) -> datetime:
