@@ -207,6 +207,9 @@ def main():
 
     logging.info(" -- Exiting main() function --")
 
+    if db.error_msg:
+        custom_exit(db.error_msg)
+
 
 if __name__ == "__main__":
     main()
