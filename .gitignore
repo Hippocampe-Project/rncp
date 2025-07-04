@@ -8,3 +8,6 @@ __pycache__/
 # Docker files
 compose.yaml
 dockerfile
+
+# Tests
+tests/
