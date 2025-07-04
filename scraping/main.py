@@ -4,17 +4,6 @@ import time
 import logging
 import sys
 
-format_date = datetime.now().strftime("%d-%m-%Y")
-today_date = datetime.strptime(format_date, "%d-%m-%Y")
-timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-
-log_filename = os.path.join(LOGS_PATH, f"log_{timestamp}.log")
-logging.basicConfig(
-    filename=log_filename,
-    level=logging.INFO,
-    format="[%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)d] - %(message)s",
-)
-
 from globals.config_urls import (
     POLITICAL_GROUPS_URLS,
     COMMISSIONS_URL,
@@ -52,6 +41,18 @@ from scrape_utils import (
 )
 from update.should_update import should_update_deputes
 from database.db_operations import HandleDatabase
+
+
+format_date = datetime.now().strftime("%d-%m-%Y")
+today_date = datetime.strptime(format_date, "%d-%m-%Y")
+timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+log_filename = os.path.join(LOGS_PATH, f"log_{timestamp}.log")
+logging.basicConfig(
+    filename=log_filename,
+    level=logging.INFO,
+    format="[%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)d] - %(message)s",
+)
 
 # Scraping configuration
 permanent_infos = False
