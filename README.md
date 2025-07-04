@@ -32,3 +32,17 @@ Dockerised environement
     nano .env --> edit the file with the help of the .env.exemple template
 6. Run main
     python3 main.py   
+
+
+## CONFIGURATION
+
+### Prod configuration 
+
+At the top of main.py, you can find a 'scraping configugation' section with variables. 
+
+##### For the first scraping in prod env : 
+<pre> ```python permanent_infos = True scrape_pol_groups_and_deputes = True scrape_votes = True database_insertion = True updating_votes = False updating_deputes = False ``` </pre>
+
+##### The prod setting for automatic scraping is : 
+<pre> ```python permanent_infos = False scrape_pol_groups_and_deputes = True scrape_votes = True database_insertion = True updating_votes = True updating_deputes = True ``` </pre>
+Note: Scraping only the deputes that have changed is quite complex. For now, we re-scrape all deputes and perform the comparison and update directly during the database insertion step.

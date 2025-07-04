@@ -59,11 +59,11 @@ logging.basicConfig(
 
 # Scraping configuration
 permanent_infos = False
-scrape_pol_groups_and_deputes = False
+scrape_pol_groups_and_deputes = True
 scrape_votes = True
 database_insertion = True
-updating_votes = False
-updating_deputes = False
+updating_votes = True
+updating_deputes = True
 
 cleanup_logs(LOGS_PATH)
 create_peristent_infos_json_if_needed(
