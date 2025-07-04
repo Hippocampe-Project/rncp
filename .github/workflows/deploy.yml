@@ -26,6 +26,6 @@ jobs:
           # deployment commands :
           echo "Starting deployment at $(date)"
           cd /home/umoya/RNCP/scraper/rncp
-          git pull origin main
+          git pull origin main-scraping
           echo "Deploy finished at $(date)"
         EOF
