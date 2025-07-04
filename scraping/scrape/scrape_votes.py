@@ -219,8 +219,7 @@ def scrape_each_vote(votes_urls: list[str], max_threads: int = 10) -> list[dict]
     votes_infos = []
 
     def signal_handler(sig, frame):
-        logging.error("Process interrupted, cleaning up threads...")
-        sys.exit(0)
+        raise KeyboardInterrupt
 
     signal.signal(signal.SIGINT, signal_handler)
 
