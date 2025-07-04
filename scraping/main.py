@@ -3,24 +3,33 @@ from datetime import datetime, time
 import time
 import logging
 import sys
+from dotenv import load_dotenv
 
-from globals.config_urls import (
+load_dotenv()
+LAST_SCRAPED_VOTE_FILE = os.getenv("LAST_SCRAPED_VOTE_FILE")
+LAST_SCRAPING_INFOS = os.getenv("LAST_SCRAPING_INFOS")
+LAST_SCRAPED_DEPUTES_FILE = os.getenv("LAST_SCRAPED_DEPUTES_FILE")
+LOGS_PATH = os.getenv("LOGS_PATH")
+
+format_date = datetime.now().strftime("%d-%m-%Y")
+today_date = datetime.strptime(format_date, "%d-%m-%Y")
+timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+log_filename = os.path.join(LOGS_PATH, f"log_{timestamp}.log")
+logging.basicConfig(
+    filename=log_filename,
+    level=logging.INFO,
+    format="[%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)d] - %(message)s",
+)
+
+from config_urls import (
     POLITICAL_GROUPS_URLS,
     COMMISSIONS_URL,
     DEPARTEMENTS_URLS,
     RECORDED_VOTE_URL,
 )
 
-from globals.config_variables import (
-    LAST_SCRAPED_VOTE_FILE,
-    LAST_SCRAPING_INFOS,
-    LAST_SCRAPED_DEPUTES_FILE,
-    LOGS_PATH,
-    CHROME_BIN,
-    CHROME_DRIVER,
-)
 
-from error_handler import custom_exit
 from chrome_driver_handler import ChromeDriverHandler
 from scrape.scrape_political_parties_urls import scrape_political_parties_urls
 from scrape.scrape_representatives import scrape_each_representative
@@ -42,17 +51,10 @@ from scrape_utils import (
 from update.should_update import should_update_deputes
 from database.db_operations import HandleDatabase
 
+# Access the environment variables
+chrome_bin = os.getenv("CHROME_BIN")
+chrome_driver = os.getenv("CHROME_DRIVER")
 
-format_date = datetime.now().strftime("%d-%m-%Y")
-today_date = datetime.strptime(format_date, "%d-%m-%Y")
-timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-
-log_filename = os.path.join(LOGS_PATH, f"log_{timestamp}.log")
-logging.basicConfig(
-    filename=log_filename,
-    level=logging.INFO,
-    format="[%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)d] - %(message)s",
-)
 
 # Scraping configuration
 permanent_infos = False
@@ -76,26 +78,21 @@ def main():
     logging.info(" - Starting scraping - ")
     start_scraping = time.time()
 
-    driver_handler = ChromeDriverHandler(CHROME_BIN, CHROME_DRIVER)
+    driver_handler = ChromeDriverHandler(chrome_bin, chrome_driver)
 
-    scrape_pol_groups_and_deputes = database_insertion = updating_deputes = (
-        should_update_deputes(LAST_SCRAPED_DEPUTES_FILE)
-    )
+    # fmt: off
+    scrape_pol_groups_and_deputes = database_insertion = updating_deputes = should_update_deputes(LAST_SCRAPED_DEPUTES_FILE)
+    # fmt: on
 
     if permanent_infos:
-        logging.info("Scraping permanent infos : departements and commissions")
+
         departements_table = scrape_departements(DEPARTEMENTS_URLS)
         logging.info(departements_table)
 
         commissions_table = scrape_commissions(COMMISSIONS_URL)
         logging.info(commissions_table)
-    else:
-        logging.info("Skipping scraping of permanent infos")
 
     if scrape_pol_groups_and_deputes:
-        logging.info(
-            f"Scraping political groups and deputes : {'updating' if updating_deputes else 'first scraping'}"
-        )
 
         political_groups_links = scrape_political_parties_urls(POLITICAL_GROUPS_URLS)
         parties_table, all_representatives_urls = scrape_each_political_group_page(
@@ -107,21 +104,18 @@ def main():
         logging.info(representatives_table)
 
     if scrape_votes:
-        logging.info(
-            f"Scraping votes : {'updating' if updating_votes else 'first scraping'}"
-        )
         if updating_votes:
             all_votes_pages_urls = scrape_all_votes_urls(
-                driver_handler, RECORDED_VOTE_URL, LAST_SCRAPED_VOTE_FILE, updating=True
+                driver_handler, RECORDED_VOTE_URL, updating=True
             )
         else:
             all_votes_pages_urls = scrape_all_votes_urls(
-                driver_handler, RECORDED_VOTE_URL, LAST_SCRAPED_VOTE_FILE
+                driver_handler, RECORDED_VOTE_URL
             )
         if (
             len(all_votes_pages_urls) == 0
         ):  # sometimes scraping fail to retrieve any urls for unknown reason for some times
-            custom_exit("Scraping failed to retrieve any votes page urls")
+            sys.exit(1)
         all_votes_data = scrape_each_vote(all_votes_pages_urls)
         all_votes_infos_sorted = sort_votes_by_vote_number(all_votes_data)
         logging.info(f"all votes length : {len(all_votes_infos_sorted)}")
@@ -207,9 +201,6 @@ def main():
     logging.info(f" ~ Execution time : {end_time - start_time} ~ ")
 
     logging.info(" -- Exiting main() function --")
-
-    if db.error_msg:
-        custom_exit(db.error_msg)
 
 
 if __name__ == "__main__":

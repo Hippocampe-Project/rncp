@@ -1,8 +1,13 @@
 from datetime import datetime, timedelta
 import json
+import os
 import logging
 import re
-import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
+LAST_SCRAPED_VOTE_FILE = os.getenv("LAST_SCRAPED_VOTE_FILE")
 
 
 def sort_votes_by_vote_number(votes: list[dict]) -> list[dict]:
@@ -32,10 +37,10 @@ def load_json(file_path: str) -> dict:
         logging.error(f"Error loading JSON : {e}")
 
 
-def cleanup_logs(logs_directory, days=60):
-
+def cleanup_logs(logs_directory):
     current_time = datetime.now()
-    age_threshold = timedelta(days)
+
+    age_threshold = timedelta(days=30)
 
     for filename in os.listdir(logs_directory):
         file_path = os.path.join(logs_directory, filename)
@@ -45,7 +50,7 @@ def cleanup_logs(logs_directory, days=60):
             file_age = current_time - file_creation_time
 
             if file_age > age_threshold:
-                logging.info(f"Deleting {filename} - (older than {days} days)")
+                logging.info(f"Deleting {filename} (older than 30 days)")
                 os.remove(file_path)
 
 

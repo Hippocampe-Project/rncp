@@ -1,23 +1,35 @@
-import sys
+import os
 import psycopg2
 from psycopg2 import sql
 from psycopg2.extras import execute_batch
 import logging
+from dotenv import load_dotenv
 
-from globals.config_variables import DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER
+
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,  # Adjust to DEBUG if needed
+    format="%(asctime)s - %(levelname)s - %(message)s",
+)
+
+# from pathlib import Path
+# dotenv_path = Path("/scraping")
+# dotenv.load_dotenv(dotenv_path=dotenv_path)
+
+load_dotenv()
 
 
 class HandleDatabase:
     def __init__(self):
-        self.db_name = DB_NAME
-        self.db_host = DB_HOST
-        self.db_user = DB_USER
-        self.db_password = DB_PASSWORD
-        self.db_port = DB_PORT
+        self.db_name = os.getenv("DB_NAME")
+        self.db_host = os.getenv("DB_HOST")
+        self.db_user = os.getenv("DB_USER")
+        self.db_password = os.getenv("DB_PASSWORD")
+        self.db_port = os.getenv("DB_PORT")
         self.conn = None
         self.cursor = None
         self.query_success = None
-        self.error_msg = None
 
     def __repr__(self):
         return (
@@ -43,7 +55,6 @@ class HandleDatabase:
                 logging.info("Database connection established successfully")
             except psycopg2.DatabaseError as error:
                 logging.error(f"Error connecting to the database: {error}")
-                self.error_msg = error
         else:
             logging.warning("Connection already exist.")
 
@@ -53,7 +64,6 @@ class HandleDatabase:
                 self.cursor = self.conn.cursor()
             except psycopg2.DatabaseError as error:
                 logging.error(f"Database cursor creation failed : {error}")
-                self.error_msg = error
         else:
             logging.warning("Tried to create new cursor but : cursor already exist.")
 
@@ -114,7 +124,6 @@ class HandleDatabase:
             logging.info("Query executed successfully.")
         except psycopg2.DatabaseError as error:
             logging.error(f"Error executing query: {error}")
-            self.error_msg = error
 
     def fetch_table_data(self, table):
         if not self.cursor:
@@ -134,7 +143,6 @@ class HandleDatabase:
             return result
         except psycopg2.DatabaseError as error:
             logging.error(f"Error while fething data of table {table} : {error}")
-            self.error_msg = error
             return []
 
     @staticmethod
@@ -257,7 +265,6 @@ class HandleDatabase:
         except psycopg2.DatabaseError as error:
             self.conn.rollback()
             logging.error(f"Error updating {id_column} of table {table_name}: {error}")
-            self.error_msg = error
 
     def execute_deputes_update_queries(
         self, data: list[tuple], deputes_table="deputes"
@@ -279,7 +286,6 @@ class HandleDatabase:
             self.conn.rollback()
             logging.error(f"Error executing table deputes update query : {error}")
             self.query_success = False
-            self.error_msg = error
 
     def execute_batch_insertion_query(
         self, query: str, data: list[tuple], table_name: str
@@ -299,7 +305,6 @@ class HandleDatabase:
                 f"Error executing batch insertion query for table {table_name} : {error}"
             )
             self.query_success = False
-            self.error_msg = error
 
     def execute_insertion(self, data: list[dict], table_name: str):
         """Takes the list of dictionaries containing the scraped data of a single scrape model
@@ -308,17 +313,13 @@ class HandleDatabase:
             data (list[dict]): a list of dictionnaries formated with the same scrappe model
             table_name (str): the name of the db table we want to inject into
         """
-        try:
-            insertion_query: psycopg2.sql.Composed = HandleDatabase.define_insert_query(
-                data, table_name
-            )
-            insertion_values: list[tuple] = HandleDatabase.define_insert_values(data)
-            self.execute_batch_insertion_query(
-                insertion_query, insertion_values, table_name
-            )
-        except KeyboardInterrupt:
-            logging.warning("Process interrupted, cleaning up and exiting.")
-            sys.exit(0)
+        insertion_query: psycopg2.sql.Composed = HandleDatabase.define_insert_query(
+            data, table_name
+        )
+        insertion_values: list[tuple] = HandleDatabase.define_insert_values(data)
+        self.execute_batch_insertion_query(
+            insertion_query, insertion_values, table_name
+        )
 
     def create_new_table(self, temp_table_name, data: list[dict]):
         try:
@@ -354,7 +355,6 @@ class HandleDatabase:
             logging.info(f"Temporary table '{temp_table_name}' successfully created")
         except psycopg2.DatabaseError as error:
             logging.error(f"Error creating {temp_table_name} : {error}")
-            self.error_msg = error
 
     def drop_table(self, table_name):
         if not self.cursor:
@@ -366,7 +366,6 @@ class HandleDatabase:
             logging.info(f"{table_name} successfully deleted")
         except psycopg2.DatabaseError as error:
             logging.error(f"Error droping table: {table_name} : {error}")
-            self.error_msg = error
 
     def compare_deputes_with_temp_deputes_table(
         self, main_table: str, temp_table_name: str, data: list[dict]
@@ -402,7 +401,6 @@ class HandleDatabase:
             )
             self.drop_table(temp_table_name)
             self.query_success = False
-            self.error_msg = error
 
     def insert_missing_data(self, main_table: str, temp_table: str, coll_order: str):
         try:
@@ -419,7 +417,6 @@ class HandleDatabase:
             logging.info("Successfully inserted new deputies")
         except psycopg2.DatabaseError as error:
             logging.error(f"Error inserting new deputies : {error}")
-            self.error_msg = error
 
     def mark_outdated_data(self, main_table: str, temp_table: str):
         try:
@@ -434,7 +431,6 @@ class HandleDatabase:
             logging.info("Successfully updated inactive deputes")
         except psycopg2.DatabaseError as error:
             logging.error(f"Error updating inactive deputes : {error}")
-            self.error_msg = error
 
     def commit(self):
         self.conn.commit()
