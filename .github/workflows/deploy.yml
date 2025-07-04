@@ -23,9 +23,17 @@ jobs:
         ssh -p 2222 -o StrictHostKeyChecking=no ${{ secrets.RASPBERRY_SERVER_SSH_USER }}@${{ secrets.RASPBERRY_SERVER_SSH_HOST }} << 'EOF'
           set -e
           echo "Connected successfully"
+
           # deployment commands :
-          echo "Starting deployment at $(date)"
+          echo "Starting deployment at \$(date)"
           cd /home/umoya/RNCP/scraper/rncp
           git pull origin main-scraping
-          echo "Deploy finished at $(date)"
+
+          # Update dependencies 
+          echo "Updating dependencies"
+          source /home/umoya/RNCP/scraper/venv_scraper/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt 
+
+          echo "Deployment finished at \$(date)"
         EOF
