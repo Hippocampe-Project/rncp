@@ -32,10 +32,10 @@ def load_json(file_path: str) -> dict:
         logging.error(f"Error loading JSON : {e}")
 
 
-def cleanup_logs(logs_directory):
-    current_time = datetime.now()
+def cleanup_logs(logs_directory, days=60):
 
-    age_threshold = timedelta(days=30)
+    current_time = datetime.now()
+    age_threshold = timedelta(days)
 
     for filename in os.listdir(logs_directory):
         file_path = os.path.join(logs_directory, filename)
@@ -45,7 +45,7 @@ def cleanup_logs(logs_directory):
             file_age = current_time - file_creation_time
 
             if file_age > age_threshold:
-                logging.info(f"Deleting {filename} (older than 30 days)")
+                logging.info(f"Deleting {filename} - (older than {days} days)")
                 os.remove(file_path)
 
 
