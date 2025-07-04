@@ -32,6 +32,8 @@ jobs:
           # Update dependencies 
           echo "Updating dependencies"
           source /home/umoya/RNCP/scraper/venv_scraper/bin/activate
+
+          cd /home/umoya/RNCP/scraper/rncp/scraping
           pip install --upgrade pip
           pip install -r requirements.txt 
 
