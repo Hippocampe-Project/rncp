@@ -9,7 +9,6 @@ import concurrent.futures
 import signal
 import os
 
-from error_handler import custom_exit
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -19,7 +18,11 @@ from selenium.common.exceptions import TimeoutException
 if typing.TYPE_CHECKING:
     from chrome_driver_handler import ChromeDriverHandler
 
-from globals.config_urls import BASE_URL
+from config_urls import BASE_URL
+from dotenv import load_dotenv
+
+load_dotenv()
+LAST_SCRAPED_VOTE_FILE = os.getenv("LAST_SCRAPED_VOTE_FILE")
 
 
 from scrape.scrape_models import Bill, Vote
@@ -31,7 +34,7 @@ from scrape_utils import load_json
 
 
 def scrape_all_votes_urls(
-    driver_handler: "ChromeDriverHandler", url: str, vote_file: str, updating=False
+    driver_handler: "ChromeDriverHandler", url: str, updating=False
 ) -> list[str]:
     """votes update logic is inside the main votes scraping function because
     we know for a fact that votes are updated weekly. So it's basically inherent
@@ -42,7 +45,7 @@ def scrape_all_votes_urls(
 
     if updating:
         logging.info("Updating votes, retrieving last vote number")
-        last_vote = load_json(vote_file)
+        last_vote = load_json(LAST_SCRAPED_VOTE_FILE)
         last_vote_number = last_vote.get("last_scraped_vote")
         logging.info(f"Last scraped vote number : {last_vote_number}")
 
@@ -85,7 +88,7 @@ def scrape_all_votes_urls(
             logging.error(
                 f"An error occured while scraping votes urls : {scraping_error}"
             )
-            custom_exit(scraping_error)
+            sys.exit(1)
 
         try:
 
@@ -106,7 +109,7 @@ def scrape_all_votes_urls(
             logging.error(
                 f"An errror occured while trying to click on next page button : {click_error}"
             )
-            custom_exit(click_error)
+            sys.exit(1)
 
     return votes_urls
 
@@ -219,7 +222,8 @@ def scrape_each_vote(votes_urls: list[str], max_threads: int = 10) -> list[dict]
     votes_infos = []
 
     def signal_handler(sig, frame):
-        raise KeyboardInterrupt
+        logging.error("Process interrupted, cleaning up threads...")
+        sys.exit(0)
 
     signal.signal(signal.SIGINT, signal_handler)
 
@@ -243,7 +247,7 @@ def scrape_each_vote(votes_urls: list[str], max_threads: int = 10) -> list[dict]
                         votes_infos.append(result)
                 except Exception as e:
                     logging.error(f"Error processing a vote page: {e}")
-                    custom_exit(e)
+                    sys.exit(1)
 
     except KeyboardInterrupt:
         logging.warning("Process interrupted, cleaning up and exiting.")
