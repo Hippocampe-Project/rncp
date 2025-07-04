@@ -39,10 +39,12 @@ class HandleDatabase:
                     user=self.db_user,
                     password=self.db_password,
                     port=self.db_port,
+                    sslmode="require",
                 )
                 logging.info("Database connection established successfully")
             except psycopg2.DatabaseError as error:
                 logging.error(f"Error connecting to the database: {error}")
+                self.conn = None
                 self.error_msg = error
         else:
             logging.warning("Connection already exist.")
@@ -452,9 +454,14 @@ class HandleDatabase:
             logging.error("Error : tried to close unexisting cursor or connection.")
 
 
-# Update db separatelly :
+### Testing DB Connection:
+# logging.info("Testing db connection")
+# db = HandleDatabase()
+# print(db)
+# db.test_db_conn()
 
-# logging.info("Executing db_operations.py")
+
+### Update db separatelly :
 # db = HandleDatabase()
 # db.connect()
 # db.create_cursor()
