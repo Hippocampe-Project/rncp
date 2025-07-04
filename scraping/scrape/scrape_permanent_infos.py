@@ -2,8 +2,9 @@ import requests
 import logging
 from bs4 import BeautifulSoup
 from tqdm import tqdm
+import sys
 
-from config_urls import BASE_URL
+from globals.config_urls import BASE_URL
 from scrape.scrape_models import Departement, Commissions
 
 
@@ -25,8 +26,12 @@ def scrape_departements(url: str) -> list[str]:
             departement = Departement(name=departement_title)
             departements_list.append(departement.to_dict())
         return departements_list
+
     except Exception as scraping_error:
         logging.error(f"Error while scraping {h4} element : {scraping_error}")
+    except KeyboardInterrupt:
+        logging.warning("Process interrupted, cleaning up and exiting.")
+        sys.exit(0)
 
 
 def scrape_commissions(url: str) -> list[str]:
@@ -68,3 +73,6 @@ def scrape_commissions(url: str) -> list[str]:
 
     except Exception as scraping_error:
         logging.warning(f"Error while scraping {div} : {scraping_error}")
+    except KeyboardInterrupt:
+        logging.warning("Process interrupted, cleaning up and exiting.")
+        sys.exit(0)

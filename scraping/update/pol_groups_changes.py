@@ -6,13 +6,13 @@ import logging
 from datetime import datetime
 
 from scrape_utils import format_date
-from config_urls import POL_GROUP_CHANGES
+from globals.config_urls import POL_GROUP_CHANGES
 
 
 def scrape_last_groupe_composition_change(
     url: str = POL_GROUP_CHANGES,
 ) -> datetime:  # format : 13-02-2025
-    logging.info(" Starting scraping last groupe change date")
+    logging.info("Starting scraping last groupe modification date")
 
     try:
         response = requests.get(url)

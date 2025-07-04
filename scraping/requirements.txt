@@ -6,3 +6,8 @@ psycopg2-binary
 python-dotenv
 sqlalchemy
 black
+pytest
+
+# Non python dependencies - system-wide depenendencies 
+# Chromium 124.0.6367.78 Alpine Linux
+# ChromeDriver 124.0.6367.78 (a087f2dd364ddd58b9c016ef1bf563d2bc138711-refs/branch-heads/6367@{#954})

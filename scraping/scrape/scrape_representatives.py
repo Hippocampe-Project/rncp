@@ -6,6 +6,8 @@ import sys
 import signal
 from tqdm import tqdm
 import concurrent.futures
+
+from error_handler import custom_exit
 from scrape.scrape_models import Representative
 
 
@@ -111,7 +113,7 @@ def scrape_each_representative(
                         representatives_table.append(result)
                 except Exception as e:
                     logging.error(f"Error processing a representative page: {e}")
-                    sys.exit(1)
+                    custom_exit(e)
 
     except KeyboardInterrupt:
         logging.warning("Process interrupted, cleaning up and exiting")
