@@ -14,13 +14,13 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Set up SSH key
-      uses: webfactory/ssh-agent@v0.8.1
+      uses: webfactory/ssh-agent@v0.7.0
       with:
         ssh-private-key: ${{ secrets.RASPBERRY_SERVER_SSH_PRIVATE_KEY }}
 
     - name: Deploy to server
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.RASPBERRY_SERVER_SSH_USER }}@${{ secrets.RASPBERRY_SERVER_SSH_HOST }} << 'EOF'
+        ssh -p 2222 -o StrictHostKeyChecking=no ${{ secrets.RASPBERRY_SERVER_SSH_USER }}@${{ secrets.RASPBERRY_SERVER_SSH_HOST }} << 'EOF'
           set -e
           echo "Connected successfully"
 

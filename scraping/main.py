@@ -4,6 +4,9 @@ import time
 import logging
 import sys
 
+# TESTING GITHUB ACTION DEPLOYMENT
+# TESTING GITHUB ACTION DEPLOYMENT
+
 from globals.config_urls import (
     POLITICAL_GROUPS_URLS,
     COMMISSIONS_URL,
