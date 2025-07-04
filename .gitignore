@@ -1,9 +1,11 @@
-backend/scraping/venv
+# Non-source files
 __pycache__/
+*.py[cod]
 .vscode/
 
 # Env variables
 .env
+backend/scraping/venv
 
 # Docker files
 compose.yaml

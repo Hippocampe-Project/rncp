@@ -1,0 +1,31 @@
+name: Deploy on raspberry server on push to main
+
+on:
+  push:
+    branches:
+      - main-scraping
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up SSH key
+      uses: webfactory/ssh-agent@v0.8.1
+      with:
+        ssh-private-key: ${{ secrets.RASPBERRY_SERVER_SSH_PRIVATE_KEY }}
+
+    - name: Deploy to server
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.RASPBERRY_SERVER_SSH_USER }}@${{ secrets.RASPBERRY_SERVER_SSH_HOST }} << 'EOF'
+          set -e
+          echo "Connected successfully"
+          # deployment commands :
+          echo "Starting deployment at $(date)"
+          cd /home/umoya/RNCP/scraper/rncp
+          git pull origin main
+          echo "Deploy finished at $(date)"
+        EOF
