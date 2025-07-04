@@ -3,7 +3,7 @@ name: Deploy on raspberry server on push to main
 on:
   push:
     branches:
-      - main
+      - main-scraping
 
 jobs:
   deploy:
