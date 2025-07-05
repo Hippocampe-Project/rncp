@@ -5,6 +5,7 @@ import { VotesDeputesService } from "./votes-deputes.service";
 import { Logger } from "@nestjs/common";
 import { DeputeNotFoundError } from "./depsearch.errors";
 import { Votes_deputes } from "models/votes-deputes.model";
+import { VoteDeputeDto } from "DTO/votes-deputes";
 
 export type Depsearch = {
   vote_id: number;
@@ -24,7 +25,7 @@ export class DepsearchResolver {
   logger = Logger;
 
   //@Query marks the following query method as a graphQL handler and allows from specifying the return type of the query + data extraction
-  @Query(() => [Votes_deputes], { nullable: true })
+  @Query(() => [VoteDeputeDto], { nullable: true })
 
   //@Args works with @Query to specify that the expected argument comes from a graphQL query.
   //'nom' should be written in the query and specifies which value in the DB should be passed to 'deputeName'
@@ -32,7 +33,7 @@ export class DepsearchResolver {
   public async depute(
     // @Context() request: RequestWithContext,
     @Args("nom", { type: () => String }) deputeName: string,
-  ): Promise<Depsearch[]> {
+  ): Promise<VoteDeputeDto[]> {
     this.logger.debug({ deputeName }, "Trying to resolve Query.depsearch");
 
     const deputeId = await this.votesDeputeService.createPayload(deputeName); // insert the votes in the database and return the deputeId

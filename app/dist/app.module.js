@@ -21,6 +21,7 @@ const scrutins_model_1 = require("./models/scrutins.model");
 const partis_model_1 = require("./models/partis.model");
 const departements_model_1 = require("./models/departements.model");
 const commissions_p_model_1 = require("./models/commissions-p.model");
+const user_model_1 = require("./models/user.model");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -54,6 +55,7 @@ exports.AppModule = AppModule = __decorate([
                         scrutins_model_1.Scrutins,
                         departements_model_1.Departements,
                         commissions_p_model_1.CommissionsPermanentes,
+                        user_model_1.User,
                     ],
                     dialectOptions: {
                         ssl: {

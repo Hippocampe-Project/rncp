@@ -12,16 +12,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DatabaseService = void 0;
 const common_1 = require("@nestjs/common");
 const sequelize_typescript_1 = require("sequelize-typescript");
-exports.default = () => ({
-    database: {
-        dialect: 'postgres',
-        host: process.env.DATABASE_HOST,
-        port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
-        username: process.env.DATABASE_USER,
-        password: process.env.DATABASE_PASSWORD,
-        database: process.env.DATABASE_NAME,
-    },
-});
+exports.default = () => {
+    console.log("Loaded DB password:", process.env.DATABASE_PASSWORD, "Loaded DB user:", process.env.DATABASE_USER);
+    return {
+        database: {
+            dialect: "postgres",
+            host: process.env.DATABASE_HOST,
+            port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
+            username: process.env.DATABASE_USER,
+            password: process.env.DATABASE_PASSWORD,
+            database: process.env.DATABASE_NAME,
+        },
+    };
+};
 let DatabaseService = class DatabaseService {
     constructor(sequelize) {
         this.sequelize = sequelize;
@@ -29,10 +32,10 @@ let DatabaseService = class DatabaseService {
     async onModuleInit() {
         try {
             await this.sequelize.authenticate();
-            console.log('Connection has been established successfully.');
+            console.log("Connection has been established successfully.");
         }
         catch (error) {
-            console.error('Unable to connect to the database:', error);
+            console.error("Unable to connect to the database:", error);
         }
     }
 };

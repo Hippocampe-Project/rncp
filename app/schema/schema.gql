@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Votes_deputes {
+type VoteDeputeDto {
   vote_id: Int!
   depute_id: Int!
   vote_category: String!
@@ -11,5 +11,5 @@ type Votes_deputes {
 }
 
 type Query {
-  depute(nom: String!): [Votes_deputes!]
+  depute(nom: String!): [VoteDeputeDto!]
 }

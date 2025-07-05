@@ -1,5 +1,5 @@
-import { OnModuleInit } from '@nestjs/common';
-import { Sequelize } from 'sequelize-typescript';
+import { OnModuleInit } from "@nestjs/common";
+import { Sequelize } from "sequelize-typescript";
 declare const _default: () => {
     database: {
         dialect: string;

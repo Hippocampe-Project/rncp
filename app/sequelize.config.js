@@ -1,4 +1,4 @@
-const { default: databaseConfig } = require('./dist/config/database.config.js');
+const { default: databaseConfig } = require("./dist/config/database.config.js");
 
 module.exports = {
   development: {

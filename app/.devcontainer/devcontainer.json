@@ -1,0 +1,19 @@
+{
+  "name": "RNCP Backend Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "forwardPorts": [3000],
+  "remoteUser": "node",
+  "workspaceFolder": "/app",
+  "postCreateCommand": "npm install",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "ms-azuretools.vscode-docker"
+  ]
+}

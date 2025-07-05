@@ -12,7 +12,7 @@ import { Field, Int, ObjectType } from "@nestjs/graphql";
 @ObjectType()
 @Table({
   tableName: "departements",
-  timestamps: true,
+  timestamps: false,
 })
 export class Departements extends Model<
   InferAttributes<Departements>,

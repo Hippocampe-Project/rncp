@@ -14,13 +14,7 @@ import { BelongsTo, InferAttributes, InferCreationAttributes } from "sequelize";
 @ObjectType()
 @Table({
   tableName: "votes_deputes",
-  timestamps: true,
-  indexes: [
-    {
-      unique: true,
-      fields: ["vote_id", "depute_id"],
-    },
-  ],
+  timestamps: false,
 })
 export class Votes_deputes extends Model<
   InferAttributes<Votes_deputes>,

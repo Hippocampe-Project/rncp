@@ -9,12 +9,10 @@ import databaseConfig, { DatabaseService } from "./config/database.config";
 import { Deputes } from "./models/deputes.model";
 import { Votes } from "./models/votes.model";
 import { Scrutins } from "./models/scrutins.model";
-// import { DeputeRepository } from './repositories/deputes.repository';
-import { VoteRepository } from "./repositories/votes.repository";
-import { PartiRepository } from "./repositories/partis.repository";
 import { Partis } from "./models/partis.model";
 import { Departements } from "./models/departements.model";
 import { CommissionsPermanentes } from "./models/commissions-p.model";
+import { User } from "models/user.model";
 
 @Module({
   imports: [
@@ -45,6 +43,7 @@ import { CommissionsPermanentes } from "./models/commissions-p.model";
           Scrutins,
           Departements,
           CommissionsPermanentes,
+          User,
         ],
         dialectOptions: {
           ssl: {

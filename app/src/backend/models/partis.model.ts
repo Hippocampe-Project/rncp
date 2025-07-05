@@ -11,7 +11,7 @@ import { Field, Int, ObjectType } from "@nestjs/graphql";
 @ObjectType()
 @Table({
   tableName: "partis",
-  timestamps: true,
+  timestamps: false,
 })
 export class Partis extends Model<Partis> {
   @PrimaryKey

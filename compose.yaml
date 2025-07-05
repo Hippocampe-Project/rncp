@@ -1,24 +1,22 @@
 services:
   backend:
-     image: rncp-app-backend
-     build:
-       context: ./app
-       dockerfile: dockerfile
-     volumes:
+    image: rncp-app-backend
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    volumes:
       - ./app:/app
-     # - /app/src/backend/node_modules
-     ports:
-       - "7777:3000"
+    # - /app/src/backend/node_modules
+    ports:
+      - "7777:3000"
     # depends_on:
     #   - scraping
 
   scraper:
     image: rncp-scraping
-    build: 
+    build:
       context: ./scraping
       dockerfile: dockerfile
     volumes:
       - ./scraping:/scraping
-
-
 # Manage container dependencies with DB (eg)

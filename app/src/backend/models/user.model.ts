@@ -2,43 +2,45 @@ import {
   Table,
   Column,
   Model,
-  ForeignKey,
   DataType,
   PrimaryKey,
   AutoIncrement,
-  BelongsTo,
 } from "sequelize-typescript";
 import { InferAttributes, InferCreationAttributes } from "sequelize";
 import { Field, Int, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
 @Table({
-  tableName: "scrutins",
+  tableName: "users",
   timestamps: false,
 })
-export class Scrutins extends Model<
-  InferAttributes<Scrutins>,
-  InferCreationAttributes<Scrutins>
+export class User extends Model<
+  InferAttributes<User>,
+  InferCreationAttributes<User>
 > {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
   @Field(() => Int)
-  id!: number;
+  id: number;
 
   @Column(DataType.STRING)
   @Field()
-  titre!: string;
+  password!: string;
+
+  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  @Field()
+  email!: string;
+
+  @Column(DataType.BOOLEAN)
+  @Field()
+  emailVerified: boolean;
+
+  @Column({ defaultValue: "USER" })
+  @Field()
+  role!: "USER" | "ADMIN";
 
   @Column(DataType.STRING)
-  @Field()
-  dossier_legislatif?: string;
-
-  @Column(DataType.STRING)
-  @Field()
-  date!: string;
-
-  @Column(DataType.STRING)
-  @Field()
-  nom!: string;
+  @Field({ nullable: true })
+  refreshToken?: string;
 }
