@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { join } from "path";
-import { DepsearchModule } from "./modules/depsearch/depsearch.module";
+import { DepsearchModule } from "domain/depsearch/depsearch.module";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import databaseConfig, { DatabaseService } from "./config/database.config";

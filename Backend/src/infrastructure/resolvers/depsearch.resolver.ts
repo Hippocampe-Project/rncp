@@ -1,11 +1,11 @@
 import { Resolver, Query, Mutation, Args, Int, Context } from "@nestjs/graphql";
 import { Deputes } from "../../models/deputes.model";
-import { DepsearchService } from "./depsearch.service";
-import { VotesDeputesService } from "./votes-deputes.service";
+import { DepsearchService } from "../../domain/depsearch/depsearch.service";
+import { VotesDeputesService } from "../../domain/depsearch/votes-deputes.service";
 import { Logger } from "@nestjs/common";
-import { DeputeNotFoundError } from "./depsearch.errors";
+import { DeputeNotFoundError } from "../../domain/depsearch/depsearch.errors";
 import { Votes_deputes } from "models/votes-deputes.model";
-import { VoteDeputeDto } from "DTO/votes-deputes";
+import { VoteDeputeDto } from "domain/DTO/votes-deputes";
 
 export type Depsearch = {
   vote_id: number;

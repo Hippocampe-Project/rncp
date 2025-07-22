@@ -5,7 +5,7 @@ import { DeputeNotFoundError } from "./depsearch.errors";
 import { VotesDeputesRepository } from "repositories/votes-deputes.repository";
 import { Votes_deputes } from "models/votes-deputes.model";
 import { Deputes } from "models/deputes.model";
-import { Depsearch } from "./depsearch.resolver";
+import { Depsearch } from "../../infrastructure/resolvers/depsearch.resolver";
 
 @Injectable()
 export class DepsearchService {

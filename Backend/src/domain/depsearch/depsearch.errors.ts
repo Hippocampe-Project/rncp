@@ -1,5 +1,5 @@
 import { ForbiddenError } from "apollo-server-express";
-import { UnexpectedError } from "errors";
+import { UnexpectedError } from "../../../errors";
 
 export type DepsearchErrors =
   | ForbiddenError

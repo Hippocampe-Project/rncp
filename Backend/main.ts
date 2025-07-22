@@ -1,5 +1,5 @@
 import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
+import { AppModule } from "./src/app.module";
 import { Logger } from "@nestjs/common";
 import { Sequelize } from "sequelize-typescript";
 import { ExpressAdapter } from "@nestjs/platform-express";

@@ -3,7 +3,7 @@ import { Injectable, ConflictException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { User } from "../../models/user.model";
 import * as bcrypt from "bcrypt";
-import { SignupInput } from "../../DTO/signup.input";
+import { SignupInput } from "../DTO/signup.input";
 
 @Injectable()
 export class AuthService {
