@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
-import { Votes } from "models/votes.model";
-import { Votes_deputes } from "models/votes-deputes.model";
-import { DeputeRepository } from "repositories/deputes.repository";
-import { VoteRepository } from "repositories/votes.repository";
+import { Votes } from "../../infrastructure/models/votes.model";
+import { Votes_deputes } from "../../infrastructure/models/votes-deputes.model";
+import { DeputeRepository } from "../../infrastructure/repositories/deputes.repository";
+import { VoteRepository } from "../../infrastructure/repositories/votes.repository";
 import { DeputeNotFoundError, VotesNotFoundError } from "./depsearch.errors";
 
 @Injectable()
@@ -11,7 +11,7 @@ export class VotesDeputesService {
   constructor(
     @InjectModel(Votes_deputes) private votesDeputesModel: typeof Votes_deputes,
     private deputeRepository: DeputeRepository,
-    private voteRepository: VoteRepository,
+    private voteRepository: VoteRepository
   ) {}
 
   async createPayload(deputeName: string): Promise<number> {

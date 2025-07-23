@@ -1,7 +1,7 @@
 // src/auth/auth.service.ts
 import { Injectable, ConflictException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
-import { User } from "../../models/user.model";
+import { User } from "../../infrastructure/models/user.model";
 import * as bcrypt from "bcrypt";
 import { SignupInput } from "../DTO/signup.input";
 
@@ -9,7 +9,7 @@ import { SignupInput } from "../DTO/signup.input";
 export class AuthService {
   constructor(
     @InjectModel(User)
-    private userModel: typeof User,
+    private userModel: typeof User
   ) {}
 
   async signup(signupInput: SignupInput): Promise<User> {

@@ -1,18 +1,13 @@
-import {
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from "@nestjs/common";
+import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { Votes } from "../models/votes.model";
-import { Deputes } from "models/deputes.model";
-import { InferAttributes, Op, WhereOptions } from "sequelize";
+import { Op } from "sequelize";
 
 @Injectable()
 export class VoteRepository {
   constructor(
     @InjectModel(Votes)
-    private readonly voteModel: typeof Votes,
+    private readonly voteModel: typeof Votes
   ) {}
 
   async findVotesByDeputeName(deputeName: string): Promise<Votes[] | null> {

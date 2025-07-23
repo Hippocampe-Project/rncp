@@ -1,11 +1,11 @@
 import { Resolver, Query, Mutation, Args, Int, Context } from "@nestjs/graphql";
-import { Deputes } from "../../models/deputes.model";
-import { DepsearchService } from "../../domain/depsearch/depsearch.service";
-import { VotesDeputesService } from "../../domain/depsearch/votes-deputes.service";
+import { Deputes } from "../../../infrastructure/models/deputes.model";
+import { DepsearchService } from "../../../domain/depsearch/depsearch.service";
+import { VotesDeputesService } from "../../../domain/depsearch/votes-deputes.service";
 import { Logger } from "@nestjs/common";
-import { DeputeNotFoundError } from "../../domain/depsearch/depsearch.errors";
-import { Votes_deputes } from "models/votes-deputes.model";
-import { VoteDeputeDto } from "domain/DTO/votes-deputes";
+import { DeputeNotFoundError } from "../../../domain/depsearch/depsearch.errors";
+import { Votes_deputes } from "../../../infrastructure/models/votes-deputes.model";
+import { VoteDeputeDto } from "../../../domain/DTO/votes-deputes";
 
 export type Depsearch = {
   vote_id: number;
@@ -19,7 +19,7 @@ export type Depsearch = {
 export class DepsearchResolver {
   constructor(
     private depsearchService: DepsearchService,
-    private votesDeputeService: VotesDeputesService,
+    private votesDeputeService: VotesDeputesService
   ) {}
 
   logger = Logger;
@@ -32,7 +32,7 @@ export class DepsearchResolver {
   //the type specification is a function that returns a type rather than a plain type, to avoid circular dependency (get back on that)
   public async depute(
     // @Context() request: RequestWithContext,
-    @Args("nom", { type: () => String }) deputeName: string,
+    @Args("nom", { type: () => String }) deputeName: string
   ): Promise<VoteDeputeDto[]> {
     this.logger.debug({ deputeName }, "Trying to resolve Query.depsearch");
 

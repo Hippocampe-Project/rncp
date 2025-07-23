@@ -1,14 +1,14 @@
 import { Module } from "@nestjs/common";
-import { DepsearchResolver } from "../../infrastructure/resolvers/depsearch.resolver";
+import { DepsearchResolver } from "../../presentation/schema/resolvers/depsearch.resolver";
 import { DepsearchService } from "./depsearch.service";
-import { DeputeRepository } from "infrastructure/repositories/deputes.repository";
+import { DeputeRepository } from "../../infrastructure/repositories/deputes.repository";
 import { SequelizeModule } from "@nestjs/sequelize";
-import { Deputes } from "models/deputes.model";
-import { VoteRepository } from "infrastructure/repositories/votes.repository";
-import { Votes } from "models/votes.model";
+import { Deputes } from "../../infrastructure/models/deputes.model";
+import { VoteRepository } from "../../infrastructure/repositories/votes.repository";
+import { Votes } from "../../infrastructure/models/votes.model";
 import { VotesDeputesService } from "./votes-deputes.service";
-import { VotesDeputesRepository } from "infrastructure/repositories/votes-deputes.repository";
-import { Votes_deputes } from "models/votes-deputes.model";
+import { VotesDeputesRepository } from "../../infrastructure/repositories/votes-deputes.repository";
+import { Votes_deputes } from "../../infrastructure/models/votes-deputes.model";
 
 // DepsearchModule acts as the intermediary that connects:
 

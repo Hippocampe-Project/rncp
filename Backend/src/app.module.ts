@@ -2,17 +2,17 @@ import { Module } from "@nestjs/common";
 import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { join } from "path";
-import { DepsearchModule } from "domain/depsearch/depsearch.module";
+import { DepsearchModule } from "./domain/depsearch/depsearch.module";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import databaseConfig, { DatabaseService } from "./config/database.config";
-import { Deputes } from "./models/deputes.model";
-import { Votes } from "./models/votes.model";
-import { Scrutins } from "./models/scrutins.model";
-import { Partis } from "./models/partis.model";
-import { Departements } from "./models/departements.model";
-import { CommissionsPermanentes } from "./models/commissions-p.model";
-import { User } from "models/user.model";
+import { Deputes } from "./infrastructure/models/deputes.model";
+import { Votes } from "./infrastructure/models/votes.model";
+import { Scrutins } from "./infrastructure/models/scrutins.model";
+import { Partis } from "./infrastructure/models/partis.model";
+import { Departements } from "./infrastructure/models/departements.model";
+import { CommissionsPermanentes } from "./infrastructure/models/commissions-p.model";
+import { User } from "./infrastructure/models/user.model";
 
 @Module({
   imports: [
