@@ -12,6 +12,10 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: Backend # <--- This makes all `run` commands happen inside Backend/
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,6 +25,7 @@ jobs:
         with:
           node-version: 20
           cache: "npm"
+          cache-dependency-path: Backend/package-lock.json # <--- point cache here
 
       - name: Install dependencies
         run: npm ci
