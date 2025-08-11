@@ -10,8 +10,8 @@ import { Response } from "express";
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
-    // Check if request is a GraphQL request
-    const isGraphQL = host.getArgByIndex(3); // GraphQL context is at index 3
+
+    const isGraphQL = host.getArgByIndex(3); 
 
     if (isGraphQL) {
       const gqlHost = GqlArgumentsHost.create(host);

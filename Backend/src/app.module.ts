@@ -21,6 +21,7 @@ import { User } from "./infrastructure/models/user.model";
       autoSchemaFile: join(process.cwd(), "schema/schema.gql"), // Auto-generate schema
       playground: true, // Enables GraphQL Playground (UI)
       debug: true, // Debugging mode for development
+      context: ({ req }) => ({ req }),
     }),
     ConfigModule.forRoot({
       load: [databaseConfig],

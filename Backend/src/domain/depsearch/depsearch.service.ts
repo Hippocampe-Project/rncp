@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { VotesDeputesRepository } from "../../infrastructure/repositories/votes-deputes.repository";
-import { Depsearch } from "../../presentation/schema/resolvers/depsearch.resolver";
+import { Depsearch } from "../../presentation/resolvers/depsearch.resolver";
 
 @Injectable()
 export class DepsearchService {

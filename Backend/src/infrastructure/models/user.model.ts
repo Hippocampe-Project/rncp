@@ -28,6 +28,10 @@ export class User extends Model<
   @Field()
   password!: string;
 
+  @Column(DataType.STRING)
+  @Field()
+  auth0Id: string;
+
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   @Field()
   email!: string;

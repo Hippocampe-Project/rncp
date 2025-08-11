@@ -1,11 +1,10 @@
-import { Resolver, Query, Mutation, Args, Int, Context } from "@nestjs/graphql";
-import { Deputes } from "../../../infrastructure/models/deputes.model";
-import { DepsearchService } from "../../../domain/depsearch/depsearch.service";
-import { VotesDeputesService } from "../../../domain/depsearch/votes-deputes.service";
-import { Logger } from "@nestjs/common";
-import { DeputeNotFoundError } from "../../../domain/depsearch/depsearch.errors";
-import { Votes_deputes } from "../../../infrastructure/models/votes-deputes.model";
-import { VoteDeputeDto } from "../../../domain/DTO/votes-deputes";
+import { Resolver, Query, Args } from "@nestjs/graphql";
+import { DepsearchService } from "../../domain/depsearch/depsearch.service";
+import { VotesDeputesService } from "../../domain/depsearch/votes-deputes.service";
+import { Inject, Logger } from "@nestjs/common";
+import { DeputeNotFoundError } from "../../domain/depsearch/depsearch.errors";
+import { Votes_deputes } from "../../infrastructure/models/votes-deputes.model";
+import { VoteDeputeDto } from "../DTO/votes-deputes";
 
 export type Depsearch = {
   vote_id: number;
@@ -18,6 +17,7 @@ export type Depsearch = {
 @Resolver(() => [Votes_deputes])
 export class DepsearchResolver {
   constructor(
+    @Inject("IVotesDeputesService")
     private depsearchService: DepsearchService,
     private votesDeputeService: VotesDeputesService
   ) {}

@@ -5,9 +5,10 @@ import { Votes_deputes } from "../../infrastructure/models/votes-deputes.model";
 import { DeputeRepository } from "../../infrastructure/repositories/deputes.repository";
 import { VoteRepository } from "../../infrastructure/repositories/votes.repository";
 import { DeputeNotFoundError, VotesNotFoundError } from "./depsearch.errors";
+import { IVotesDeputesService } from "../ports/votes-deputes.repository";
 
 @Injectable()
-export class VotesDeputesService {
+export class VotesDeputesService implements IVotesDeputesService {
   constructor(
     @InjectModel(Votes_deputes) private votesDeputesModel: typeof Votes_deputes,
     private deputeRepository: DeputeRepository,

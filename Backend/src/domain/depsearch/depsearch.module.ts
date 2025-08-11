@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { DepsearchResolver } from "../../presentation/schema/resolvers/depsearch.resolver";
+import { DepsearchResolver } from "../../presentation/resolvers/depsearch.resolver";
 import { DepsearchService } from "./depsearch.service";
 import { DeputeRepository } from "../../infrastructure/repositories/deputes.repository";
 import { SequelizeModule } from "@nestjs/sequelize";
@@ -22,12 +22,20 @@ import { Votes_deputes } from "../../infrastructure/models/votes-deputes.model";
 
   providers: [
     DepsearchResolver,
-    VotesDeputesService,
+    {
+      provide: "IVotesDeputesService",
+      useClass: VotesDeputesService,
+    },
     DepsearchService,
     VotesDeputesRepository,
     DeputeRepository,
     VoteRepository,
   ],
-  exports: [DeputeRepository, VoteRepository, VotesDeputesRepository],
+  exports: [
+    DeputeRepository,
+    VoteRepository,
+    VotesDeputesRepository,
+    "IVotesDeputesService",
+  ],
 })
 export class DepsearchModule {}
