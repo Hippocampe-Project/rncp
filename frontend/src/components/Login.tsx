@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-
+// import { UserProvider } from "@auth0/nextjs-auth0/client"
 import { auth0 } from "../lib/auth0";
 
-<a href="/auth/login">Login</a>
+<a href="/auth">Login</a>
+
 
 /*
 export default async function Login() {

@@ -5,13 +5,38 @@
 import * as React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-
+//import { UserProvider } from '@auth0/nextjs-auth0/client'
 
 import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css';
 
 import { siteConfig } from '@/constant/config';
+
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html>
+      <body className="flex flex-col min-h-screen">
+        <header>
+            <Header />
+        </header>
+          <main className="flex-grow">
+            {children}
+          </main>
+      </body>
+      <footer>
+          <Footer />
+      </footer>
+    </html>
+  );
+}
+
+
 
 // !STARTERCONF Change these default meta
 // !STARTERCONF Look at @/constant/config to change them
@@ -57,25 +82,3 @@ export const metadata: Metadata = {
   // ],
 };
 */
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html>
-      <body className="flex flex-col min-h-screen">
-        <header>
-            <Header />
-        </header>
-          <main className="flex-grow">
-            {children}
-          </main>
-      </body>
-      <footer>
-          <Footer />
-      </footer>
-    </html>
-  );
-}
