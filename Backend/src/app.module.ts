@@ -19,7 +19,7 @@ import { User } from "./infrastructure/models/user.model";
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), "schema/schema.gql"), // Auto-generate schema
-      playground: true, // Enables GraphQL Playground (UI)
+      playground: false, // Enables GraphQL Playground (UI) (no longer shipped by Apollo v5)
       debug: true, // Debugging mode for development
       context: ({ req }) => ({ req }),
     }),

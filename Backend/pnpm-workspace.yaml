@@ -1,0 +1,11 @@
+packages:
+  - apps/**
+  - packages/**
+  - Backend/
+  - '!**/test/**'
+
+onlyBuiltDependencies:
+  - '@apollo/protobufjs'
+  - '@nestjs/core'
+  - '@swc/core'
+  - bcrypt
