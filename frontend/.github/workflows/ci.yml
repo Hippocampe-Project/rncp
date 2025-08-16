@@ -1,9 +1,10 @@
-name: CI
+name: CI-front
 
 on:
   push:
     branches:
       - main
+      - frontend-setup
   pull_request:
 
 jobs:
