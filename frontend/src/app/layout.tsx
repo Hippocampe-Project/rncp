@@ -1,6 +1,5 @@
 'use client';
 
-
 //import { Metadata } from 'next';
 import * as React from 'react';
 import Header from '@/components/Header';
@@ -13,7 +12,6 @@ import '@/styles/colors.css';
 
 import { siteConfig } from '@/constant/config';
 
-
 export default function RootLayout({
   children,
 }: {
@@ -21,22 +19,18 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body className="flex flex-col min-h-screen">
+      <body className='flex flex-col min-h-screen'>
         <header>
-            <Header />
+          <Header />
         </header>
-          <main className="flex-grow">
-            {children}
-          </main>
-      </body>
-      <footer>
+        <main className='flex-grow'>{children}</main>
+        <footer>
           <Footer />
-      </footer>
+        </footer>
+      </body>
     </html>
   );
 }
-
-
 
 // !STARTERCONF Change these default meta
 // !STARTERCONF Look at @/constant/config to change them
