@@ -24,6 +24,7 @@ import { User } from "./infrastructure/models/user.model";
       context: ({ req }) => ({ req }),
     }),
     ConfigModule.forRoot({
+      envFilePath: ".env.development",
       load: [databaseConfig],
     }),
     SequelizeModule.forRootAsync({

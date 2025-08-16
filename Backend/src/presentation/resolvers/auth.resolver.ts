@@ -1,4 +1,5 @@
-import { Resolver, Query, Context, UseGuards } from "@nestjs/graphql";
+import { Resolver, Query, Context } from "@nestjs/graphql";
+import { UseGuards } from "@nestjs/common";
 import { AuthService } from "../../domain/auth/auth.service";
 import { User } from "../../infrastructure/models/user.model";
 import { JwtAuthGuard } from "../../domain/auth/jwt-auth.guard";

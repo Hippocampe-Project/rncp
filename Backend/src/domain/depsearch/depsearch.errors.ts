@@ -1,4 +1,4 @@
-import { ForbiddenError } from "apollo-server-express";
+import { ForbiddenError } from "@nestjs/apollo";
 import { UnexpectedError } from "../../../errors";
 
 export type DepsearchErrors =

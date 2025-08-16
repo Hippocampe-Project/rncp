@@ -22,6 +22,7 @@ import { Votes_deputes } from "../../infrastructure/models/votes-deputes.model";
 
   providers: [
     DepsearchResolver,
+    VotesDeputesService,
     {
       provide: "IVotesDeputesService",
       useClass: VotesDeputesService,
