@@ -1,20 +1,33 @@
 'use client';
 
-import * as React from 'react';
-import '@/lib/env';
+import { gql, useQuery } from '@apollo/client';
 
-import { auth0 } from "../../lib/auth0";
+const GET_ME = gql`
+  query Me {
+    me {
+      id
+      email
+      name
+    }
+  }
+`;
 
-export default async function UserProfilePage() {
-   const session = await auth0.getSession();
+export default function UserProfilePage() {
+  const { loading, error, data } = useQuery(GET_ME);
 
-  if (!session) {
-    window.location.href = '/authentification'; 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  if (!data?.me) {
+    // not logged in
+    window.location.href = '/auth/login';
+    return null;
   }
 
   return (
-  <main>
-        <div>This is the user profile page</div>
-  </main>
-);
+    <main>
+      <h1>Welcome, {data.me.name}</h1>
+      <p>Email: {data.me.email}</p>
+    </main>
+  );
 }
