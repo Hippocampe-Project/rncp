@@ -1,0 +1,60 @@
+name: CI-front
+
+on:
+  push:
+    branches:
+      - '*s'
+  pull_request:
+
+jobs:
+  ci-front:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install pnpm
+        run: npm install -g pnpm
+      - name: Install dependencies
+        run: pnpm install
+      - name: Run frontend tests
+        working-directory: ./frontend
+        run: pnpm test
+  # lint:
+  #   name: ⬣ ESLint, ʦ TypeScript, 💅 Prettier, and 🃏 Test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: ⬇️ Checkout repo
+  #       uses: actions/checkout@v4
+
+  #     - name: 🤌 Setup pnpm
+  #       uses: pnpm/action-setup@v4
+  #       with:
+  #         version: 9
+
+  #     - name: ⎔ Setup node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20
+  #         cache: 'pnpm'
+
+  #     - name: 📥 Download deps
+  #       run: pnpm install --frozen-lockfile
+
+  #     - name: 🔬 Lint
+  #       run: pnpm run lint:strict
+
+  #     - name: 🔎 Type check
+  #       run: pnpm run typecheck
+
+  #     - name: 💅 Prettier check
+  #       run: pnpm run format:check
+
+  #     - name: 🃏 Run jest
+  #       run: pnpm run test
