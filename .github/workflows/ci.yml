@@ -13,19 +13,32 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack & Prepare pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
+      - name: Cache pnpm dependencies
+        uses: actions/cache@v3
         with:
-          node-version: 20
-          cache: "pnpm"
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('Backend/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
       - name: Install pnpm
         run: npm install -g pnpm
+
       - name: Install dependencies
         run: pnpm install
+
       - name: Run frontend tests
         working-directory: ./frontend
         run: pnpm test
+
   # lint:
   #   name: ⬣ ESLint, ʦ TypeScript, 💅 Prettier, and 🃏 Test
   #   runs-on: ubuntu-latest
