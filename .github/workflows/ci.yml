@@ -3,7 +3,7 @@ name: CI-front
 on:
   push:
     branches:
-      - "*"
+      - "frontend-setup"
   pull_request:
 
 jobs:
@@ -16,21 +16,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Enable Corepack & Prepare pnpm
+      - name: Enable Corepack
         run: |
           corepack enable
-          corepack prepare pnpm@latest --activate
 
       - name: Cache pnpm dependencies
         uses: actions/cache@v3
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('Backend/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-
-
-      - name: Install pnpm
-        run: npm install -g pnpm
 
       - name: Install dependencies
         run: pnpm install

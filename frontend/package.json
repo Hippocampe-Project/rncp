@@ -75,5 +75,6 @@
       "src/__tests__/setupTests.ts"
     ],
     "testEnvironment": "jsdom"
-  }
+  },
+  "packageManager": "pnpm@10.14.0"
 }
