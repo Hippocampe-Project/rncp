@@ -5,7 +5,7 @@ import { Votes_deputes } from "../../infrastructure/models/votes-deputes.model";
 import { DeputeRepository } from "../../infrastructure/repositories/deputes.repository";
 import { VoteRepository } from "../../infrastructure/repositories/votes.repository";
 import { DeputeNotFoundError, VotesNotFoundError } from "./depsearch.errors";
-import { IVotesDeputesService } from "../ports/votes-deputes.repository";
+import { IVotesDeputesService } from "../ports/votes-deputes.port";
 
 @Injectable()
 export class VotesDeputesService implements IVotesDeputesService {
