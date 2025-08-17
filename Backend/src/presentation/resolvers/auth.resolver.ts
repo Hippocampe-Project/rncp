@@ -13,8 +13,8 @@ export class AuthResolver {
   @Query(() => User)
   @UseGuards(JwtAuthGuard)
   async me(@Context() ctx): Promise<User> {
-    const user = ctx.req.user;
-    return this.authService.findOrCreateUser(user);
+    console.log("➡️ Received request with user:", ctx.req.user);
+    return this.authService.findOrCreateUser(ctx.req.user);
   }
 
   @Query(() => [User])
