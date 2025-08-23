@@ -6,7 +6,25 @@ import {
 } from '@apollo/client';
 import { HttpLink } from '@apollo/client';
 
-const httpLink = new HttpLink({ uri: 'http://localhost:3000' });
+// const httpLink = new HttpLink({ uri: 'http://localhost:3000' });
+
+const httpLink = new HttpLink({
+  uri: 'http://localhost:3000', // make sure this points to your GraphQL endpoint
+  fetch: async (uri, options) => {
+    const response = await fetch(uri, options);
+
+    // Log raw response before parsing
+    const text = await response.text();
+    console.log('📦 Raw GraphQL response:', text);
+
+    // Re-create a Response object so Apollo can parse it normally
+    return new Response(text, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+    });
+  },
+});
 
 const authLink = new ApolloLink((operation, forward) => {
   return fromPromise(
