@@ -9,7 +9,7 @@ import {
 } from "sequelize-typescript";
 import { Votes } from "./votes.model";
 import { Deputes } from "./deputes.model";
-import { BelongsTo, InferAttributes, InferCreationAttributes } from "sequelize";
+import { InferAttributes, InferCreationAttributes } from "sequelize";
 
 @ObjectType()
 @Table({
@@ -21,11 +21,13 @@ export class Votes_deputes extends Model<
   InferCreationAttributes<Votes_deputes>
 > {
   @ForeignKey(() => Votes)
+  @PrimaryKey
   @Column(DataType.INTEGER)
   @Field(() => Int)
   vote_id!: number;
 
   @ForeignKey(() => Deputes)
+  @PrimaryKey
   @Column(DataType.INTEGER)
   @Field(() => Int)
   depute_id!: number;

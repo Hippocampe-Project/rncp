@@ -18,8 +18,8 @@ export type Depsearch = {
 export class DepsearchResolver {
   constructor(
     @Inject("IVotesDeputesService")
-    private depsearchService: DepsearchService,
-    private votesDeputeService: VotesDeputesService
+    private votesDeputeService: VotesDeputesService,
+    private depsearchService: DepsearchService
   ) {}
 
   logger = Logger;

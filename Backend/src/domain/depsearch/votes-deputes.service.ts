@@ -34,7 +34,9 @@ export class VotesDeputesService implements IVotesDeputesService {
       vote_titre: vote.titre,
     }));
 
-    this.votesDeputesModel.bulkCreate(payload);
+    await this.votesDeputesModel.bulkCreate(payload, {
+      updateOnDuplicate: ["vote_category", "vote_titre", "depute_nom"],
+    });
     return depute.id;
   }
 

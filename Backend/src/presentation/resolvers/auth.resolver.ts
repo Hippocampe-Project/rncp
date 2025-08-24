@@ -21,7 +21,6 @@ export class AuthResolver {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("ADMIN")
   async allUsers(@Context() ctx): Promise<User[]> {
-    // Add a method in a UserService or reuse model directly
     return User.findAll();
   }
 }

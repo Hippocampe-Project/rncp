@@ -14,7 +14,6 @@ export class DepsearchService {
         `No votes found for depute with ID ${deputeId}`
       );
     }
-    //return name back to normal
     return votes;
   }
 }

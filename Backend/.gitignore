@@ -1,0 +1,6 @@
+dist
+src/node_modules/
+scraping/
+.env.test
+.env.development
+testconnection.ts
