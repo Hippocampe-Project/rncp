@@ -39,7 +39,7 @@ from scrape_utils import (
     cleanup_logs,
     create_peristent_infos_json_if_needed,
 )
-from update.should_update import should_update_deputes
+from update.should_update import should_update_deputes, should_update_votes
 from database.db_operations import HandleDatabase
 
 
@@ -56,16 +56,16 @@ logging.basicConfig(
 
 # Scraping configuration
 permanent_infos = False
-scrape_pol_groups_and_deputes = True
+# scrape_pol_groups_and_deputes = True
 scrape_votes = True
-database_insertion = True
-updating_votes = True
-updating_deputes = True
+# database_insertion = True
+# updating_votes = True
+# updating_deputes = True
 
 cleanup_logs(LOGS_PATH)
-create_peristent_infos_json_if_needed(
-    [LAST_SCRAPED_VOTE_FILE, LAST_SCRAPING_INFOS, LAST_SCRAPED_DEPUTES_FILE]
-)
+# create_peristent_infos_json_if_needed(
+#     [LAST_SCRAPED_VOTE_FILE, LAST_SCRAPING_INFOS, LAST_SCRAPED_DEPUTES_FILE]
+# )
 
 
 def main():
@@ -81,6 +81,8 @@ def main():
     scrape_pol_groups_and_deputes = database_insertion = updating_deputes = (
         should_update_deputes(LAST_SCRAPED_DEPUTES_FILE)
     )
+
+    updating_votes = should_update_votes()
 
     if permanent_infos:
         logging.info("Scraping permanent infos : departements and commissions")
