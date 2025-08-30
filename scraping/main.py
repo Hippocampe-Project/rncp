@@ -82,7 +82,7 @@ def main():
         should_update_deputes(LAST_SCRAPED_DEPUTES_FILE)
     )
 
-    updating_votes = should_update_votes()
+    updating_votes = should_update_votes(LAST_SCRAPED_VOTE_FILE)
 
     if permanent_infos:
         logging.info("Scraping permanent infos : departements and commissions")
