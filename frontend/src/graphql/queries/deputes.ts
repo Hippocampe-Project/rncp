@@ -53,13 +53,25 @@ export const GET_DEPUTE_BY_ID = gql`
 `;
 
 export const SEARCH_DEPUTE_BY_NAME = gql`
-  query SearchDepute($searchTerm: String!) {
+  query SearchDepute($deputeName: String!) {
     depute(nom: $searchTerm) {
       id
       nom
       departement_id
       commission_permanente_id
       photo
+    }
+  }
+`;
+
+export const SEARCH_DEPUTE_VOTES_BY_NAME = gql`
+  query SearchDeputeVotes($deputeName: String!) {
+    depute(nom: $deputeName) {
+      vote_id
+      depute_id
+      vote_category
+      depute_nom
+      vote_titre
     }
   }
 `;

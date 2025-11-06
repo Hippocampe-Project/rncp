@@ -2,7 +2,7 @@ import { useLazyQuery } from '@apollo/client';
 import { gql } from '@apollo/client';
 import React, { useState } from 'react';
 
-import { SEARCH_DEPUTE_BY_NAME } from '@/graphql/queries/deputes';
+import { SEARCH_DEPUTE_VOTES_BY_NAME } from '@/graphql/queries/deputes';
 
 import { Depute } from '@/types/depute';
 
@@ -20,7 +20,7 @@ export default function DeputesSearchBar({
   const [searchTerm, setSearchTerm] = useState('');
   const [searchDepute, { loading, error, data }] = useLazyQuery<{
     deputeByName: Depute;
-  }>(SEARCH_DEPUTE_BY_NAME, {
+  }>(SEARCH_DEPUTE_VOTES_BY_NAME, {
     onCompleted: (data) => {
       onDeputeFound?.(data?.deputeByName || null);
     },
@@ -38,7 +38,7 @@ export default function DeputesSearchBar({
     e.preventDefault();
     if (searchTerm.trim()) {
       searchDepute({
-        variables: { name: searchTerm.trim() },
+        variables: { deputeName: searchTerm.trim() },
       });
     }
   };
