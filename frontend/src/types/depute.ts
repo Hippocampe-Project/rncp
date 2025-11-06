@@ -1,4 +1,4 @@
-export interface Deputy {
+export interface Depute {
   id: number;
   nom: string;
   date_naissance: string;

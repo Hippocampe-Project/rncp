@@ -1,23 +1,21 @@
+/* eslint-disable no-console */
 import {
   ApolloClient,
   ApolloLink,
   fromPromise,
+  HttpLink,
   InMemoryCache,
 } from '@apollo/client';
-import { HttpLink } from '@apollo/client';
 
-// const httpLink = new HttpLink({ uri: 'http://localhost:3000' });
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000';
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:3000', // make sure this points to your GraphQL endpoint
+  uri: `${BACKEND_URL}/graphql`,
   fetch: async (uri, options) => {
     const response = await fetch(uri, options);
-
-    // Log raw response before parsing
     const text = await response.text();
     console.log('📦 Raw GraphQL response:', text);
-
-    // Re-create a Response object so Apollo can parse it normally
     return new Response(text, {
       status: response.status,
       statusText: response.statusText,
@@ -26,30 +24,28 @@ const httpLink = new HttpLink({
   },
 });
 
-const authLink = new ApolloLink((operation, forward) => {
-  return fromPromise(
-    fetch('/api/token')
+const authLink = new ApolloLink((operation, forward) =>
+  fromPromise(
+    fetch('/auth/access-token', { credentials: 'include' })
       .then((res) => res.json())
       .then(({ accessToken }) => {
-        console.log('✅ Step 4: Access token received:', accessToken); // log JWT
+        console.log('✅ Access token received:', accessToken);
         return accessToken;
       }),
   ).flatMap((accessToken) => {
-    operation.setContext({
-      headers: {
-        Authorization: accessToken ? `Bearer ${accessToken}` : '',
+    operation.setContext(
+      ({ headers = {} }: { headers?: Record<string, string> }) => {
+        const newHeaders: Record<string, string> = { ...headers };
+        if (accessToken) {
+          newHeaders.Authorization = `Bearer ${accessToken}`;
+        }
+        return { headers: newHeaders };
       },
-    });
+    );
 
-    const obs = forward(operation);
-    obs.subscribe({
-      next: (result) => console.log('➡️ Step 4: GraphQL response:', result), // log GraphQL response
-      error: (err) => console.error('❌ Step 4: GraphQL error:', err),
-    });
-
-    return obs;
-  });
-});
+    return forward(operation);
+  }),
+);
 
 export const client = new ApolloClient({
   link: authLink.concat(httpLink),

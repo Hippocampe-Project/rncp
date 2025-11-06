@@ -1,14 +1,14 @@
 'use client';
 
+import { ApolloProvider } from '@apollo/client';
+import * as React from 'react';
+
 import '@/styles/globals.css';
 
-import * as React from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-
-
-import { ApolloProvider } from '@apollo/client';
 import { client } from '@/lib/apolloClient';
+
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 export default function RootLayout({
   children,
@@ -18,12 +18,11 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className='flex flex-col min-h-screen'>
-          <ApolloProvider client={client}>
-            <Header />
-            <main className='flex-grow'>{children}</main>
-            <Footer />
-          </ApolloProvider>
-
+        <ApolloProvider client={client}>
+          <Header />
+          <main className='flex-grow'>{children}</main>
+          <Footer />
+        </ApolloProvider>
       </body>
     </html>
   );

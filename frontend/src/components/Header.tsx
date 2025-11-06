@@ -19,7 +19,7 @@ export default function Header() {
         </button>
         <button
           className='hover:bg-gray-700 px-3 py-2 rounded'
-          onClick={() => (window.location.href = '/deputies')}
+          onClick={() => (window.location.href = '/deputes')}
         >
           Député.e
         </button>

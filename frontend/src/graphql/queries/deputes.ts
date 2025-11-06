@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-export const GET_DEPUTIES = gql`
-  query GetDeputies {
-    deputies {
+export const GET_DEPUTE = gql`
+  query GetDepute {
+    depute {
       id
       nom
       date_naissance
@@ -20,9 +20,9 @@ export const GET_DEPUTIES = gql`
   }
 `;
 
-export const GET_DEPUTIES_SIMPLE = gql`
-  query GetDeputiesSimple {
-    deputies {
+export const GET_DEPUTE_SIMPLE = gql`
+  query GetDeputeSimple {
+    depute {
       id
       nom
       departement_id
@@ -32,9 +32,9 @@ export const GET_DEPUTIES_SIMPLE = gql`
   }
 `;
 
-export const GET_DEPUTY_BY_ID = gql`
-  query GetDeputyById($id: Int!) {
-    deputy(id: $id) {
+export const GET_DEPUTE_BY_ID = gql`
+  query GetDeputeById($id: Int!) {
+    depute(id: $id) {
       id
       nom
       date_naissance
@@ -53,8 +53,8 @@ export const GET_DEPUTY_BY_ID = gql`
 `;
 
 export const SEARCH_DEPUTE_BY_NAME = gql`
-  query SearchDeputies($searchTerm: String!) {
-    deputies(nom: $searchTerm) {
+  query SearchDepute($searchTerm: String!) {
+    depute(nom: $searchTerm) {
       id
       nom
       departement_id
