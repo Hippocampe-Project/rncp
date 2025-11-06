@@ -13,7 +13,17 @@ async function bootstrap() {
   console.log("Sequelize has been loaded!");
 
   // Cors = utile si le back et le front sont hébergés séparéments
-  app.enableCors();
+  app.enableCors({
+    origin: ["http://localhost:4000"],
+    credentials: true,
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  });
+
+  app.use((req, res, next) => {
+    console.log("➡️ Incoming request:", req.method, req.url);
+    next();
+  });
 
   // préfixe global = permet de centraliser les appels d'api askip
   // app.setGlobalPrefix('api');

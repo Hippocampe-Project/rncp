@@ -34,6 +34,7 @@ export class DepsearchResolver {
     // @Context() request: RequestWithContext,
     @Args("nom", { type: () => String }) deputeName: string
   ): Promise<VoteDeputeDto[]> {
+    console.log("Incoming query", deputeName);
     this.logger.debug({ deputeName }, "Trying to resolve Query.depsearch");
 
     const deputeId = await this.votesDeputeService.createPayload(deputeName); // insert the votes in the database and return the deputeId
