@@ -66,7 +66,7 @@ export const SEARCH_DEPUTE_BY_NAME = gql`
 
 export const SEARCH_DEPUTE_VOTES_BY_NAME = gql`
   query SearchDeputeVotes($deputeName: String!) {
-    depute(nom: $deputeName) {
+    deputeByName: depute(nom: $deputeName) {
       vote_id
       depute_id
       vote_category
