@@ -21,7 +21,7 @@ export class VotesDeputesService implements IVotesDeputesService {
       throw new DeputeNotFoundError(deputeName);
     }
     const deputesVotes: Votes[] =
-      await this.voteRepository.findVotesByDeputeName(deputeName);
+      await this.voteRepository.findVotesByDeputeName(deputeName); // /!\ TODO:  can not return cases where deputy is absent 
     if (deputesVotes.length === 0) {
       throw new VotesNotFoundError(deputeName);
     }
