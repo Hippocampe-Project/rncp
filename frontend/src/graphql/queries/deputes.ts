@@ -54,7 +54,7 @@ export const GET_DEPUTE_BY_ID = gql`
 
 export const SEARCH_DEPUTE_BY_NAME = gql`
   query SearchDepute($deputeName: String!) {
-    depute(nom: $searchTerm) {
+    deputeByName: depute(nom: $deputeName) {
       id
       nom
       departement_id
