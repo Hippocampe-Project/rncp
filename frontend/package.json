@@ -24,7 +24,10 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
+<<<<<<< HEAD
     "recharts": "^3.3.0",
+=======
+>>>>>>> ffb14d19 (frontend arbo reorg)
     "tailwind-merge": "^2.6.0",
     "zod": "^3.24.1"
   },

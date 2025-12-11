@@ -54,7 +54,11 @@ export const GET_DEPUTE_BY_ID = gql`
 
 export const SEARCH_DEPUTE_BY_NAME = gql`
   query SearchDepute($deputeName: String!) {
+<<<<<<< HEAD
     deputeByName: depute(nom: $deputeName) {
+=======
+    depute(nom: $searchTerm) {
+>>>>>>> ffb14d19 (frontend arbo reorg)
       id
       nom
       departement_id
@@ -66,7 +70,11 @@ export const SEARCH_DEPUTE_BY_NAME = gql`
 
 export const SEARCH_DEPUTE_VOTES_BY_NAME = gql`
   query SearchDeputeVotes($deputeName: String!) {
+<<<<<<< HEAD
     deputeByName: depute(nom: $deputeName) {
+=======
+    depute(nom: $deputeName) {
+>>>>>>> ffb14d19 (frontend arbo reorg)
       vote_id
       depute_id
       vote_category
