@@ -1,0 +1,28 @@
+[16:51:36.245] [INFO] storybook v10.1.7
+[16:51:36.561] [DEBUG] Getting package.json info for /home/pipou/dev/project-frontend/frontend/package.json...
+[16:51:36.949] [DEBUG] Serving static files from [36mfrontend/public[39m at [36m/[39m
+[16:51:36.949] [INFO] Starting...
+[16:51:36.984] [WARN] No story files found for the specified pattern: [34msrc/**/*.mdx[39m
+[16:51:37.069] [DEBUG] Starting preview..
+[16:51:37.088] [INFO] Addon-docs: using MDX3
+[16:51:37.105] [INFO] Using implicit CSS loaders
+[16:51:37.213] [INFO] Using SWC as compiler
+[16:51:37.223] [INFO] Using default Webpack5 setup
+[16:51:37.465] [DEBUG] Using tsconfig paths for react-docgen
+[16:51:39.158] [ERROR] Failed to build the preview
+[16:51:39.158] [WARN] Force closed preview build
+[16:51:39.159] [ERROR] [38;2;241;97;97mSB_BUILDER-WEBPACK5_0003 (WebpackCompilationError): There were problems when compiling your code with Webpack.
+Run Storybook with --debug-webpack for more information.[39m
+    at starter (file://./node_modules/.pnpm/@storybook+builder-webpack5@10.1.7_esbuild@0.27.1_msw@2.10.5_@types+node@24.3.0_typescr_ede00c025ff4218b4ba7402820c93a52/node_modules/@storybook/builder-webpack5/dist/index.js:799:11)
+    at starter.next (<anonymous>)
+    at Module.start (file://./node_modules/.pnpm/@storybook+builder-webpack5@10.1.7_esbuild@0.27.1_msw@2.10.5_@types+node@24.3.0_typescr_ede00c025ff4218b4ba7402820c93a52/node_modules/@storybook/builder-webpack5/dist/index.js:857:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async storybookDevServer (file://./node_modules/.pnpm/storybook@10.1.7_@testing-library+dom@10.4.1_prettier@3.6.2_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/storybook/dist/core-server/index.js:6806:82)
+    at async buildOrThrow (file://./node_modules/.pnpm/storybook@10.1.7_@testing-library+dom@10.4.1_prettier@3.6.2_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/storybook/dist/core-server/index.js:5555:12)
+    at async buildDevStandalone (file://./node_modules/.pnpm/storybook@10.1.7_@testing-library+dom@10.4.1_prettier@3.6.2_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/storybook/dist/core-server/index.js:7208:66)
+    at async withTelemetry (file://./node_modules/.pnpm/storybook@10.1.7_@testing-library+dom@10.4.1_prettier@3.6.2_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/storybook/dist/_node-chunks/chunk-H5UMVQS5.js:209:12)
+    at async dev (file://./node_modules/.pnpm/storybook@10.1.7_@testing-library+dom@10.4.1_prettier@3.6.2_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/storybook/dist/bin/core.js:2734:3)
+    at async _Command.<anonymous> (file://./node_modules/.pnpm/storybook@10.1.7_@testing-library+dom@10.4.1_prettier@3.6.2_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/storybook/dist/bin/core.js:2801:92)
+[16:51:39.160] [WARN] Broken build, fix the error above.
+You may need to refresh the browser.
+[16:51:46.945] [PROMPT] Would you like to send anonymous crash reports to improve Storybook and fix bugs faster? {"choice":false}
