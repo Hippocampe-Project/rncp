@@ -4,6 +4,7 @@ import { Logger } from "@nestjs/common";
 import { Sequelize } from "sequelize-typescript";
 import { ExpressAdapter } from "@nestjs/platform-express";
 import { GlobalExceptionFilter } from "global-exception.filter";
+import { RequestHandler } from "node_modules/@types/express";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, new ExpressAdapter());
@@ -20,10 +21,12 @@ async function bootstrap() {
     allowedHeaders: ["Content-Type", "Authorization"],
   });
 
-  app.use((req, res, next) => {
+  const logger: RequestHandler = (req, res, next) => {
     console.log("➡️ Incoming request:", req.method, req.url);
     next();
-  });
+  };
+
+  app.use(logger);
 
   // préfixe global = permet de centraliser les appels d'api askip
   // app.setGlobalPrefix('api');

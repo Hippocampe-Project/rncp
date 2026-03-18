@@ -28,7 +28,9 @@ export class DeputeRepository {
         },
       });
     } catch (error) {
-      throw new InternalServerErrorException("Database error", error);
+      throw new InternalServerErrorException("Database error", {
+        cause: error,
+      });
     }
   }
 }

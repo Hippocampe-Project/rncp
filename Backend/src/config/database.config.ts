@@ -1,18 +1,24 @@
 import { Injectable, OnModuleInit } from "@nestjs/common";
 import { Sequelize } from "sequelize-typescript";
 
+const port = process.env.DATABASE_PORT;
+
+if (!port) {
+  throw new Error("DATABASE_PORT is not defined");
+}
+
 export default () => {
   console.log(
-    "Loaded DB password:",
-    process.env.DATABASE_PASSWORD,
-    "Loaded DB user:",
-    process.env.DATABASE_USER,
+    "Loaded DB password.",
+    //process.env.DATABASE_PASSWORD,
+    "Loaded DB user.",
+    //process.env.DATABASE_USER,
   ); // <-- TEMP DEBUG
   return {
     database: {
       dialect: "postgres",
       host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
+      port: parseInt(port, 10) || 5432,
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,

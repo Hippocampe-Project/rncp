@@ -21,7 +21,7 @@ import { User } from "./infrastructure/models/user.model";
       autoSchemaFile: join(process.cwd(), "schema/schema.gql"), // Auto-generate schema
       playground: true, // Enables GraphQL Playground (UI) (no longer shipped by Apollo v5)
       debug: true, // Debugging mode for development
-      context: ({ req }) => ({ req }),
+      context: ({ req }: { req: Request }) => ({ req }),
       formatError: (error) => {
         console.error("🧩 GraphQL Error:", error);
         return error;
