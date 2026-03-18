@@ -7,10 +7,10 @@ import { Op } from "sequelize";
 export class VoteRepository {
   constructor(
     @InjectModel(Votes)
-    private readonly voteModel: typeof Votes
+    private readonly voteModel: typeof Votes,
   ) {}
 
-  async findVotesByDeputeName(deputeName: string): Promise<Votes[] | null> {
+  async findVotesByDeputeName(deputeName: string): Promise<Votes[]> {
     try {
       return this.voteModel.findAll({
         where: {
@@ -23,7 +23,9 @@ export class VoteRepository {
         },
       });
     } catch (error) {
-      throw new InternalServerErrorException("Database error", error);
+      throw new InternalServerErrorException("Database error", {
+        cause: error,
+      });
     }
   }
 }

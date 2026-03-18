@@ -12,7 +12,7 @@ export class VotesDeputesService implements IVotesDeputesService {
   constructor(
     @InjectModel(Votes_deputes) private votesDeputesModel: typeof Votes_deputes,
     private deputeRepository: DeputeRepository,
-    private voteRepository: VoteRepository
+    private voteRepository: VoteRepository,
   ) {}
 
   async createPayload(deputeName: string): Promise<number> {
