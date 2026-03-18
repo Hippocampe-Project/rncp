@@ -6,10 +6,10 @@ import { Votes_deputes } from "../models/votes-deputes.model";
 export class VotesDeputesRepository {
   constructor(
     @InjectModel(Votes_deputes)
-    private readonly votesDeputeModel: typeof Votes_deputes
+    private readonly votesDeputeModel: typeof Votes_deputes,
   ) {}
 
-  async findAllDeputeVotes(deputeId: number): Promise<Votes_deputes[] | null> {
+  async findAllDeputeVotes(deputeId: number): Promise<Votes_deputes[]> {
     try {
       return await this.votesDeputeModel.findAll({
         where: {
@@ -17,7 +17,9 @@ export class VotesDeputesRepository {
         },
       });
     } catch (error) {
-      throw new InternalServerErrorException("Database error", error);
+      throw new InternalServerErrorException("Database error", {
+        cause: error,
+      });
     }
   }
 }

@@ -15,7 +15,7 @@ export class RolesGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const requiredRoles = this.reflector.getAllAndOverride<string[]>(
       ROLES_KEY,
-      [context.getHandler(), context.getClass()]
+      [context.getHandler(), context.getClass()],
     );
 
     if (!requiredRoles) return true;
@@ -23,7 +23,7 @@ export class RolesGuard implements CanActivate {
     const ctx = GqlExecutionContext.create(context);
     const user = ctx.getContext().req.user;
 
-    const userRoles = user["https://yourdomain.com/claims/roles"] || [];
+    const userRoles = user["https://localhost:3000/claims/roles"] || [];
     const hasRole = requiredRoles.some((role) => userRoles.includes(role));
 
     if (!hasRole) throw new ForbiddenException("Insufficient role");

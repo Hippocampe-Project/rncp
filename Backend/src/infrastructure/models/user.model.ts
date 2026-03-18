@@ -22,7 +22,7 @@ export class User extends Model<
   @AutoIncrement
   @Column(DataType.INTEGER)
   @Field(() => Int)
-  id: number;
+  id!: number;
 
   @Column(DataType.STRING)
   @Field()
@@ -30,7 +30,7 @@ export class User extends Model<
 
   @Column(DataType.STRING)
   @Field()
-  auth0Id: string;
+  auth0Id!: string;
 
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   @Field()
@@ -38,7 +38,7 @@ export class User extends Model<
 
   @Column(DataType.BOOLEAN)
   @Field()
-  emailVerified: boolean;
+  emailVerified: boolean = false;
 
   @Column({ defaultValue: "USER" })
   @Field()

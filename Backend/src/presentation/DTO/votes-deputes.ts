@@ -3,17 +3,17 @@ import { ObjectType, Field, Int } from "@nestjs/graphql";
 @ObjectType()
 export class VoteDeputeDto {
   @Field(() => Int)
-  vote_id: number;
+  vote_id!: number;
 
   @Field(() => Int)
-  depute_id: number;
+  depute_id!: number;
 
   @Field()
-  vote_category: string;
+  vote_category!: string;
 
   @Field()
-  depute_nom: string;
+  depute_nom!: string;
 
   @Field()
-  vote_titre: string;
+  vote_titre!: string;
 }

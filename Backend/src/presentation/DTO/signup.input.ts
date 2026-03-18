@@ -5,9 +5,9 @@ import { IsEmail, MinLength } from "class-validator";
 export class SignupInput {
   @Field()
   @IsEmail()
-  email: string;
+  email!: string;
 
   @Field()
   @MinLength(6)
-  password: string;
+  password!: string;
 }

@@ -1,4 +1,4 @@
 export class Departement {
-  id: number;
-  nom: string;
+  id!: number;
+  nom!: string;
 }
